@@ -1,0 +1,347 @@
+html {
+  --color1: black;
+  --color2: aqua;
+  --color3: #303030;
+  --color4: gray;
+  --color5: rgba(89, 167, 255);
+
+  font-size: 1.25vmin;
+
+  head,
+  body {
+    margin: 0;
+
+    div#root {
+      div.App {
+        text-align: center;
+        background: var(--color1);
+        color: white;
+        width: 100vw;
+        height: 100vh;
+        overflow: scroll;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        position: relative;
+
+        div#homepage {
+          h1 {
+            position: relative;
+            color: var(--color2);
+
+            p {
+
+              img {
+                width: 5em;
+                height: 5em;
+                border-radius: 50%;
+                object-fit: cover;
+                box-shadow: 0 0 2em var(--color2);
+                filter: brightness(.5)
+              }
+
+              strong {
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: fit-content;
+                height: fit-content;
+                margin: auto;
+                background-color: black;
+                line-height: 50%;
+                transform: translateY(50%);
+                font-size: 1.5em;
+              }
+            }
+          }
+
+          div {
+            input.home {
+              background-color: var(--color2);
+              font-weight: 900;
+              border: .5em ridge var(--color3);
+              box-shadow: inset 0 0 1.5em var(--color1), 0 0 1em var(--color5);
+
+              padding: .75em 1.5em;
+              font-size: 1.5em;
+              display: block;
+              margin: 2em auto;
+              color: var(--color1);
+            }
+
+            a {
+
+              button.home {
+                &:hover {
+                  cursor: pointer;
+                }
+
+                background-color: var(--color5);
+                color: var(--color2);
+                font-size: 1.5em;
+                padding: .5em 1em;
+                box-shadow: inset 0 0 5em var(--color1),
+                0 0 1em var(--color5);
+                border: .5em double var(--color3);
+                border-radius: 2em;
+              }
+            }
+          }
+        }
+
+        div#view {
+
+          a {
+            text-decoration: none;
+            color: white;
+            position: absolute;
+            top: 1em;
+            left: 1em;
+            font-weight: 600;
+          }
+
+          h1.error {
+            text-align: center;
+            top: 5vh;
+            font-size: 2.5vh;
+          }
+
+          div.heading {
+
+            h1 {
+              position: relative;
+
+              p {
+                margin: 0;
+
+                img {
+                  height: 7.5rem;
+                  border-radius: 50%;
+                  object-fit: cover;
+                  box-shadow: 0 0 2rem var(--color2);
+                  filter: brightness(.65);
+                  margin: 0;
+                }
+
+                strong {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  right: 0;
+                  bottom: 0;
+                  width: fit-content;
+                  height: fit-content;
+                  margin: auto;
+                  line-height: 0;
+                  color: var(--color2);
+                  font-size: 2.5rem;
+                }
+              }
+            }
+
+            div.navbar {
+              display: inline-flex;
+              justify-content: center;
+              background-color: var(--color3);
+              box-shadow: inset 0 0 1rem var(--color1), 0 0 .5rem var(--color5);
+              border-radius: 1rem;
+
+              button {
+                &:hover {
+                  cursor: pointer;
+                }
+
+                font-size: 2rem;
+                background-color: transparent;
+                color: var(--color4);
+                text-shadow: 0 0 .25rem var(--color1);
+                border: .75rem ridge transparent;
+              }
+
+              button.active {
+                border: .75rem ridge var(--color5);
+                color: var(--color2);
+                background-color: var(--color3);
+                filter: contrast(2);
+              }
+            }
+
+            div.switch_wrapper {
+              display: flex;
+              justify-content: center;
+              flex-wrap: nowrap;
+
+              div.switch {
+                margin: 1rem;
+                background-color: var(--color3);
+                width: fit-content;
+                box-shadow: inset 0 0 1rem var(--color1), 0 0 .5rem var(--color5);
+                border-radius: 1rem;
+
+                button {
+                  &:hover {
+                    cursor: pointer;
+                  }
+
+                  background-color: transparent;
+                  color: var(--color4);
+                  text-shadow: 0 0 .25rem var(--color1);
+                  border: .75rem ridge transparent;
+                  font-weight: 900;
+                  font-size: 1.5rem;
+                }
+
+                button.active {
+                  background-color: var(--color3);
+                  color: var(--color2);
+                  border: .75rem groove var(--color5);
+                  filter: contrast(2);
+                }
+              }
+
+            }
+          }
+
+          div.summary {
+            width: fit-content;
+            margin: auto;
+
+
+            table {
+              border-spacing: 0;
+              border: .5rem groove var(--color5);
+              filter: contrast(2);
+              margin: 1rem;
+
+              tbody {
+                tr {
+
+                  th,
+                  td {
+                    border: .5rem groove var(--color4);
+                    background-color: var(--color2);
+                    padding: .5rem;
+                    font-size: 1.75rem;
+                  }
+
+                  th {
+                    background: var(--color4);
+                    color: var(--color5);
+                    font-weight: 900;
+                    text-shadow: 0 0 .25rem var(--color1);
+                  }
+
+                  td {
+                    background-color: var(--color3);
+                    color: var(--color2);
+                  }
+
+                  td.bold {
+                    font-weight: 700;
+                    box-shadow: inset 0 0 3.5em var(--color1);
+                    padding: 0.25em;
+
+                  }
+                }
+              }
+            }
+          }
+
+          div.scrollable {
+            display: block;
+            overflow: scroll;
+            height: 80vh;
+
+            table {
+              table-layout: fixed;
+              margin: auto;
+              width: 95%;
+              max-width: 1200px;
+              font-size: 1.5rem;
+              border-collapse: collapse;
+              position: relative;
+
+              tr {
+                &:hover {
+                  cursor: pointer;
+                }
+
+                box-shadow: inset 0 0 .25rem var(--color5),
+                inset 0 0 1rem var(--color1);
+                background-color: var(--color3);
+
+                th,
+                td {
+                  padding: .25rem;
+                }
+
+                th {
+                  color: var(--color5);
+                  text-shadow: 0 0 .25em var(--color1);
+                  background-color: var(--color4);
+                  position: sticky;
+                  top: 0;
+                  z-index: 1;
+                }
+
+                td {
+                  background-color: transparent;
+
+
+                  span {
+                    &:hover {
+                      strong {
+                        overflow: visible;
+                        max-width: unset;
+                        color: var(--color2);
+                      }
+                    }
+
+                    position: relative;
+                    display: block;
+                    margin: 0;
+                    padding: 0;
+
+                    img {
+                      width: 5rem;
+                      height: 5rem;
+                      border-radius: 50%;
+                      object-fit: cover;
+                      box-shadow: 0 0 .75rem var(--color2);
+                      margin: .5em;
+                    }
+
+                    strong {
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      right: 0;
+                      bottom: 0;
+                      margin: auto;
+                      height: fit-content;
+                      width: fit-content;
+                      max-width: 100%;
+                      text-overflow: ellipsis;
+                      overflow: hidden;
+                      white-space: nowrap;
+                      background-color: var(--color3);
+                    }
+                  }
+
+                  p {
+                    margin: .25rem;
+                  }
+                }
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+
+  }
+}
