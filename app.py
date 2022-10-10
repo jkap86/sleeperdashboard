@@ -58,4 +58,10 @@ def getLeaguesDetailed():
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
     
-    
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+@app.route('/<path>')
+def catch_all(path):
+    return app.send_static_file('index.html')
