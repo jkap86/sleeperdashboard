@@ -174,61 +174,62 @@ const View = () => {
             Home
         </Link>
         {
-            !state_User ? <h1 className="error">USERNAME NOT FOUND</h1> :
-                <>
-                    <div className="heading">
-                        <h1>
-                            <p className="image">
-                                <img
-                                    alt={state_User.display_name}
-                                    src={`https://sleepercdn.com/avatars/${state_User.avatar}`}
-                                    className="avatar_heading"
-                                />
-                                <strong>
-                                    {state_User.display_name}
-                                </strong>
-                            </p>
-                        </h1>
-                        <div className="navbar">
-                            <button
-                                className={tab === 'Leagues' ? 'active' : null}
-                                onClick={() => setTab('Leagues')}>
-                                Leagues
-                            </button>
-                            <button
-                                className={tab === 'Leaguemates' ? 'active' : null}
-                                onClick={() => setTab('Leaguemates')}>
-                                Leaguemates
-                            </button>
-                            <button
-                                className={tab === 'Player Shares' ? 'active' : null}
-                                onClick={() => setTab('Player Shares')}>
-                                Player Shares
-                            </button>
-                            <button
-                                className={tab === 'Trades' ? 'active' : null}
-                                onClick={() => setTab('Trades')}>
-                                Trades
-                            </button>
-                        </div>
-                        <div className="switch_wrapper">
-                            <div className="switch">
-                                <button className={type1 === 'Redraft' ? 'active' : null} onClick={() => setType1('Redraft')}>Redraft</button>
-                                <button className={type1 === 'All' ? 'active' : null} onClick={() => setType1('All')}>All</button>
-                                <button className={type1 === 'Dynasty' ? 'active' : null} onClick={() => setType1('Dynasty')}>Dynasty</button>
+            state_User === 'Invalid' ? <h1 className="error">USERNAME NOT FOUND</h1> :
+                !state_User ? <h1>Loading...</h1> :
+                    <>
+                        <div className="heading">
+                            <h1>
+                                <p className="image">
+                                    <img
+                                        alt={state_User.display_name}
+                                        src={`https://sleepercdn.com/avatars/${state_User.avatar}`}
+                                        className="avatar_heading"
+                                    />
+                                    <strong>
+                                        {state_User.display_name}
+                                    </strong>
+                                </p>
+                            </h1>
+                            <div className="navbar">
+                                <button
+                                    className={tab === 'Leagues' ? 'active' : null}
+                                    onClick={() => setTab('Leagues')}>
+                                    Leagues
+                                </button>
+                                <button
+                                    className={tab === 'Leaguemates' ? 'active' : null}
+                                    onClick={() => setTab('Leaguemates')}>
+                                    Leaguemates
+                                </button>
+                                <button
+                                    className={tab === 'Player Shares' ? 'active' : null}
+                                    onClick={() => setTab('Player Shares')}>
+                                    Player Shares
+                                </button>
+                                <button
+                                    className={tab === 'Trades' ? 'active' : null}
+                                    onClick={() => setTab('Trades')}>
+                                    Trades
+                                </button>
                             </div>
-                            <div className="switch">
-                                <button className={type2 === 'Bestball' ? 'active' : null} onClick={() => setType2('Bestball')}>Bestball</button>
-                                <button className={type2 === 'All' ? 'active' : null} onClick={() => setType2('All')}>All</button>
-                                <button className={type2 === 'Standard' ? 'active' : null} onClick={() => setType2('Standard')}>Standard</button>
+                            <div className="switch_wrapper">
+                                <div className="switch">
+                                    <button className={type1 === 'Redraft' ? 'active' : null} onClick={() => setType1('Redraft')}>Redraft</button>
+                                    <button className={type1 === 'All' ? 'active' : null} onClick={() => setType1('All')}>All</button>
+                                    <button className={type1 === 'Dynasty' ? 'active' : null} onClick={() => setType1('Dynasty')}>Dynasty</button>
+                                </div>
+                                <div className="switch">
+                                    <button className={type2 === 'Bestball' ? 'active' : null} onClick={() => setType2('Bestball')}>Bestball</button>
+                                    <button className={type2 === 'All' ? 'active' : null} onClick={() => setType2('All')}>All</button>
+                                    <button className={type2 === 'Standard' ? 'active' : null} onClick={() => setType2('Standard')}>Standard</button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="summary">
+                            <div className="summary">
 
+                            </div>
                         </div>
-                    </div>
-                    {display}
-                </>
+                        {display}
+                    </>
         }
 
 

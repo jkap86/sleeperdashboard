@@ -1,6 +1,5 @@
-from flask import Flask, request, session
+from flask import Flask, request
 from flask_cors import CORS
-from flask_session import Session
 import requests
 import concurrent.futures
 import itertools
@@ -9,10 +8,6 @@ import functools
 app = Flask(__name__, static_folder='build/', static_url_path='/')
 CORS(app)
 app.debug = True
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
-app.secret_key = '1111'
 
 @app.route('/user/<username>')
 def getUser(username):
