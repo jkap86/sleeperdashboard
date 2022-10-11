@@ -23,9 +23,9 @@ def getLeagues(user_id):
     
     def getLeagueInfo(league):
             users = requests.get(
-                'https://api.sleeper.app/v1/league/' + league['league_id'] + '/users', timeout=3).json()
+                'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users').json()
             rosters = requests.get(
-                'https://api.sleeper.app/v1/league/' + league['league_id'] + '/rosters', timeout=3).json()
+                'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters').json()
             
             league = {
                 'league_id': league['league_id'],
