@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_compress import Compress
 import requests
 import concurrent.futures
 import itertools
-import functools
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
-CORS(app)
+Compress(app)
 
 @app.route('/user/<username>')
 def getUser(username):
@@ -89,3 +88,4 @@ def index():
 @app.route('/<path>')
 def catch_all(path):
     return app.send_static_file('index.html')
+    
