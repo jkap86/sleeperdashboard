@@ -40,13 +40,13 @@ def getLeagues(user_id):
             roster = next(iter([
                 x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
-            league['wins'] = roster['settings']['wins']
-            league['losses'] = roster['settings']['losses']
-            league['ties'] = roster['settings']['ties']
+            league['wins'] = roster['settings']['wins'] if roster != None else 0
+            league['losses'] = roster['settings']['losses'] if roster != None else 0
+            league['ties'] = roster['settings']['ties'] if roster != None else 0
             league['fpts'] = float(
-                str(roster['settings']['fpts']))
+                str(roster['settings']['fpts'])) if roster != None else 0
             league['fpts_against'] = float(str(
-                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if 'fpts_against' in roster['settings'].keys() else 0
+                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if roster != None else 0
             
 
             return league
