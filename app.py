@@ -37,18 +37,18 @@ def getLeagues(user_id):
             league['bestball'] = 'Bestball' if ('best_ball' in league['settings'].keys(
             ) and league['settings']['best_ball'] == 1) else 'Standard'
 
-            roster = yield next(
-                x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners']))
+            roster = next(iter([
+                x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
-            
-            league['wins'] = roster['settings']['wins']
-            league['losses'] = roster['settings']['losses']
-            league['ties'] = roster['settings']['ties']
-            league['fpts'] = float(
-                str(roster['settings']['fpts']))
-            league['fpts_against'] = float(str(
-                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if 'fpts_against' in roster['settings'].keys() else 0
-            
+            if roster != None:
+                league['wins'] = roster['settings']['wins']
+                league['losses'] = roster['settings']['losses']
+                league['ties'] = roster['settings']['ties']
+                league['fpts'] = float(
+                    str(roster['settings']['fpts']))
+                league['fpts_against'] = float(str(
+                    roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if 'fpts_against' in roster['settings'].keys() else 0
+                
 
             return league
          
