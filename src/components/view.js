@@ -28,16 +28,15 @@ const View = () => {
                 setState_User(false)
             } else {
                 setState_User(user)
-                const leagues = await (
-                    await fetch(`/leagues/${user.user_id}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    })
-                ).json()
+                const leagues = await fetch(`/leagues/${user.user_id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
 
-                setStateLeagues(leagues)
+                setStateLeagues(leagues.json())
             }
             setIsLoadingLeagues(false)
         }

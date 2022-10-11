@@ -40,7 +40,17 @@ def getLeagues(user_id):
             roster = next(iter([
                 x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
-            league['userRoster'] = roster
+            league = {
+                'league_id': league['league_id'],
+                'name': league['name'],
+                'avatar': league['avatar'],
+                'total_rosters': league['total_rosters'],
+                'wins': 0,
+                'losses': 0,
+                'ties': 0,
+                'rosters': rosters,
+                'userRoster': roster
+            }
             return league
           
 
