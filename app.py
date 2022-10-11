@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
 import concurrent.futures
@@ -7,7 +7,6 @@ import functools
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
 CORS(app)
-app.debug = True
 
 @app.route('/user/<username>')
 def getUser(username):
@@ -47,7 +46,7 @@ def getLeagues(user_id):
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         
-    return leagues_detailed
+    return jsonify(leagues_detailed)
     
     
 @app.route('/leaguemates', methods=['POST'])
