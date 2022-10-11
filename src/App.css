@@ -1,0 +1,325 @@
+html {
+  --color1: black;
+  --color2: aqua;
+  --color3: #303030;
+  --color4: gray;
+  --color5: rgba(89, 167, 255);
+  font-size: 1.25vmin;
+}
+html head,
+html body {
+  margin: 0;
+}
+html head div#root div.App,
+html body div#root div.App {
+  text-align: center;
+  background: var(--color1);
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  position: relative;
+}
+html head div#root div.App div#homepage h1,
+html body div#root div.App div#homepage h1 {
+  position: relative;
+  color: var(--color2);
+}
+html head div#root div.App div#homepage h1 p img,
+html body div#root div.App div#homepage h1 p img {
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 2em var(--color2);
+  filter: brightness(0.5);
+}
+html head div#root div.App div#homepage h1 p strong,
+html body div#root div.App div#homepage h1 p strong {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  background-color: black;
+  line-height: 50%;
+  transform: translateY(50%);
+  font-size: 1.5em;
+}
+html head div#root div.App div#homepage div input.home,
+html body div#root div.App div#homepage div input.home {
+  background-color: var(--color2);
+  font-weight: 900;
+  border: 0.5em ridge var(--color3);
+  box-shadow: inset 0 0 1.5em var(--color1), 0 0 1em var(--color5);
+  padding: 0.75em 1.5em;
+  font-size: 1.5em;
+  display: block;
+  margin: 2em auto;
+  color: var(--color1);
+}
+html head div#root div.App div#homepage div a button.home,
+html body div#root div.App div#homepage div a button.home {
+  background-color: var(--color5);
+  color: var(--color2);
+  font-size: 1.5em;
+  padding: 0.5em 1em;
+  box-shadow: inset 0 0 5em var(--color1), 0 0 1em var(--color5);
+  border: 0.5em double var(--color3);
+  border-radius: 2em;
+}
+html head div#root div.App div#homepage div a button.home:hover,
+html body div#root div.App div#homepage div a button.home:hover {
+  cursor: pointer;
+}
+html head div#root div.App div#view .home,
+html body div#root div.App div#view .home {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 2rem;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+}
+html head div#root div.App div#view .home:hover,
+html body div#root div.App div#view .home:hover {
+  cursor: pointer;
+}
+html head div#root div.App div#view h1.error,
+html body div#root div.App div#view h1.error {
+  text-align: center;
+  top: 5vh;
+  font-size: 2.5vh;
+}
+html head div#root div.App div#view div.heading h1,
+html body div#root div.App div#view div.heading h1 {
+  position: relative;
+}
+html head div#root div.App div#view div.heading h1 p,
+html body div#root div.App div#view div.heading h1 p {
+  margin: 0;
+}
+html head div#root div.App div#view div.heading h1 p img,
+html body div#root div.App div#view div.heading h1 p img {
+  height: 7.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 2rem var(--color2);
+  filter: brightness(0.65);
+  margin: 0;
+}
+html head div#root div.App div#view div.heading h1 p strong,
+html body div#root div.App div#view div.heading h1 p strong {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  line-height: 0;
+  color: var(--color2);
+  font-size: 2.5rem;
+}
+html head div#root div.App div#view div.heading div.navbar,
+html body div#root div.App div#view div.heading div.navbar {
+  display: inline-flex;
+  justify-content: center;
+  background-color: var(--color3);
+  box-shadow: inset 0 0 1rem var(--color1), 0 0 0.5rem var(--color5);
+  border-radius: 1rem;
+}
+html head div#root div.App div#view div.heading div.navbar button,
+html body div#root div.App div#view div.heading div.navbar button {
+  font-size: 2rem;
+  background-color: transparent;
+  color: var(--color4);
+  text-shadow: 0 0 0.25rem var(--color1);
+  border: 0.75rem ridge transparent;
+}
+html head div#root div.App div#view div.heading div.navbar button:hover,
+html body div#root div.App div#view div.heading div.navbar button:hover {
+  cursor: pointer;
+}
+html head div#root div.App div#view div.heading div.navbar button.active,
+html body div#root div.App div#view div.heading div.navbar button.active {
+  border: 0.75rem ridge var(--color5);
+  color: var(--color2);
+  background-color: var(--color3);
+  filter: contrast(2);
+}
+html head div#root div.App div#view div.heading div.switch_wrapper,
+html body div#root div.App div#view div.heading div.switch_wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+html head div#root div.App div#view div.heading div.switch_wrapper div.switch,
+html body div#root div.App div#view div.heading div.switch_wrapper div.switch {
+  margin: 1rem;
+  background-color: var(--color3);
+  width: fit-content;
+  box-shadow: inset 0 0 1rem var(--color1), 0 0 0.5rem var(--color5);
+  border-radius: 1rem;
+}
+html head div#root div.App div#view div.heading div.switch_wrapper div.switch button,
+html body div#root div.App div#view div.heading div.switch_wrapper div.switch button {
+  background-color: transparent;
+  color: var(--color4);
+  text-shadow: 0 0 0.25rem var(--color1);
+  border: 0.75rem ridge transparent;
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+html head div#root div.App div#view div.heading div.switch_wrapper div.switch button:hover,
+html body div#root div.App div#view div.heading div.switch_wrapper div.switch button:hover {
+  cursor: pointer;
+}
+html head div#root div.App div#view div.heading div.switch_wrapper div.switch button.active,
+html body div#root div.App div#view div.heading div.switch_wrapper div.switch button.active {
+  background-color: var(--color3);
+  color: var(--color2);
+  border: 0.75rem groove var(--color5);
+  filter: contrast(2);
+}
+html head div#root div.App div#view div.summary,
+html body div#root div.App div#view div.summary {
+  width: fit-content;
+  margin: auto;
+}
+html head div#root div.App div#view div.summary table,
+html body div#root div.App div#view div.summary table {
+  border-spacing: 0;
+  border: 0.5rem groove var(--color5);
+  filter: contrast(2);
+  margin: 1rem;
+}
+html head div#root div.App div#view div.summary table tbody tr th,
+html head div#root div.App div#view div.summary table tbody tr td,
+html body div#root div.App div#view div.summary table tbody tr th,
+html body div#root div.App div#view div.summary table tbody tr td {
+  border: 0.5rem groove var(--color4);
+  background-color: var(--color2);
+  padding: 0.5rem;
+  font-size: 1.75rem;
+}
+html head div#root div.App div#view div.summary table tbody tr th,
+html body div#root div.App div#view div.summary table tbody tr th {
+  background: var(--color4);
+  color: var(--color5);
+  font-weight: 900;
+  text-shadow: 0 0 0.25rem var(--color1);
+}
+html head div#root div.App div#view div.summary table tbody tr td,
+html body div#root div.App div#view div.summary table tbody tr td {
+  background-color: var(--color3);
+  color: var(--color2);
+}
+html head div#root div.App div#view div.summary table tbody tr td.bold,
+html body div#root div.App div#view div.summary table tbody tr td.bold {
+  font-weight: 700;
+  box-shadow: inset 0 0 3.5em var(--color1);
+  padding: 0.25em;
+}
+html head div#root div.App div#view div.scrollable,
+html body div#root div.App div#view div.scrollable {
+  display: block;
+  overflow: scroll;
+  height: 80vh;
+}
+html head div#root div.App div#view div.scrollable table,
+html body div#root div.App div#view div.scrollable table {
+  table-layout: fixed;
+  margin: auto;
+  width: 95%;
+  max-width: 1200px;
+  font-size: 1.5rem;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+  position: relative;
+  box-shadow: 0 0 2rem var(--color5);
+}
+html head div#root div.App div#view div.scrollable table tr.main_header,
+html body div#root div.App div#view div.scrollable table tr.main_header {
+  color: var(--color1);
+  text-shadow: 0 0 0.25rem var(--color5);
+  background-color: var(--color4);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-size: 2rem;
+}
+html head div#root div.App div#view div.scrollable table tr.main_header th,
+html body div#root div.App div#view div.scrollable table tr.main_header th {
+  padding: 1rem;
+}
+html head div#root div.App div#view div.scrollable table tr,
+html body div#root div.App div#view div.scrollable table tr {
+  outline: 0.25rem solid var(--color5);
+  background-color: var(--color3);
+}
+html head div#root div.App div#view div.scrollable table tr:hover,
+html body div#root div.App div#view div.scrollable table tr:hover {
+  cursor: pointer;
+}
+html head div#root div.App div#view div.scrollable table tr th,
+html head div#root div.App div#view div.scrollable table tr td,
+html body div#root div.App div#view div.scrollable table tr th,
+html body div#root div.App div#view div.scrollable table tr td {
+  padding: 0.25rem;
+}
+html head div#root div.App div#view div.scrollable table tr td,
+html body div#root div.App div#view div.scrollable table tr td {
+  background-color: transparent;
+}
+html head div#root div.App div#view div.scrollable table tr td span,
+html body div#root div.App div#view div.scrollable table tr td span {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+html head div#root div.App div#view div.scrollable table tr td span:hover strong,
+html body div#root div.App div#view div.scrollable table tr td span:hover strong {
+  overflow: visible;
+  max-width: unset;
+  color: var(--color2);
+}
+html head div#root div.App div#view div.scrollable table tr td span img,
+html body div#root div.App div#view div.scrollable table tr td span img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0.75rem var(--color2);
+  margin: 0.5em;
+}
+html head div#root div.App div#view div.scrollable table tr td span strong,
+html body div#root div.App div#view div.scrollable table tr td span strong {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: fit-content;
+  width: fit-content;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: var(--color3);
+}
+html head div#root div.App div#view div.scrollable table tr td p,
+html body div#root div.App div#view div.scrollable table tr td p {
+  margin: 0.25rem;
+}
+
+/*# sourceMappingURL=App.css.map */

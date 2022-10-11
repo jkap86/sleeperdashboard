@@ -16,7 +16,6 @@ const View = () => {
     const [type1, setType1] = useState('All');
     const [type2, setType2] = useState('All');
     const [isLoadingLeagues, setIsLoadingLeagues] = useState(false);
-    const [isUser, setIsUser] = useState(true);
     const [state_User, setState_User] = useState(false);
     const [stateLeagues, setStateLeagues] = useState([]);
 
@@ -25,7 +24,7 @@ const View = () => {
             setIsLoadingLeagues(true)
             const user = await axios.get(`/user/${params.username}`)
             if (user.data === 'Invalid') {
-                setIsUser(false)
+                setState_User(false)
             } else {
                 setState_User(user.data)
                 const leagues = await axios.get(`/leagues/${user.data.user_id}`)
@@ -86,7 +85,7 @@ const View = () => {
             Home
         </Link>
         {
-            !isUser ? <h1 className="error">USERNAME NOT FOUND</h1> :
+            isLoadingLeagues ? <h1>Loading...</h1> : !state_User ? <h1 className="error">USERNAME NOT FOUND</h1> :
                 <>
                     <div className="heading">
                         <h1>
