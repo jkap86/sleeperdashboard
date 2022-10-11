@@ -1,4 +1,5 @@
 from flask import Flask, request, session
+from flask_cors import CORS
 from flask_session import Session
 import requests
 import concurrent.futures
@@ -6,6 +7,7 @@ import itertools
 import functools
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
+CORS(app)
 app.debug = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -47,7 +49,10 @@ def getLeagues(user_id):
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
-        return leagues_detailed
+        
+    return {
+        'leagues': leagues_detailed
+    }
     
     
 @app.route('/leaguemates', methods=['POST'])
