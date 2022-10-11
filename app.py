@@ -38,6 +38,9 @@ def getLeagues(user_id):
             league['wins'] = roster['settings']['wins']
             league['losses'] = roster['settings']['losses']
             league['ties'] = roster['settings']['ties']
+
+            return league
+            '''
             league['fpts'] = float(
                 str(roster['settings']['fpts']))
             league['fpts_against'] = float(str(
@@ -47,7 +50,7 @@ def getLeagues(user_id):
             ) and league['settings']['best_ball'] == 1) else 'Standard'
 
             return league
-
+            '''
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
