@@ -22,10 +22,11 @@ def getUser(username):
 
     return user
 
-@app.route('/leagues/<user_id>')
+@app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 def getLeagues(user_id):
     leagues = requests.get('https://api.sleeper.app/v1/user/' + user_id + '/leagues/nfl/2022').json()
-    
+    return leagues
+    '''
     def getLeagueInfo(league):
             users = requests.get(
                 'https://api.sleeper.app/v1/league/' + league['league_id'] + '/users').json()
@@ -45,7 +46,7 @@ def getLeagues(user_id):
 
             return league
 
-            '''
+            
             roster = next(iter([
                 x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
@@ -59,11 +60,12 @@ def getLeagues(user_id):
             
 
             return league
-            '''
+          
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
+        '''
     
 @app.route('/leaguemates', methods=['POST'])
 def getLeaguemates():
