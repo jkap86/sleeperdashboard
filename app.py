@@ -19,27 +19,37 @@ def getUser(username):
 
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 def getLeagues(user_id):
-    leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022').json()
-    
+    try:
+        leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022').json()
+    except Exception as e:
+        print(e)
+
     def getLeagueInfo(league):
+        try:
             users = requests.get(
                 'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users').json()
+        except Exception as e:
+            print(e)
+
+        try:     
             rosters = requests.get(
                 'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters').json()
-            
-            league = {
-                'league_id': league['league_id'],
-                'name': league['name'],
-                'avatar': league['avatar'],
-                'total_rosters': league['total_rosters'],
-                'wins': 0,
-                'losses': 0,
-                'ties': 0,
-                'fpts': 0,
-                'fpts_against': 0,
-                'rosters': rosters
-            }
-            return league
+        except Exception as e:
+            print(e)
+
+        league = {
+            'league_id': league['league_id'],
+            'name': league['name'],
+            'avatar': league['avatar'],
+            'total_rosters': league['total_rosters'],
+            'wins': 0,
+            'losses': 0,
+            'ties': 0,
+            'fpts': 0,
+            'fpts_against': 0,
+            'rosters': rosters
+        }
+        return league
           
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
