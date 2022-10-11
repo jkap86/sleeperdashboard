@@ -6,6 +6,7 @@ import Leagues from './leagues';
 import user_avatar from '../images/user_avatar.jpeg';
 import league_avatar from '../images/league_avatar.png';
 import player_avatar from '../images/headshot.png';
+import Leaguemates from "./leaguemates";
 
 const View = () => {
     const params = useParams();
@@ -13,8 +14,11 @@ const View = () => {
     const [type1, setType1] = useState('All');
     const [type2, setType2] = useState('All');
     const [isLoadingLeagues, setIsLoadingLeagues] = useState(false);
+    const [isLoadingLeaguemates, setIsLoadingLeaguemates] = useState(false);
+    const [isLoadingPlayerShares, setIsLoadingPlayerShares] = useState(false);
     const [state_User, setState_User] = useState(false);
     const [stateLeagues, setStateLeagues] = useState([]);
+    const [stateLeaguemates, setStateLeaguemates] = useState([]);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -35,6 +39,19 @@ const View = () => {
         }
         fetchUser()
     }, [params.username])
+
+    useEffect(() => {
+        const fetchLeaguemates = async () => {
+            setIsLoadingLeaguemates(true)
+            const lms = await axios.post('/leaguemates', {
+                leagues: stateLeagues,
+                user: state_User
+            })
+            setStateLeaguemates(lms.data.sort((a, b) => b.leagues.length - a.leagues.length))
+            setIsLoadingLeaguemates(false)
+        }
+        fetchLeaguemates()
+    }, [stateLeagues])
 
     const avatar = (avatar_id, alt, type) => {
         let source;
@@ -63,6 +80,68 @@ const View = () => {
         return image
     }
 
+    const totals = (
+        <table className="summary">
+            <tbody>
+                <tr>
+                    <td colSpan={6} className="bold">{stateLeagues.length} Leagues</td>
+                </tr>
+                <tr>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>T</th>
+                    <th>WPCT</th>
+                    <th>Pts For</th>
+                    <th>Pts Against</th>
+                </tr>
+                <tr>
+                    <td>
+                        {
+                            stateLeagues.reduce((acc, cur) => acc + cur.wins, 0)
+                        }
+                    </td>
+                    <td>
+                        {
+                            stateLeagues.reduce((acc, cur) => acc + cur.losses, 0)
+                        }
+                    </td>
+                    <td>
+                        {
+                            stateLeagues.reduce((acc, cur) => acc + cur.ties, 0)
+                        }
+                    </td>
+                    <td>
+                        <em>
+                            {
+                                (
+                                    stateLeagues.reduce((acc, cur) => acc + cur.wins, 0) /
+                                    stateLeagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
+                                ).toLocaleString("en-US", {
+                                    maximumFractionDigits: 4,
+                                    minimumFractionDigits: 4
+                                })
+                            }
+                        </em>
+                    </td>
+                    <td>
+                        {
+                            stateLeagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
+                                maximumFractionDigits: 2
+                            })
+                        } pts
+                    </td>
+                    <td>
+                        {
+                            stateLeagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
+                                maximumFractionDigits: 2
+                            })
+                        } pts
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    )
+
     let display;
     switch (tab) {
         case 'Leagues':
@@ -70,6 +149,15 @@ const View = () => {
                 <Leagues
                     leagues={stateLeagues}
                     user_id={state_User.user_id}
+                    avatar={avatar}
+                />
+            break;
+        case 'Leaguemates':
+            display = isLoadingLeaguemates ? <h1>Loading..</h1> :
+                <Leaguemates
+                    leaguemates={stateLeaguemates}
+                    user_id={state_User.user_id}
+                    username={state_User.display_name}
                     avatar={avatar}
                 />
             break;
@@ -130,6 +218,9 @@ const View = () => {
                                 <button className={type2 === 'All' ? 'active' : null} onClick={() => setType2('All')}>All</button>
                                 <button className={type2 === 'Standard' ? 'active' : null} onClick={() => setType2('Standard')}>Standard</button>
                             </div>
+                        </div>
+                        <div className="summary">
+                            {totals}
                         </div>
                     </div>
                     {display}

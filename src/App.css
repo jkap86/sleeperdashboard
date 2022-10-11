@@ -241,59 +241,73 @@ html body div#root div.App div#view div.scrollable table {
   width: 95%;
   max-width: 1200px;
   font-size: 1.5rem;
-  border-collapse: separate;
-  border-spacing: 0 0.5rem;
+  border-collapse: collapse;
   position: relative;
   box-shadow: 0 0 2rem var(--color5);
 }
-html head div#root div.App div#view div.scrollable table tr.main_header,
-html body div#root div.App div#view div.scrollable table tr.main_header {
+html head div#root div.App div#view div.scrollable table colgroup.leaguemate,
+html body div#root div.App div#view div.scrollable table colgroup.leaguemate {
+  border-left: 0.5rem solid var(--color5);
+}
+html head div#root div.App div#view div.scrollable table tbody.main_header,
+html body div#root div.App div#view div.scrollable table tbody.main_header {
+  position: sticky;
+  top: 0.25rem;
+  z-index: 1;
+  outline: 0.25rem solid var(--color5);
+}
+html head div#root div.App div#view div.scrollable table tbody.main_header tr,
+html body div#root div.App div#view div.scrollable table tbody.main_header tr {
+  outline: none;
+  background-color: transparent;
+  color: var(--color1);
+  text-shadow: 0 0 0.25rem var(--color5);
+  font-size: 2rem;
+}
+html head div#root div.App div#view div.scrollable table tbody.main_header tr th,
+html body div#root div.App div#view div.scrollable table tbody.main_header tr th {
+  padding: 0;
+  background-color: var(--color4);
+}
+html head div#root div.App div#view div.scrollable table tbody tr.main_header,
+html body div#root div.App div#view div.scrollable table tbody tr.main_header {
   color: var(--color1);
   text-shadow: 0 0 0.25rem var(--color5);
   background-color: var(--color4);
   position: sticky;
-  top: 0;
+  top: 0.25rem;
   z-index: 1;
   font-size: 2rem;
 }
-html head div#root div.App div#view div.scrollable table tr.main_header th,
-html body div#root div.App div#view div.scrollable table tr.main_header th {
-  padding: 1rem;
-}
-html head div#root div.App div#view div.scrollable table tr,
-html body div#root div.App div#view div.scrollable table tr {
+html head div#root div.App div#view div.scrollable table tbody tr,
+html body div#root div.App div#view div.scrollable table tbody tr {
   outline: 0.25rem solid var(--color5);
   background-color: var(--color3);
 }
-html head div#root div.App div#view div.scrollable table tr:hover,
-html body div#root div.App div#view div.scrollable table tr:hover {
+html head div#root div.App div#view div.scrollable table tbody tr:hover,
+html body div#root div.App div#view div.scrollable table tbody tr:hover {
   cursor: pointer;
 }
-html head div#root div.App div#view div.scrollable table tr th,
-html head div#root div.App div#view div.scrollable table tr td,
-html body div#root div.App div#view div.scrollable table tr th,
-html body div#root div.App div#view div.scrollable table tr td {
+html head div#root div.App div#view div.scrollable table tbody tr td,
+html body div#root div.App div#view div.scrollable table tbody tr td {
+  background-color: transparent;
   padding: 0.25rem;
 }
-html head div#root div.App div#view div.scrollable table tr td,
-html body div#root div.App div#view div.scrollable table tr td {
-  background-color: transparent;
-}
-html head div#root div.App div#view div.scrollable table tr td span,
-html body div#root div.App div#view div.scrollable table tr td span {
+html head div#root div.App div#view div.scrollable table tbody tr td span,
+html body div#root div.App div#view div.scrollable table tbody tr td span {
   position: relative;
   display: block;
   margin: 0;
   padding: 0;
 }
-html head div#root div.App div#view div.scrollable table tr td span:hover strong,
-html body div#root div.App div#view div.scrollable table tr td span:hover strong {
+html head div#root div.App div#view div.scrollable table tbody tr td span:hover strong,
+html body div#root div.App div#view div.scrollable table tbody tr td span:hover strong {
   overflow: visible;
   max-width: unset;
   color: var(--color2);
 }
-html head div#root div.App div#view div.scrollable table tr td span img,
-html body div#root div.App div#view div.scrollable table tr td span img {
+html head div#root div.App div#view div.scrollable table tbody tr td span img,
+html body div#root div.App div#view div.scrollable table tbody tr td span img {
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -301,8 +315,8 @@ html body div#root div.App div#view div.scrollable table tr td span img {
   box-shadow: 0 0 0.75rem var(--color2);
   margin: 0.5em;
 }
-html head div#root div.App div#view div.scrollable table tr td span strong,
-html body div#root div.App div#view div.scrollable table tr td span strong {
+html head div#root div.App div#view div.scrollable table tbody tr td span strong,
+html body div#root div.App div#view div.scrollable table tbody tr td span strong {
   position: absolute;
   top: 0;
   left: 1rem;
@@ -317,8 +331,8 @@ html body div#root div.App div#view div.scrollable table tr td span strong {
   white-space: nowrap;
   background-color: var(--color3);
 }
-html head div#root div.App div#view div.scrollable table tr td p,
-html body div#root div.App div#view div.scrollable table tr td p {
+html head div#root div.App div#view div.scrollable table tbody tr td p,
+html body div#root div.App div#view div.scrollable table tbody tr td p {
   margin: 0.25rem;
 }
 

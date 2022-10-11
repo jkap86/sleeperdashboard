@@ -58,6 +58,38 @@ def getLeaguesDetailed():
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
     
+@app.route('/leaguemates', methods=['POST'])
+def getLeaguemates():
+    leagues = request.get_json()['leagues']
+    user = request.get_json()['user']
+    leaguemates = list(map(lambda x: list(map(lambda y: {
+        **y,
+        'league': {
+            'name': x['name'],
+            'lmroster': next(iter([z for z in x['rosters'] if z['owner_id'] == y['user_id'] or
+                                   (z['co_owners'] != None and y['user_id'] in z['co_owners'])]), None),
+            'roster': next(iter([z for z in x['rosters'] if z['owner_id'] == user['user_id'] or
+                                 (z['co_owners'] != None and user['user_id'] in z['co_owners'])]), None)
+        }
+    }, x['users'])), leagues))
+
+    leaguemates = list(filter(lambda x: x['league']['lmroster'] != None, list(
+        itertools.chain(*leaguemates))))
+
+    leaguemates_dict = []
+    list(map(lambda x: {
+        leaguemates_dict.append({
+            **x,
+            'leagues': [y['league'] for i, y in enumerate(leaguemates) if y['user_id'] == x['user_id']]
+        })
+    }, leaguemates))
+
+    leaguemates_dict = list({
+        x['user_id']: x for x in leaguemates_dict
+    }.values())
+    return leaguemates_dict
+
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')

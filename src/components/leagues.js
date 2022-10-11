@@ -108,72 +108,9 @@ const Leagues = (props) => {
         </tr>
     )
 
-    const totals = (
-        <table className="summary">
-            <tbody>
-                <tr>
-                    <td colSpan={6} className="bold">{props.leagues.length} Leagues</td>
-                </tr>
-                <tr>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>T</th>
-                    <th>WPCT</th>
-                    <th>Pts For</th>
-                    <th>Pts Against</th>
-                </tr>
-                <tr>
-                    <td>
-                        {
-                            props.leagues.reduce((acc, cur) => acc + cur.wins, 0)
-                        }
-                    </td>
-                    <td>
-                        {
-                            props.leagues.reduce((acc, cur) => acc + cur.losses, 0)
-                        }
-                    </td>
-                    <td>
-                        {
-                            props.leagues.reduce((acc, cur) => acc + cur.ties, 0)
-                        }
-                    </td>
-                    <td>
-                        <em>
-                            {
-                                (
-                                    props.leagues.reduce((acc, cur) => acc + cur.wins, 0) /
-                                    props.leagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
-                                ).toLocaleString("en-US", {
-                                    maximumFractionDigits: 4,
-                                    minimumFractionDigits: 4
-                                })
-                            }
-                        </em>
-                    </td>
-                    <td>
-                        {
-                            props.leagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
-                                maximumFractionDigits: 2
-                            })
-                        } pts
-                    </td>
-                    <td>
-                        {
-                            props.leagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
-                                maximumFractionDigits: 2
-                            })
-                        } pts
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    )
+
 
     return <>
-        <div className="summary">
-            {totals}
-        </div>
         <div className="scrollable">
             <table className="main leagues">
                 <tbody>

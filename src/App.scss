@@ -266,85 +266,102 @@ html {
               width: 95%;
               max-width: 1200px;
               font-size: 1.5rem;
-              border-collapse: separate;
-              border-spacing: 0 .5rem;
+              border-collapse: collapse;
               position: relative;
               box-shadow: 0 0 2rem var(--color5);
 
-              tr.main_header {
-                color: var(--color1);
-                text-shadow: 0 0 .25rem var(--color5);
-                background-color: var(--color4);
-                position: sticky;
-                top: 0;
-                z-index: 1;
-                font-size: 2rem;
+              colgroup.leaguemate {
+                border-left: .5rem solid var(--color5);
+              }
 
-                th {
-                  padding: 1rem;
+              tbody.main_header {
+                position: sticky;
+                top: .25rem;
+                z-index: 1;
+                outline: .25rem solid var(--color5);
+
+                tr {
+                  outline: none;
+                  background-color: transparent;
+                  color: var(--color1);
+                  text-shadow: 0 0 .25rem var(--color5);
+                  font-size: 2rem;
+
+                  th {
+                    padding: 0;
+                    background-color: var(--color4);
+                  }
                 }
               }
 
-              tr {
-                &:hover {
-                  cursor: pointer;
+              tbody {
+                tr.main_header {
+                  color: var(--color1);
+                  text-shadow: 0 0 .25rem var(--color5);
+                  background-color: var(--color4);
+                  position: sticky;
+                  top: .25rem;
+                  z-index: 1;
+                  font-size: 2rem;
+
                 }
 
-                outline: .25rem solid var(--color5);
-                background-color: var(--color3);
+                tr {
+                  &:hover {
+                    cursor: pointer;
+                  }
 
-                th,
-                td {
-                  padding: .25rem;
-                }
+                  outline: .25rem solid var(--color5);
+                  background-color: var(--color3);
 
-                td {
-                  background-color: transparent;
+                  td {
+                    background-color: transparent;
+                    padding: .25rem;
 
+                    span {
+                      &:hover {
+                        strong {
+                          overflow: visible;
+                          max-width: unset;
+                          color: var(--color2);
+                        }
+                      }
 
-                  span {
-                    &:hover {
+                      position: relative;
+                      display: block;
+                      margin: 0;
+                      padding: 0;
+
+                      img {
+                        width: 5rem;
+                        height: 5rem;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        box-shadow: 0 0 .75rem var(--color2);
+                        margin: .5em;
+                      }
+
                       strong {
-                        overflow: visible;
-                        max-width: unset;
-                        color: var(--color2);
+                        position: absolute;
+                        top: 0;
+                        left: 1rem;
+                        right: 0;
+                        bottom: 0;
+                        margin: auto;
+                        height: fit-content;
+                        width: fit-content;
+                        max-width: 100%;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        background-color: var(--color3);
+
                       }
                     }
 
-                    position: relative;
-                    display: block;
-                    margin: 0;
-                    padding: 0;
-
-                    img {
-                      width: 5rem;
-                      height: 5rem;
-                      border-radius: 50%;
-                      object-fit: cover;
-                      box-shadow: 0 0 .75rem var(--color2);
-                      margin: .5em;
+                    p {
+                      margin: .25rem;
                     }
-
-                    strong {
-                      position: absolute;
-                      top: 0;
-                      left: 1rem;
-                      right: 0;
-                      bottom: 0;
-                      margin: auto;
-                      height: fit-content;
-                      width: fit-content;
-                      max-width: 100%;
-                      text-overflow: ellipsis;
-                      overflow: hidden;
-                      white-space: nowrap;
-                      background-color: var(--color3);
-
-                    }
-                  }
-
-                  p {
-                    margin: .25rem;
                   }
                 }
               }
