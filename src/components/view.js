@@ -7,9 +7,6 @@ import user_avatar from '../images/user_avatar.jpeg';
 import league_avatar from '../images/league_avatar.png';
 import player_avatar from '../images/headshot.png';
 
-axiosRetry(axios, {
-    retries: Infinity
-})
 const View = () => {
     const params = useParams();
     const [tab, setTab] = useState('Leagues');
