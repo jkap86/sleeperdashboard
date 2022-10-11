@@ -23,17 +23,14 @@ const View = () => {
     useEffect(() => {
         const fetchUser = async () => {
             setIsLoadingLeagues(true)
-            const user = await axios.get(`/user/${params.username}`)
-            if (user.data === 'Invalid') {
+            const user = await (await fetch(`/user/${params.username}`)).json()
+            if (user === 'Invalid') {
                 setState_User(false)
             } else {
-                setState_User(user.data)
-                const leagues = await axios.get(`/leagues/${user.data.user_id}`)
-                const leagues_detailed = await axios.post('/leaguesdetailed', {
-                    leagues: leagues.data,
-                    user: user.data
-                })
-                setStateLeagues(leagues_detailed.data)
+                setState_User(user)
+                const leagues = await (await fetch(`/leagues/${user.user_id}`)).json()
+
+                setStateLeagues(leagues)
             }
             setIsLoadingLeagues(false)
         }

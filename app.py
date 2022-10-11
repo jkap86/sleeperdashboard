@@ -25,13 +25,7 @@ def getUser(username):
 @app.route('/leagues/<user_id>')
 def getLeagues(user_id):
     leagues = requests.get('https://api.sleeper.app/v1/user/' + user_id + '/leagues/nfl/2022').json()
-    return leagues
-
-@app.route('/leaguesdetailed', methods=['POST'])
-def getLeaguesDetailed():
-    data = request.get_json()
-    user = data['user']
-    leagues = data['leagues']
+    
     def getLeagueInfo(league):
             users = requests.get(
                 'https://api.sleeper.app/v1/league/' + league['league_id'] + '/users').json()
@@ -40,7 +34,7 @@ def getLeaguesDetailed():
             league['users'] = users
             league['rosters'] = rosters
             roster = next(
-                x for x in rosters if x['owner_id'] == user['user_id'] or (x['co_owners'] != None and user['user_id'] in x['co_owners']))
+                x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners']))
             league['wins'] = roster['settings']['wins']
             league['losses'] = roster['settings']['losses']
             league['ties'] = roster['settings']['ties']
