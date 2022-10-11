@@ -37,6 +37,15 @@ def getLeagues(user_id):
             league['bestball'] = 'Bestball' if ('best_ball' in league['settings'].keys(
             ) and league['settings']['best_ball'] == 1) else 'Standard'
 
+            league['wins'] = 0
+            league['losses'] = 0
+            league['ties'] = 0
+            league['fpts'] = 0
+            league['fpts_against'] = 0
+
+            return league
+
+            '''
             roster = next(iter([
                 x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
@@ -50,7 +59,8 @@ def getLeagues(user_id):
             
 
             return league
-         
+            '''
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
