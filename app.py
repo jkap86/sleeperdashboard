@@ -25,8 +25,7 @@ def getUser(username):
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 def getLeagues(user_id):
     leagues = requests.get('https://api.sleeper.app/v1/user/' + user_id + '/leagues/nfl/2022').json()
-    return leagues
-    '''
+    
     def getLeagueInfo(league):
             users = requests.get(
                 'https://api.sleeper.app/v1/league/' + league['league_id'] + '/users').json()
@@ -38,34 +37,17 @@ def getLeagues(user_id):
             league['bestball'] = 'Bestball' if ('best_ball' in league['settings'].keys(
             ) and league['settings']['best_ball'] == 1) else 'Standard'
 
-            league['wins'] = 0
-            league['losses'] = 0
-            league['ties'] = 0
-            league['fpts'] = 0
-            league['fpts_against'] = 0
-
-            return league
-
-            
             roster = next(iter([
                 x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
-            league['wins'] = roster['settings']['wins'] if roster != None else 0
-            league['losses'] = roster['settings']['losses'] if roster != None else 0
-            league['ties'] = roster['settings']['ties'] if roster != None else 0
-            league['fpts'] = float(
-                str(roster['settings']['fpts'])) if roster != None else 0
-            league['fpts_against'] = float(str(
-                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if roster != None else 0
-            
-
+            league['userRoster'] = roster
             return league
           
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
-        '''
+    
     
 @app.route('/leaguemates', methods=['POST'])
 def getLeaguemates():
