@@ -81,65 +81,66 @@ const View = () => {
     }
 
     const totals = (
-        <table className="summary">
-            <tbody>
-                <tr>
-                    <td colSpan={6} className="bold">{stateLeagues.length} Leagues</td>
-                </tr>
-                <tr>
-                    <th>W</th>
-                    <th>L</th>
-                    <th>T</th>
-                    <th>WPCT</th>
-                    <th>Pts For</th>
-                    <th>Pts Against</th>
-                </tr>
-                <tr>
-                    <td>
-                        {
-                            stateLeagues.reduce((acc, cur) => acc + cur.wins, 0)
-                        }
-                    </td>
-                    <td>
-                        {
-                            stateLeagues.reduce((acc, cur) => acc + cur.losses, 0)
-                        }
-                    </td>
-                    <td>
-                        {
-                            stateLeagues.reduce((acc, cur) => acc + cur.ties, 0)
-                        }
-                    </td>
-                    <td>
-                        <em>
+        isLoadingLeagues ? null :
+            <table className="summary">
+                <tbody>
+                    <tr>
+                        <td colSpan={6} className="bold">{stateLeagues.length} Leagues</td>
+                    </tr>
+                    <tr>
+                        <th>W</th>
+                        <th>L</th>
+                        <th>T</th>
+                        <th>WPCT</th>
+                        <th>Pts For</th>
+                        <th>Pts Against</th>
+                    </tr>
+                    <tr>
+                        <td>
                             {
-                                (
-                                    stateLeagues.reduce((acc, cur) => acc + cur.wins, 0) /
-                                    stateLeagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
-                                ).toLocaleString("en-US", {
-                                    maximumFractionDigits: 4,
-                                    minimumFractionDigits: 4
-                                })
+                                stateLeagues.reduce((acc, cur) => acc + cur.wins, 0)
                             }
-                        </em>
-                    </td>
-                    <td>
-                        {
-                            stateLeagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
-                                maximumFractionDigits: 2
-                            })
-                        } pts
-                    </td>
-                    <td>
-                        {
-                            stateLeagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
-                                maximumFractionDigits: 2
-                            })
-                        } pts
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </td>
+                        <td>
+                            {
+                                stateLeagues.reduce((acc, cur) => acc + cur.losses, 0)
+                            }
+                        </td>
+                        <td>
+                            {
+                                stateLeagues.reduce((acc, cur) => acc + cur.ties, 0)
+                            }
+                        </td>
+                        <td>
+                            <em>
+                                {
+                                    (
+                                        stateLeagues.reduce((acc, cur) => acc + cur.wins, 0) /
+                                        stateLeagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
+                                    ).toLocaleString("en-US", {
+                                        maximumFractionDigits: 4,
+                                        minimumFractionDigits: 4
+                                    })
+                                }
+                            </em>
+                        </td>
+                        <td>
+                            {
+                                stateLeagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
+                                    maximumFractionDigits: 2
+                                })
+                            } pts
+                        </td>
+                        <td>
+                            {
+                                stateLeagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
+                                    maximumFractionDigits: 2
+                                })
+                            } pts
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     )
 
     let display;
@@ -170,7 +171,7 @@ const View = () => {
             Home
         </Link>
         {
-            isLoadingLeagues ? <h1>Loading...</h1> : !state_User ? <h1 className="error">USERNAME NOT FOUND</h1> :
+            !state_User ? <h1 className="error">USERNAME NOT FOUND</h1> :
                 <>
                     <div className="heading">
                         <h1>

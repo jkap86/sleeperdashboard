@@ -77,12 +77,13 @@ def getLeaguemates():
         itertools.chain(*leaguemates))))
 
     leaguemates_dict = []
-    list(map(lambda x: {
-        leaguemates_dict.append({
-            **x,
-            'leagues': [y['league'] for i, y in enumerate(leaguemates) if y['user_id'] == x['user_id']]
-        })
-    }, leaguemates))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        list(executor.map(lambda x: {
+            leaguemates_dict.append({
+                **x,
+                'leagues': [y['league'] for i, y in enumerate(leaguemates) if y['user_id'] == x['user_id']]
+            })
+        }, leaguemates))
 
     leaguemates_dict = list({
         x['user_id']: x for x in leaguemates_dict
