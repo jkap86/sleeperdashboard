@@ -33,24 +33,25 @@ def getLeagues(user_id):
                 'https://api.sleeper.app/v1/league/' + league['league_id'] + '/rosters').json()
             league['users'] = users
             league['rosters'] = rosters
-            roster = next(
-                x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners']))
-            league['wins'] = roster['settings']['wins']
-            league['losses'] = roster['settings']['losses']
-            league['ties'] = roster['settings']['ties']
-
-            return league
-            '''
-            league['fpts'] = float(
-                str(roster['settings']['fpts']))
-            league['fpts_against'] = float(str(
-                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if 'fpts_against' in roster['settings'].keys() else 0
             league['dynasty'] = 'Dynasty' if league['settings']['type'] == 2 else 'Redraft'
             league['bestball'] = 'Bestball' if ('best_ball' in league['settings'].keys(
             ) and league['settings']['best_ball'] == 1) else 'Standard'
 
+            roster = yield next(
+                x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners']))
+            
+            
+            league['wins'] = roster['settings']['wins']
+            league['losses'] = roster['settings']['losses']
+            league['ties'] = roster['settings']['ties']
+            league['fpts'] = float(
+                str(roster['settings']['fpts']))
+            league['fpts_against'] = float(str(
+                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if 'fpts_against' in roster['settings'].keys() else 0
+            
+
             return league
-            '''
+         
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
