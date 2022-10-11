@@ -35,8 +35,8 @@ const View = () => {
                         'Accept': 'application/json'
                     }
                 })
-                leagues = leagues.json()
-                setStateLeagues(leagues.leagues)
+                leagues = await leagues.json()
+                setStateLeagues(leagues)
             }
             setIsLoadingLeagues(false)
         }

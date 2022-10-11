@@ -42,6 +42,8 @@ def getLeagues(user_id):
                 'wins': 0,
                 'losses': 0,
                 'ties': 0,
+                'fpts': 0,
+                'fpts_against': 0,
                 'rosters': rosters
             }
             return league
@@ -50,9 +52,7 @@ def getLeagues(user_id):
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         
-    return {
-        'leagues': leagues_detailed
-    }
+    return leagues_detailed
     
     
 @app.route('/leaguemates', methods=['POST'])
