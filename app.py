@@ -10,7 +10,7 @@ Compress(app)
 @app.route('/user/<username>')
 def getUser(username):
     user = requests.get(
-        'https://api.sleeper.app/v1/user/' + str(username)
+        'https://api.sleeper.app/v1/user/' + str(username), timeout=3
     ).json()
     if (user == None):
         user = 'Invalid'
@@ -20,14 +20,14 @@ def getUser(username):
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 def getLeagues(user_id):
     try:
-        leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022').json()
+        leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
     except Exception as e:
         print(e)
 
     def getLeagueInfo(league):
         try:
             users = requests.get(
-                'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users').json()
+                'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
         except Exception as e:
             print(e)
 
