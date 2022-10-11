@@ -19,7 +19,7 @@ def getUser(username):
 
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 def getLeagues(user_id):
-    leagues = requests.get('https://api.sleeper.app/v1/user/' + user_id + '/leagues/nfl/2022').json()
+    leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022').json()
     return leagues
     '''
     def getLeagueInfo(league):
