@@ -28,7 +28,14 @@ const View = () => {
                 setState_User(false)
             } else {
                 setState_User(user)
-                const leagues = await (await fetch(`/leagues/${user.user_id}`)).json()
+                const leagues = await (
+                    await fetch(`/leagues/${user.user_id}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    })
+                ).json()
 
                 setStateLeagues(leagues)
             }
@@ -48,7 +55,7 @@ const View = () => {
             setIsLoadingLeaguemates(false)
         }
         fetchLeaguemates()
-    }, [stateLeagues])
+    }, [])
 
     const avatar = (avatar_id, alt, type) => {
         let source;
