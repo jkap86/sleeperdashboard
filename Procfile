@@ -1,1 +1,1 @@
-web: flask --debug run --port $PORT
+web: gunicorn app:app
