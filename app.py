@@ -31,14 +31,6 @@ def getLeagues(user_id):
                 'https://api.sleeper.app/v1/league/' + league['league_id'] + '/users').json()
             rosters = requests.get(
                 'https://api.sleeper.app/v1/league/' + league['league_id'] + '/rosters').json()
-            league['users'] = users
-            league['rosters'] = rosters
-            league['dynasty'] = 'Dynasty' if league['settings']['type'] == 2 else 'Redraft'
-            league['bestball'] = 'Bestball' if ('best_ball' in league['settings'].keys(
-            ) and league['settings']['best_ball'] == 1) else 'Standard'
-
-            roster = next(iter([
-                x for x in rosters if x['owner_id'] == user_id or (x['co_owners'] != None and user_id in x['co_owners'])]), None)
             
             league = {
                 'league_id': league['league_id'],
@@ -48,13 +40,12 @@ def getLeagues(user_id):
                 'wins': 0,
                 'losses': 0,
                 'ties': 0,
-                'rosters': rosters,
-                'userRoster': roster
+                'rosters': rosters
             }
             return league
           
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         return leagues_detailed
     
