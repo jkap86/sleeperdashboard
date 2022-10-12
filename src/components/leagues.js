@@ -6,7 +6,6 @@ const Leagues = (props) => {
     useEffect(() => {
         setLeagues(props.leagues)
     }, [props])
-    console.log(leagues)
 
     leagues.map(league => {
         const standings = league.rosters.sort((a, b) =>

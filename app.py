@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_compress import Compress
 import requests
 import concurrent.futures
@@ -38,7 +38,9 @@ def getLeagueInfo(league, user_id):
         }
     return league
           
+def getPlayerShares(leagues, user_id, players_all):
 
+    return leagues
 
 @app.route('/user/<username>')
 def getUser(username):
@@ -90,8 +92,34 @@ def getLeaguemates():
     leaguemates_dict = list({
         x['user_id']: x for x in leaguemates_dict
     }.values())
+    
     return leaguemates_dict
 
+'''
+@app.route('/playershares', methods=['POST'])
+def getPlayerShares():
+    leagues = request.get_json()['leagues']
+    user = request.get_json()['user']
+    allplayers = requests.get(
+        'https://api.sleeper.app/v1/players/nfl'
+    ).json()
+
+    players_all = (
+        list(map(lambda x:
+            list(map(lambda y:
+                [] if y['players'] == None else 
+                list(map(lambda z:
+                    {
+                        'id': z,
+                        'name': allplayers[z] if z in allplayers.keys() else z
+                    }
+                ))
+            ))
+        ))
+    )
+    
+'''
+    
 
 @app.route('/')
 def index():

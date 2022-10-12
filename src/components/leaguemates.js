@@ -113,6 +113,10 @@ const Leaguemates = (props) => {
                     </em>
                 </td>
             </tr>
+            {
+                leaguemate.isLeaguesHidden === undefined || leaguemate.isLeaguesHidden ? null :
+                    'Leagues'
+            }
         </React.Fragment>
     )
 

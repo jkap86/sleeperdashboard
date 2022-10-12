@@ -54,7 +54,7 @@ const View = () => {
             setIsLoadingLeaguemates(false)
         }
         fetchLeaguemates()
-    }, [])
+    }, [stateLeagues])
 
     const avatar = (avatar_id, alt, type) => {
         let source;
