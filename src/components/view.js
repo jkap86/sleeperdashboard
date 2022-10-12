@@ -26,9 +26,11 @@ const View = () => {
         const fetchData = async (user) => {
             setIsLoadingLeagues(true)
             const leagues = await axios.get(`/leagues/${user.user_id}`)
-            setStateLeagues(leagues.data)
+            setStateLeagues(leagues.data.leagues)
+            setStateLeaguemates(leagues.data.leaguemates)
+            console.log(leagues.data.playershares.sort((a, b) => b.id - a.id))
             setIsLoadingLeagues(false)
-
+            /*
             setIsLoadingLeaguemates(true)
             setIsLoadingPlayerShares(true)
             const [lms, ps] = await Promise.all([
@@ -45,6 +47,7 @@ const View = () => {
             setStatePlayerShares(ps.data.sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
             setIsLoadingLeaguemates(false)
             setIsLoadingPlayerShares(false)
+            */
         }
         const fetchUser = async () => {
             const user = await axios.get(`/user/${params.username}`)

@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, session
+from flask_session import Session
 from flask_compress import Compress
 import requests
 import concurrent.futures
@@ -6,6 +7,10 @@ import itertools
 import functools
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+app.secret_key = '1111'
 Compress(app)
 
 def getLeagueInfo(league, user_id):
@@ -51,6 +56,90 @@ def addLeagues(player, user_id, players_all):
     }
     return player_detail
 
+def getLeaguemates_League(league, user_id):
+    userRoster = (
+        next(iter([z for z in league['rosters'] if z['owner_id'] == user_id or
+            (z['co_owners'] != None and user_id in z['co_owners'])]), None)
+    )
+    leaguemates_league = []
+    for lm in league['users']:
+        lmroster = (
+            next(iter([z for z in league['rosters'] if z['owner_id'] == lm['user_id'] or
+            (z['co_owners'] != None and lm['user_id'] in z['co_owners'])]), None)
+        )
+
+        if lmroster != None:
+            leaguemates_league.append({
+                **lm,
+                'league': {
+                    'name': league['name'],
+                    'lmroster': lmroster,
+                    'roster': userRoster
+                }
+            })
+    
+    return leaguemates_league
+
+def addLmLeagues(leaguemate, leaguemates_all):
+    return({
+        **leaguemate,
+        'leagues': [y['league'] for i, y in enumerate(leaguemates_all) if y['user_id'] == leaguemate['user_id']]
+    })
+        
+def getLM(leagues, user_id):
+    leaguemates = list(map(getLeaguemates_League, leagues, itertools.repeat(user_id)))
+    leaguemates = list(itertools.chain(*leaguemates))
+    leaguemates_dict = list(map(addLmLeagues, leaguemates, itertools.repeat(leaguemates)))
+
+    return leaguemates_dict
+
+def getPlayerShares(leagues, user_id, allplayers):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
+        players_all = (
+            list(executor.map(lambda x:
+                list(map(lambda y:
+                    [] if y['players'] == None else 
+                    list(map(lambda z:
+                        {
+                            'id': z,
+                            'player': allplayers[z] if z in allplayers.keys() else z,
+                            'league_id': x['league_id'],
+                            'league_name': x['name'],
+                            'manager': next(iter([
+                                m for m in x['users'] if 
+                                    (m['user_id'] == y['owner_id'] or (y['co_owners'] != None and m['user_id'] in y['co_owners']))
+                            ]), {'display_name': 'Orphan', 'user_id': 0}),
+                            'wins': y['settings']['wins'],
+                            'losses': y['settings']['losses'],
+                            'ties': y['settings']['ties'],
+                            'fpts': (
+                                float(str(y['settings']['fpts']) + "." + str(y['settings']['fpts_decimal'])) 
+                                    if 'fpts_decimal' in y['settings'].keys() else 0
+                            ),
+                            'fpts_against': (
+                                float(str(y['settings']['fpts_against']) + "." + str(y['settings']['fpts_against_decimal']))
+                                    if 'fpts_against_decimal' in y['settings'].keys() else 0
+                            )                   
+                        }
+                        , y['players']
+                    ))
+                    , x['rosters']
+                ))
+                , leagues
+            ))
+        )
+        players_all = list(itertools.chain(*list(itertools.chain(*players_all))))
+        players_unique = list({
+        player['id']: {
+            'id': player['id'],
+            'player': player['player']
+        } for player in players_all
+    }.values())
+        playershares = list(executor.map(addLeagues, players_unique, itertools.repeat(user_id), itertools.repeat(players_all)))
+
+    return playershares
+    
+
 @app.route('/user/<username>')
 def getUser(username):
     user = requests.get(
@@ -64,12 +153,28 @@ def getUser(username):
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 @functools.lru_cache(maxsize=128)
 def getLeagues(user_id):
+    if session.get('allplayers') == None:
+        print('getting players...')
+        allplayers = requests.get(
+            'https://api.sleeper.app/v1/players/nfl'
+        ).json()
+        session['allplayers'] = allplayers
+    else:
+        print('players already loaded...')
+        allplayers = session.get('allplayers')
+
     leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
     
     with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id)))
-        
-    return leagues_detailed
+        leaguemates = list(executor.map(getLM, [leagues_detailed], [user_id]))
+        playershares = list(executor.map(getPlayerShares, [leagues_detailed], [user_id], [allplayers]))
+
+    return {
+        'leagues': leagues_detailed,
+        'leaguemates': leaguemates[0],
+        'playershares': playershares[0]
+    }
     
     
 @app.route('/leaguemates', methods=['POST'])
@@ -77,29 +182,10 @@ def getLeagues(user_id):
 def getLeaguemates():
     leagues = request.get_json()['leagues']
     user = request.get_json()['user']
-    leaguemates = list(map(lambda x: list(map(lambda y: {
-        **y,
-        'league': {
-            'name': x['name'],
-            'lmroster': next(iter([z for z in x['rosters'] if z['owner_id'] == y['user_id'] or
-                                   (z['co_owners'] != None and y['user_id'] in z['co_owners'])]), None),
-            'roster': next(iter([z for z in x['rosters'] if z['owner_id'] == user['user_id'] or
-                                 (z['co_owners'] != None and user['user_id'] in z['co_owners'])]), None)
-        }
-    }, x['users'])), leagues))
 
-    leaguemates = list(filter(lambda x: x['league']['lmroster'] != None, list(
-        itertools.chain(*leaguemates))))
-
-    leaguemates_dict = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
-        list(executor.map(lambda x: {
-            leaguemates_dict.append({
-                **x,
-                'leagues': [y['league'] for i, y in enumerate(leaguemates) if y['user_id'] == x['user_id']]
-            })
-        }, leaguemates))
-
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
+        leaguemates = list(executor.submit(getLM, leagues, 'user_id'))
+    
     leaguemates_dict = list({
         x['user_id']: x for x in leaguemates_dict
     }.values())
@@ -109,7 +195,7 @@ def getLeaguemates():
 
 @app.route('/playershares', methods=['POST'])
 @functools.lru_cache(maxsize=128)
-def getPlayerShares():
+def getPS():
     leagues = request.get_json()['leagues']
     user = request.get_json()['user']
     allplayers = requests.get(
@@ -158,7 +244,7 @@ def getPlayerShares():
         } for player in players_all
     }.values())
     
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
         playershares = list(executor.map(addLeagues, players_unique, itertools.repeat(user['user_id']), itertools.repeat(players_all)))
     
     return playershares
