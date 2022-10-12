@@ -28,7 +28,7 @@ const View = () => {
             const leagues = await axios.get(`/leagues/${user.user_id}`)
             setStateLeagues(leagues.data.leagues)
             setStateLeaguemates(leagues.data.leaguemates)
-            console.log(leagues.data.playershares.sort((a, b) => b.id - a.id))
+            console.log(leagues.data.playershares.filter(x => x.player.full_name === 'INACTIVE'))
             setIsLoadingLeagues(false)
             /*
             setIsLoadingLeaguemates(true)
