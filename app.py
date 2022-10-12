@@ -26,13 +26,12 @@ def getLeagueInfo(league, user_id):
             'ties': userRoster['settings']['ties'] if userRoster != None else '-',
             'fpts': float(str(userRoster['settings']['fpts']) + 
                 "." + str(userRoster['settings']['fpts_decimal'])) 
-                    if userRoster != None and 'fpts_decimal' in userRoster['settings'].keys() else
-                    userRoster['settings']['fpts'] if userRoster != None else 
-                    '-',
+                    if userRoster != None and 'fpts_decimal' in userRoster['settings'].keys() else 
+                    0,
             'fpts_against': float(str(userRoster['settings']['fpts_against']) + 
                 "." + str(userRoster['settings']['fpts_against_decimal'])) 
                 if userRoster != None and 'fpts_against' in userRoster['settings'].keys() else 
-                '-',
+                0,
             'rosters': rosters,
             'users': users,
             'userRoster': userRoster
