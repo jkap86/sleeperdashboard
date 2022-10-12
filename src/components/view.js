@@ -25,30 +25,19 @@ const View = () => {
     useEffect(() => {
         const fetchData = async (user) => {
             setIsLoadingLeagues(true)
+            setIsLoadingLeaguemates(true)
+            setIsLoadingPlayerShares(true)
+
             const leagues = await axios.get(`/leagues/${user.user_id}`)
             setStateLeagues(leagues.data.leagues)
             setStateLeaguemates(leagues.data.leaguemates)
-            console.log(leagues.data.leaguemates)
+            setStatePlayerShares(leagues.data.playershares)
+            console.log(leagues.data)
             setIsLoadingLeagues(false)
-            /*
-            setIsLoadingLeaguemates(true)
-            setIsLoadingPlayerShares(true)
-            const [lms, ps] = await Promise.all([
-                await axios.post('/leaguemates', {
-                    leagues: leagues.data,
-                    user: user
-                }),
-                await axios.post('/playershares', {
-                    leagues: leagues.data,
-                    user: user
-                })
-            ])
-            setStateLeaguemates(lms.data.sort((a, b) => b.leagues.length - a.leagues.length))
-            setStatePlayerShares(ps.data.sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
             setIsLoadingLeaguemates(false)
             setIsLoadingPlayerShares(false)
-            */
         }
+
         const fetchUser = async () => {
             const user = await axios.get(`/user/${params.username}`)
             if (user.data === 'Invalid') {
