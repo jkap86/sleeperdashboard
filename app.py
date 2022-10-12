@@ -7,24 +7,7 @@ import itertools
 app = Flask(__name__, static_folder='build/', static_url_path='/')
 Compress(app)
 
-@app.route('/user/<username>')
-def getUser(username):
-    user = requests.get(
-        'https://api.sleeper.app/v1/user/' + str(username), timeout=3
-    ).json()
-    if (user == None):
-        user = 'Invalid'
-
-    return user
-
-@app.route('/leagues/<user_id>', methods=['GET', 'POST'])
-def getLeagues(user_id):
-    try:
-        leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
-    except Exception as e:
-        print(e)
-
-    def getLeagueInfo(league):
+def getLeagueInfo(league):
         try:
             users = requests.get(
                 'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
@@ -52,7 +35,26 @@ def getLeagues(user_id):
         return league
           
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+
+@app.route('/user/<username>')
+def getUser(username):
+    user = requests.get(
+        'https://api.sleeper.app/v1/user/' + str(username), timeout=3
+    ).json()
+    if (user == None):
+        user = 'Invalid'
+
+    return user
+
+@app.route('/leagues/<user_id>', methods=['GET', 'POST'])
+def getLeagues(user_id):
+    try:
+        leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
+    except Exception as e:
+        print(e)
+
+    
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
         leagues_detailed = list(executor.map(getLeagueInfo, leagues))
         
     return leagues_detailed
