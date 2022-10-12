@@ -3,6 +3,7 @@ from flask_compress import Compress
 import requests
 import concurrent.futures
 import itertools
+import functools
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
 Compress(app)
@@ -12,7 +13,7 @@ def getLeagueInfo(league, user_id):
         'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
           
     rosters = requests.get(
-        'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters').json()
+        'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters', timeout=3).json()
         
     userRoster = next(iter([x for x in rosters if x['owner_id'] == user_id or 
         (x['co_owners'] != None and user_id in x['co_owners'])]), None)
@@ -61,6 +62,7 @@ def getUser(username):
     return user
 
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
+@functools.lru_cache(maxsize=128)
 def getLeagues(user_id):
     leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
     
@@ -71,6 +73,7 @@ def getLeagues(user_id):
     
     
 @app.route('/leaguemates', methods=['POST'])
+@functools.lru_cache(maxsize=128)
 def getLeaguemates():
     leagues = request.get_json()['leagues']
     user = request.get_json()['user']
@@ -105,6 +108,7 @@ def getLeaguemates():
 
 
 @app.route('/playershares', methods=['POST'])
+@functools.lru_cache(maxsize=128)
 def getPlayerShares():
     leagues = request.get_json()['leagues']
     user = request.get_json()['user']
@@ -158,15 +162,6 @@ def getPlayerShares():
         playershares = list(executor.map(addLeagues, players_unique, itertools.repeat(user['user_id']), itertools.repeat(players_all)))
     
     return playershares
-    
-    '''
-    playershares = []
-    for player in players_unique:
-        addLeagues(player, user['user_id'], players_all)
-        playershares.append(player)
-    
-    return playershares
-    '''
     
     
 

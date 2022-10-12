@@ -6,25 +6,25 @@ const PlayerShares = (props) => {
             <th colSpan={3}>
                 Name
             </th>
-            <th>
+            <th colSpan={2}>
                 Leagues
             </th>
             <th>
-                Wins
+                W
             </th>
             <th>
-                losses
+                L
             </th>
-            <th>
-                Win PCT
+            <th colSpan={2}>
+                W%
             </th>
-            <th>
+            <th colSpan={2}>
                 PF
             </th>
-            <th>
+            <th colSpan={2}>
                 PA
             </th>
-            <th>
+            <th colSpan={2}>
                 <em>
                     Diff
                 </em>
@@ -46,7 +46,7 @@ const PlayerShares = (props) => {
                     </strong>
                 </span>
             </td>
-            <td>
+            <td colSpan={2}>
                 {
                     player.leagues_owned.length
                 }
@@ -61,23 +61,25 @@ const PlayerShares = (props) => {
                     player.leagues_owned.reduce((acc, cur) => acc + cur.losses, 0)
                 }
             </td>
-            <td>
-                {
-                    (player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0) /
-                        player.leagues_owned.reduce((acc, cur) => acc + cur.losses + cur.wins, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-                }
+            <td colSpan={2}>
+                <em>
+                    {
+                        (player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0) /
+                            player.leagues_owned.reduce((acc, cur) => acc + cur.losses + cur.wins, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                    }
+                </em>
             </td>
-            <td>
+            <td colSpan={2}>
                 {
                     player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US")
                 }
             </td>
-            <td>
+            <td colSpan={2}>
                 {
                     player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US")
                 }
             </td>
-            <td>
+            <td colSpan={2}>
                 <em>
                     {
                         (player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0) -
