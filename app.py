@@ -7,32 +7,32 @@ import itertools
 app = Flask(__name__, static_folder='build/', static_url_path='/')
 Compress(app)
 
-def getLeagueInfo(league):
-        try:
-            users = requests.get(
-                'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
-        except Exception as e:
-            print(e)
-
-        try:     
-            rosters = requests.get(
-                'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters').json()
-        except Exception as e:
-            print(e)
-
-        league = {
+def getLeagueInfo(league, user_id):
+    users = requests.get(
+        'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
+          
+    rosters = requests.get(
+        'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters').json()
+        
+    userRoster = next(iter([x for x in rosters if x['owner_id'] == user_id or 
+        (x['co_owners'] != None and user_id in x['co_owners'])]), None)
+    league = {
             'league_id': league['league_id'],
             'name': league['name'],
             'avatar': league['avatar'],
             'total_rosters': league['total_rosters'],
-            'wins': 0,
-            'losses': 0,
-            'ties': 0,
-            'fpts': 0,
-            'fpts_against': 0,
-            'rosters': rosters
+            'wins': userRoster['settings']['wins'] if userRoster != None else '-',
+            'losses': userRoster['settings']['losses'] if userRoster != None else '-',
+            'ties': userRoster['settings']['ties'] if userRoster != None else '-',
+            'fpts': float(
+                str(userRoster['settings']['fpts']) + "." + str(userRoster['settings']['fpts_decimal'])) if userRoster != None else '-',
+            'fpts_against': float(str(
+                userRoster['settings']['fpts_against']) + "." + str(userRoster['settings']['fpts_against_decimal'])) if userRoster != None else '-',
+            'rosters': rosters,
+            'users': users,
+            'userRoster': userRoster
         }
-        return league
+    return league
           
 
 
@@ -48,14 +48,10 @@ def getUser(username):
 
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 def getLeagues(user_id):
-    try:
-        leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
-    except Exception as e:
-        print(e)
-
+    leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
     
     with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-        leagues_detailed = list(executor.map(getLeagueInfo, leagues))
+        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id)))
         
     return leagues_detailed
     
