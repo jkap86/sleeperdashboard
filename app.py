@@ -38,9 +38,17 @@ def getLeagueInfo(league, user_id):
         }
     return league
           
-def getPlayerShares(leagues, user_id, players_all):
-
-    return leagues
+def addLeagues(player, user_id, players_all):
+    player_detail = {
+        **player,
+        'leagues_owned': [
+            x for x in players_all if x['id'] == player['id'] and x['manager']['user_id'] == user_id
+        ],
+        'leagues_taken': [
+            x for x in players_all if x['id'] == player['id'] and x['manager']['user_id'] != user_id
+        ]
+    }
+    return player_detail
 
 @app.route('/user/<username>')
 def getUser(username):
@@ -81,7 +89,7 @@ def getLeaguemates():
         itertools.chain(*leaguemates))))
 
     leaguemates_dict = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
         list(executor.map(lambda x: {
             leaguemates_dict.append({
                 **x,
@@ -95,7 +103,7 @@ def getLeaguemates():
     
     return leaguemates_dict
 
-'''
+
 @app.route('/playershares', methods=['POST'])
 def getPlayerShares():
     leagues = request.get_json()['leagues']
@@ -111,14 +119,55 @@ def getPlayerShares():
                 list(map(lambda z:
                     {
                         'id': z,
-                        'name': allplayers[z] if z in allplayers.keys() else z
+                        'player': allplayers[z] if z in allplayers.keys() else {'id': z},
+                        'league_id': x['league_id'],
+                        'league_name': x['name'],
+                        'manager': next(iter([
+                            m for m in x['users'] if 
+                                (m['user_id'] == y['owner_id'] or (y['co_owners'] != None and m['user_id'] in y['co_owners']))
+                        ]), {'display_name': 'Orphan', 'user_id': 0}),
+                        'wins': y['settings']['wins'],
+                        'losses': y['settings']['losses'],
+                        'ties': y['settings']['ties'],
+                        'fpts': (
+                            float(str(y['settings']['fpts']) + "." + str(y['settings']['fpts_decimal'])) 
+                                if 'fpts_decimal' in y['settings'].keys() else 0
+                        ),
+                        'fpts_against': (
+                            float(str(y['settings']['fpts_against']) + "." + str(y['settings']['fpts_against_decimal']))
+                                if 'fpts_against_decimal' in y['settings'].keys() else 0
+                        )                   
                     }
+                    , y['players']
                 ))
+                , x['rosters']
             ))
+            , leagues
         ))
     )
+    players_all = list(itertools.chain(*list(itertools.chain(*players_all))))
+
+    players_unique = list({
+        player['id']: {
+            'id': player['id'],
+            'player': player['player']
+        } for player in players_all
+    }.values())
     
-'''
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
+        playershares = list(executor.map(addLeagues, players_unique, itertools.repeat(user['user_id']), itertools.repeat(players_all)))
+    
+    return playershares
+    
+    '''
+    playershares = []
+    for player in players_unique:
+        addLeagues(player, user['user_id'], players_all)
+        playershares.append(player)
+    
+    return playershares
+    '''
+    
     
 
 @app.route('/')

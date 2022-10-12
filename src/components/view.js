@@ -7,6 +7,7 @@ import user_avatar from '../images/user_avatar.jpeg';
 import league_avatar from '../images/league_avatar.png';
 import player_avatar from '../images/headshot.png';
 import Leaguemates from "./leaguemates";
+import PlayerShares from "./playershares";
 
 const View = () => {
     const params = useParams();
@@ -19,42 +20,43 @@ const View = () => {
     const [state_User, setState_User] = useState(false);
     const [stateLeagues, setStateLeagues] = useState([]);
     const [stateLeaguemates, setStateLeaguemates] = useState([]);
+    const [statePlayerShares, setStatePlayerShares] = useState([]);
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchData = async (user) => {
             setIsLoadingLeagues(true)
-            const user = await (await fetch(`/user/${params.username}`)).json()
-            if (user === 'Invalid') {
+            const leagues = await axios.get(`/leagues/${user.user_id}`)
+            setStateLeagues(leagues.data)
+            setIsLoadingLeagues(false)
+
+            setIsLoadingLeaguemates(true)
+            setIsLoadingPlayerShares(true)
+            const [lms, ps] = await Promise.all([
+                await axios.post('/leaguemates', {
+                    leagues: leagues.data,
+                    user: user
+                }),
+                await axios.post('/playershares', {
+                    leagues: leagues.data,
+                    user: user
+                })
+            ])
+            setStateLeaguemates(lms.data.sort((a, b) => b.leagues.length - a.leagues.length))
+            setStatePlayerShares(ps.data.sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
+            setIsLoadingLeaguemates(false)
+            setIsLoadingPlayerShares(false)
+        }
+        const fetchUser = async () => {
+            const user = await axios.get(`/user/${params.username}`)
+            if (user.data === 'Invalid') {
                 setState_User(false)
             } else {
-                setState_User(user)
-                let leagues = await fetch(`/leagues/${user.user_id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    }
-                })
-                leagues = await leagues.json()
-                setStateLeagues(leagues)
+                setState_User(user.data)
+                fetchData(user.data)
             }
-            setIsLoadingLeagues(false)
         }
         fetchUser()
     }, [params.username])
-
-    useEffect(() => {
-        const fetchLeaguemates = async () => {
-            setIsLoadingLeaguemates(true)
-            const lms = await axios.post('/leaguemates', {
-                leagues: stateLeagues,
-                user: state_User
-            })
-            setStateLeaguemates(lms.data.sort((a, b) => b.leagues.length - a.leagues.length))
-            setIsLoadingLeaguemates(false)
-        }
-        fetchLeaguemates()
-    }, [stateLeagues])
 
     const avatar = (avatar_id, alt, type) => {
         let source;
@@ -160,6 +162,13 @@ const View = () => {
                     leaguemates={stateLeaguemates}
                     user_id={state_User.user_id}
                     username={state_User.display_name}
+                    avatar={avatar}
+                />
+            break;
+        case 'Player Shares':
+            display = isLoadingPlayerShares ? <h1>Loading...</h1> :
+                <PlayerShares
+                    player_shares={statePlayerShares}
                     avatar={avatar}
                 />
             break;

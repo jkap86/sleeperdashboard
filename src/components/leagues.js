@@ -50,10 +50,7 @@ const Leagues = (props) => {
     )
 
     const display = leagues.map((league, index) =>
-        <tr
-            key={`${league.league_id}_${index}`}
-            className="grid-container"
-        >
+        <tr key={`${league.league_id}_${index}`}>
             <td colSpan={3}>
                 <span className="image">
                     {
