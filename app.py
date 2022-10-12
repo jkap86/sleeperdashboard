@@ -27,9 +27,9 @@ def getLeagueInfo(league, user_id):
             'name': league['name'],
             'avatar': league['avatar'],
             'total_rosters': league['total_rosters'],
-            'wins': userRoster['settings']['wins'] if userRoster != None else '-',
-            'losses': userRoster['settings']['losses'] if userRoster != None else '-',
-            'ties': userRoster['settings']['ties'] if userRoster != None else '-',
+            'wins': userRoster['settings']['wins'] if userRoster != None else 0,
+            'losses': userRoster['settings']['losses'] if userRoster != None else 0,
+            'ties': userRoster['settings']['ties'] if userRoster != None else 0,
             'fpts': float(str(userRoster['settings']['fpts']) + 
                 "." + str(userRoster['settings']['fpts_decimal'])) 
                     if userRoster != None and 'fpts_decimal' in userRoster['settings'].keys() else 
@@ -68,7 +68,7 @@ def getLeaguemates_League(league, user_id):
             (z['co_owners'] != None and lm['user_id'] in z['co_owners'])]), None)
         )
 
-        if lmroster != None:
+        if lmroster != None and userRoster != None:
             leaguemates_league.append({
                 **lm,
                 'league': {
