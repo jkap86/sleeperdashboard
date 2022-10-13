@@ -174,22 +174,6 @@ def getLeagues(user_id):
         'leaguemates': leaguemates[0],
         'playershares': playershares[0]
     }
-   
-@app.route('/filtered/<user_id>', methods=['GET', 'POST'])
-@functools.lru_cache(maxsize=128)
-def getFiltered(user_id):
-    leagues = request.get_json()
-    allplayers = session.get('allplayers')
-    inactives = session.get('inactives')
-    
-    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-        leaguemates = list(executor.map(getLM, [leagues], [user_id]))
-        playershares = list(executor.map(getPlayerShares, [leagues], [user_id], [allplayers], [inactives]))
-
-    return {
-        'leaguemates': leaguemates[0],
-        'playershares': playershares[0]
-    }
 
 @app.route('/')
 def index():

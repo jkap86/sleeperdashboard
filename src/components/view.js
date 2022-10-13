@@ -70,7 +70,7 @@ const View = () => {
     }, [params.username])
 
     useEffect(() => {
-        const filterLeagues = async () => {
+        const fetchFiltered = async () => {
             const leagues = stateLeagues.original
             const leaguemates = stateLeaguemates.original
             const playershares = statePlayerShares.original
@@ -213,7 +213,7 @@ const View = () => {
         if (isInitialRender.current) {
             isInitialRender.current = false
         } else {
-            filterLeagues()
+            fetchFiltered()
         }
     }, [type1, type2])
 

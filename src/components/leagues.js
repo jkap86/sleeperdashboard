@@ -1,30 +1,46 @@
 import { useState, useEffect } from "react"
+import Search from "./search"
 
 const Leagues = (props) => {
     const [leagues, setLeagues] = useState([])
 
     useEffect(() => {
-        setLeagues(props.leagues)
+        setLeagues(props.leagues.map(league => {
+            const standings = league.rosters.sort((a, b) =>
+                b.settings.wins - a.settings.wins || b.settings.losses - a.settings.losses ||
+                b.settings.fpts - a.settings.fpts
+            )
+            const rank = standings.findIndex(obj => {
+                return obj.owner_id === props.user_id
+            })
+            league['rank'] = rank + 1
+            const standings_points = league.rosters.sort((a, b) =>
+                b.settings.fpts - a.settings.fpts || b.settings.wins - a.settings.wins
+            )
+            const rank_points = standings_points.findIndex(obj => {
+                return obj.owner_id === props.user_id
+            })
+            league['rank_points'] = rank_points + 1
+            return league
+        }))
     }, [props])
 
-    leagues.map(league => {
-        const standings = league.rosters.sort((a, b) =>
-            b.settings.wins - a.settings.wins || b.settings.losses - a.settings.losses ||
-            b.settings.fpts - a.settings.fpts
-        )
-        const rank = standings.findIndex(obj => {
-            return obj.owner_id === props.user_id
-        })
-        league['rank'] = rank + 1
-        const standings_points = league.rosters.sort((a, b) =>
-            b.settings.fpts - a.settings.fpts || b.settings.wins - a.settings.wins
-        )
-        const rank_points = standings_points.findIndex(obj => {
-            return obj.owner_id === props.user_id
-        })
-        league['rank_points'] = rank_points + 1
-        return league
-    })
+    const searchLeagues = (league_name) => {
+        let l = leagues
+        if (league_name !== undefined && league_name.trim().length > 0) {
+            l.map(league => {
+                return league.isLeagueHidden = true
+            })
+            l.filter(x => x.name.trim() === league_name.trim()).map(league => {
+                return league.isLeagueHidden = false
+            })
+        } else {
+            l.map(league => {
+                return league.isLeagueHidden = false
+            })
+        }
+        setLeagues([...l])
+    }
 
     const header = (
         <tr className="main_header">
@@ -49,7 +65,7 @@ const Leagues = (props) => {
         </tr>
     )
 
-    const display = leagues.map((league, index) =>
+    const display = leagues.filter(x => x.isLeagueHidden === undefined || x.isLeagueHidden === false).map((league, index) =>
         <tr key={`${league.league_id}_${index}`}>
             <td colSpan={3}>
                 <span className="image">
@@ -107,6 +123,11 @@ const Leagues = (props) => {
 
 
     return <>
+        <Search
+            list={leagues.map(league => league.name)}
+            placeholder={'Search Leagues'}
+            sendSearched={(data) => searchLeagues(data)}
+        />
         <div className="scrollable">
             <table className="main leagues">
                 <tbody>
