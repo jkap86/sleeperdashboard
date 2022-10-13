@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from 'axios';
 import axiosRetry from "axios-retry";
 import Leagues from './leagues';
@@ -11,6 +11,7 @@ import PlayerShares from "./playershares";
 
 const View = () => {
     const params = useParams();
+    const isInitialRender = useRef(true);
     const [tab, setTab] = useState('Leagues');
     const [type1, setType1] = useState('All');
     const [type2, setType2] = useState('All');
@@ -18,9 +19,18 @@ const View = () => {
     const [isLoadingLeaguemates, setIsLoadingLeaguemates] = useState(false);
     const [isLoadingPlayerShares, setIsLoadingPlayerShares] = useState(false);
     const [state_User, setState_User] = useState(false);
-    const [stateLeagues, setStateLeagues] = useState([]);
-    const [stateLeaguemates, setStateLeaguemates] = useState([]);
-    const [statePlayerShares, setStatePlayerShares] = useState([]);
+    const [stateLeagues, setStateLeagues] = useState({
+        original: [],
+        display: []
+    });
+    const [stateLeaguemates, setStateLeaguemates] = useState({
+        original: [],
+        display: []
+    });
+    const [statePlayerShares, setStatePlayerShares] = useState({
+        original: [],
+        display: []
+    });
 
     useEffect(() => {
         const fetchData = async (user) => {
@@ -29,9 +39,18 @@ const View = () => {
             setIsLoadingPlayerShares(true)
 
             const leagues = await axios.get(`/leagues/${user.user_id}`)
-            setStateLeagues(leagues.data.leagues)
-            setStateLeaguemates(leagues.data.leaguemates)
-            setStatePlayerShares(leagues.data.playershares)
+            setStateLeagues({
+                original: leagues.data.leagues,
+                display: leagues.data.leagues
+            })
+            setStateLeaguemates({
+                original: leagues.data.leaguemates,
+                display: leagues.data.leaguemates
+            })
+            setStatePlayerShares({
+                original: leagues.data.playershares,
+                display: leagues.data.playershares
+            })
             console.log(leagues.data)
             setIsLoadingLeagues(false)
             setIsLoadingLeaguemates(false)
@@ -49,6 +68,154 @@ const View = () => {
         }
         fetchUser()
     }, [params.username])
+
+    useEffect(() => {
+        const filterLeagues = async () => {
+            const leagues = stateLeagues.original
+            const leaguemates = stateLeaguemates.original
+            const playershares = statePlayerShares.original
+            let filteredLeagues;
+            let filteredLeaguemates;
+            let filteredPlayerShares;
+            switch (type1) {
+                case ('Redraft'):
+                    filteredLeagues = leagues.filter(x => x.dynasty === 'Redraft')
+                    filteredLeaguemates = leaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues.filter(x => x.dynasty === 'Redraft')
+                        }
+                    })
+                    filteredPlayerShares = playershares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned.filter(x => x.dynasty === 'Redraft')
+                        }
+                    })
+                    break;
+                case ('All'):
+                    filteredLeagues = leagues
+                    filteredLeaguemates = leaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues
+                        }
+                    })
+                    filteredPlayerShares = playershares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned
+                        }
+                    })
+                    break;
+                case ('Dynasty'):
+                    filteredLeagues = leagues.filter(x => x.dynasty === 'Dynasty')
+                    filteredLeaguemates = leaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues.filter(x => x.dynasty === 'Dynasty')
+                        }
+                    })
+                    filteredPlayerShares = playershares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned.filter(x => x.dynasty === 'Dynasty')
+                        }
+                    })
+                    break;
+                default:
+                    filteredLeagues = leagues
+                    filteredLeaguemates = leaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues
+                        }
+                    })
+                    break;
+            }
+            switch (type2) {
+                case ('Bestball'):
+                    filteredLeagues = filteredLeagues.filter(x => x.bestball === 'Bestball')
+                    filteredLeaguemates = filteredLeaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues.filter(x => x.bestball === 'Bestball')
+                        }
+                    })
+                    filteredPlayerShares = filteredPlayerShares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned.filter(x => x.bestball === 'Bestball')
+                        }
+                    })
+                    break;
+                case ('All'):
+                    filteredLeagues = filteredLeagues
+                    filteredLeaguemates = filteredLeaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues
+                        }
+                    })
+                    filteredPlayerShares = filteredPlayerShares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned
+                        }
+                    })
+                    break;
+                case ('Standard'):
+                    filteredLeagues = filteredLeagues.filter(x => x.bestball === 'Standard')
+                    filteredLeaguemates = filteredLeaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues.filter(x => x.bestball === 'Standard')
+                        }
+                    })
+                    filteredPlayerShares = filteredPlayerShares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned.filter(x => x.bestball === 'Standard')
+                        }
+                    })
+                    break;
+                default:
+                    filteredLeagues = filteredLeagues
+                    filteredLeaguemates = filteredLeaguemates.map(lm => {
+                        return {
+                            ...lm,
+                            leagues: lm.leagues
+                        }
+                    })
+                    filteredPlayerShares = filteredPlayerShares.map(player => {
+                        return {
+                            ...player,
+                            leagues_owned: player.leagues_owned
+                        }
+                    })
+                    break;
+            }
+
+            setStateLeagues({
+                ...stateLeagues,
+                display: [...filteredLeagues]
+            })
+            setStateLeaguemates({
+                ...stateLeaguemates,
+                display: [...filteredLeaguemates]
+            })
+            setStatePlayerShares({
+                ...statePlayerShares,
+                display: [...filteredPlayerShares]
+            })
+
+        }
+        if (isInitialRender.current) {
+            isInitialRender.current = false
+        } else {
+            filterLeagues()
+        }
+    }, [type1, type2])
 
     const avatar = (avatar_id, alt, type) => {
         let source;
@@ -81,7 +248,7 @@ const View = () => {
             <table className="summary">
                 <tbody>
                     <tr>
-                        <td colSpan={6} className="bold">{stateLeagues?.length} Leagues</td>
+                        <td colSpan={6} className="bold">{stateLeagues.display.length} Leagues</td>
                     </tr>
                     <tr>
                         <th>W</th>
@@ -94,25 +261,25 @@ const View = () => {
                     <tr>
                         <td>
                             {
-                                stateLeagues.reduce((acc, cur) => acc + cur.wins, 0)
+                                stateLeagues.display.reduce((acc, cur) => acc + cur.wins, 0)
                             }
                         </td>
                         <td>
                             {
-                                stateLeagues.reduce((acc, cur) => acc + cur.losses, 0)
+                                stateLeagues.display.reduce((acc, cur) => acc + cur.losses, 0)
                             }
                         </td>
                         <td>
                             {
-                                stateLeagues.reduce((acc, cur) => acc + cur.ties, 0)
+                                stateLeagues.display.reduce((acc, cur) => acc + cur.ties, 0)
                             }
                         </td>
                         <td>
                             <em>
                                 {
                                     (
-                                        stateLeagues.reduce((acc, cur) => acc + cur.wins, 0) /
-                                        stateLeagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
+                                        stateLeagues.display.reduce((acc, cur) => acc + cur.wins, 0) /
+                                        stateLeagues.display.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
                                     ).toLocaleString("en-US", {
                                         maximumFractionDigits: 4,
                                         minimumFractionDigits: 4
@@ -122,14 +289,14 @@ const View = () => {
                         </td>
                         <td>
                             {
-                                stateLeagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
+                                stateLeagues.display.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
                                     maximumFractionDigits: 2
                                 })
                             } pts
                         </td>
                         <td>
                             {
-                                stateLeagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
+                                stateLeagues.display.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
                                     maximumFractionDigits: 2
                                 })
                             } pts
@@ -143,7 +310,7 @@ const View = () => {
         case 'Leagues':
             display = isLoadingLeagues ? <h1>Loading...</h1> :
                 <Leagues
-                    leagues={stateLeagues}
+                    leagues={stateLeagues.display}
                     user_id={state_User.user_id}
                     avatar={avatar}
                 />
@@ -151,7 +318,7 @@ const View = () => {
         case 'Leaguemates':
             display = isLoadingLeaguemates ? <h1>Loading..</h1> :
                 <Leaguemates
-                    leaguemates={stateLeaguemates}
+                    leaguemates={stateLeaguemates.display}
                     user_id={state_User.user_id}
                     username={state_User.display_name}
                     avatar={avatar}
@@ -160,7 +327,7 @@ const View = () => {
         case 'Player Shares':
             display = isLoadingPlayerShares ? <h1>Loading...</h1> :
                 <PlayerShares
-                    player_shares={statePlayerShares}
+                    player_shares={statePlayerShares.display}
                     avatar={avatar}
                 />
             break;

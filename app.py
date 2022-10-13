@@ -40,22 +40,13 @@ def getLeagueInfo(league, user_id):
                 0,
             'rosters': rosters,
             'users': users,
-            'userRoster': userRoster
+            'userRoster': userRoster,
+            'dynasty': 'Dynasty' if league['settings']['type'] == 2 else 'Redraft',
+            'bestball': 'Bestball' if ('best_ball' in league['settings'].keys(
+                ) and league['settings']['best_ball'] == 1) else 'Standard'
         }
     return league
           
-def addLeagues(player, user_id, players_all):
-    player_detail = {
-        **player,
-        'leagues_owned': [
-            x for x in players_all if x['id'] == player['id'] and x['manager']['user_id'] == user_id
-        ],
-        'leagues_taken': [
-            x for x in players_all if x['id'] == player['id'] and x['manager']['user_id'] != user_id
-        ]
-    }
-    return player_detail
-
 def getLeaguemates_League(league, user_id):
     userRoster = (
         next(iter([z for z in league['rosters'] if z['owner_id'] == user_id or
@@ -72,7 +63,7 @@ def getLeaguemates_League(league, user_id):
             leaguemates_league.append({
                 **lm,
                 'league': {
-                    'name': league['name'],
+                    **league,
                     'lmroster': lmroster,
                     'roster': userRoster
                 }
@@ -90,7 +81,9 @@ def getLM(leagues, user_id):
     leaguemates = list(map(getLeaguemates_League, leagues, itertools.repeat(user_id)))
     leaguemates = list(itertools.chain(*leaguemates))
     leaguemates_dict = list(map(addLmLeagues, leaguemates, itertools.repeat(leaguemates)))
-
+    leaguemates_dict = list({
+        lm['user_id']: lm for lm in leaguemates_dict
+    }.values())
     return leaguemates_dict
 
 def getPlayersLeague(league, allplayers):
@@ -99,6 +92,8 @@ def getPlayersLeague(league, allplayers):
         'player': allplayers.get(z, {'full_name': 'INACTIVE'}),
         'league_id': league['league_id'],
         'league_name': league['name'],
+        'dynasty': league['dynasty'],
+        'bestball': league['bestball'],
         'manager': next(iter([
             m for m in league['users'] if 
                 (m['user_id'] == y['owner_id'] or (y['co_owners'] != None and m['user_id'] in y['co_owners']))
@@ -115,7 +110,19 @@ def getPlayersLeague(league, allplayers):
                 if 'fpts_against_decimal' in y['settings'].keys() else 0
         ) 
     } for z in y['players'] or []] for y in league['rosters'] or []]
-    
+
+def addPlayerLeagues(player, user_id, players_all):
+    player_detail = {
+        **player,
+        'leagues_owned': [
+            x for x in players_all if x['id'] == player['id'] and x['manager']['user_id'] == user_id
+        ],
+        'leagues_taken': [
+            x for x in players_all if x['id'] == player['id'] and x['manager']['user_id'] != user_id
+        ]
+    }
+    return player_detail
+
 def getPlayerShares(leagues, user_id, allplayers, inactives):
     with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
         players_all = list(executor.map(getPlayersLeague, leagues, itertools.repeat(allplayers)))
@@ -126,7 +133,7 @@ def getPlayerShares(leagues, user_id, allplayers, inactives):
                 'player': player['player']
             } for player in players_all
         }.values())
-        playershares = list(executor.map(addLeagues, players_unique, itertools.repeat(user_id), itertools.repeat(players_all)))
+        playershares = list(executor.map(addPlayerLeagues, players_unique, itertools.repeat(user_id), itertools.repeat(players_all)))
         
     return playershares
     
@@ -168,6 +175,22 @@ def getLeagues(user_id):
         'playershares': playershares[0]
     }
    
+@app.route('/filtered/<user_id>', methods=['GET', 'POST'])
+@functools.lru_cache(maxsize=128)
+def getFiltered(user_id):
+    leagues = request.get_json()
+    allplayers = session.get('allplayers')
+    inactives = session.get('inactives')
+    
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
+        leaguemates = list(executor.map(getLM, [leagues], [user_id]))
+        playershares = list(executor.map(getPlayerShares, [leagues], [user_id], [allplayers], [inactives]))
+
+    return {
+        'leaguemates': leaguemates[0],
+        'playershares': playershares[0]
+    }
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')

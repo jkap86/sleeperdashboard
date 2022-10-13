@@ -13,7 +13,7 @@ const Leaguemates = (props) => {
     }
 
     useEffect(() => {
-        setLeaguemates(props.leaguemates)
+        setLeaguemates(props.leaguemates.sort((a, b) => b.leagues.length - a.leagues.length))
     }, [props])
 
     const header = (

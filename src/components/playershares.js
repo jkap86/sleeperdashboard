@@ -32,7 +32,7 @@ const PlayerShares = (props) => {
         </tr>
     )
 
-    const player_shares = props.player_shares.map((player, index) =>
+    const player_shares = props.player_shares.filter(x => x.leagues_owned.length > 0).sort((a, b) => b.leagues_owned.length - a.leagues_owned.length).map((player, index) =>
         <tr key={`${player.id}_${index}`}>
             <td colSpan={3}>
                 <span className="image">
