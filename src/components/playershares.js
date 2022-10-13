@@ -14,7 +14,7 @@ const PlayerShares = (props) => {
             ps.map(player => {
                 return player.isHidden = true
             })
-            ps.filter(x => x.player.full_name.trim() === player_name.trim()).map(player => {
+            ps.filter(x => x.player.full_name?.trim() === player_name.trim()).map(player => {
                 return player.isHidden = false
             })
         } else {
