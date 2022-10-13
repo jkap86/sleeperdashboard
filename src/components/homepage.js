@@ -6,32 +6,34 @@ const Homepage = () => {
     const [username, setUsername] = useState('')
 
     return <div id='homepage'>
-        <h1>
-            <p className="image">
-                <img
-                    alt='sleeper_logo'
+        <div className='home_wrapper'>
+            <h1>
+                <p className="image">
+                    <img
+                        alt='sleeper_logo'
+                        className='home'
+                        src={sleeperLogo}
+                    />
+                    <strong>
+                        Sleeper Dashboard
+                    </strong>
+                </p>
+            </h1>
+            <div className="username_search_wrapper">
+                <input
                     className='home'
-                    src={sleeperLogo}
+                    type="text"
+                    placeholder="Username"
+                    onChange={(e) => setUsername(e.target.value)}
                 />
-                <strong>
-                    Sleeper Dashboard
-                </strong>
-            </p>
-        </h1>
-        <div className="username_search_wrapper">
-            <input
-                className='home'
-                type="text"
-                placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <Link to={`/${username}`}>
-                <button
-                    className='home clickable'
-                >
-                    Submit
-                </button>
-            </Link>
+                <Link to={`/${username}`}>
+                    <button
+                        className='home clickable'
+                    >
+                        Submit
+                    </button>
+                </Link>
+            </div>
         </div>
     </div>
 }

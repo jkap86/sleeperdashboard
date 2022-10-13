@@ -8,116 +8,114 @@ const PlayerShares = (props) => {
     useEffect(() => {
         setPlayershares(props.player_shares.sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
     }, [props])
-    /*
-        const searchPlayers = (player_name) => {
-            let ps = player_shares
-            if (player_name !== undefined && player_name.trim().length > 0) {
-                ps.map(player => {
-                    return player.isHidden = true
-                })
-                ps.filter(x => x.player.full_name?.trim() === player_name.trim()).map(player => {
-                    return player.isHidden = false
-                })
-            } else {
-                ps.map(player => {
-                    return player.isHidden = false
-                })
-            }
-            setPlayershares([...ps])
-        }
-    */
+
     const header = (
-        <tr className="main_header">
-            <th colSpan={3}>
-                Name
-            </th>
-            <th colSpan={2}>
-                Leagues
-            </th>
-            <th>
-                W
-            </th>
-            <th>
-                L
-            </th>
-            <th colSpan={2}>
-                W%
-            </th>
-            <th colSpan={2}>
-                PF
-            </th>
-            <th colSpan={2}>
-                PA
-            </th>
-            <th colSpan={2}>
-                <em>
-                    Avg Diff
-                </em>
-            </th>
-        </tr>
+        <tbody className="main_header">
+            <tr>
+                <th colSpan={3}>
+                    Name
+                </th>
+                <th colSpan={1}>
+                    #
+                </th>
+                <th>
+                    W
+                </th>
+                <th>
+                    L
+                </th>
+                <th colSpan={2}>
+                    W%
+                </th>
+                <th colSpan={3}>
+                    PF
+                </th>
+                <th colSpan={3}>
+                    PA
+                </th>
+                <th colSpan={2}>
+                    <em>
+                        Avg Diff
+                    </em>
+                </th>
+            </tr>
+        </tbody>
     )
 
     const playershares_display = searched.trim().length === 0 ? playershares :
         playershares.filter(x => x.player.full_name?.trim() === searched.trim())
 
-    const display = playershares_display.map((player, index) =>
-        <tr key={`${player.id}_${index}`}>
-            <td colSpan={3}>
-                <span className="image">
-                    {
-                        props.avatar(player.id, player.player.full_name, 'player')
-                    }
-                    <strong>
-                        {
-                            player.player.full_name
-                        }
-                    </strong>
-                </span>
-            </td>
-            <td colSpan={2}>
-                {
-                    player.leagues_owned.length
-                }
-            </td>
-            <td>
-                {
-                    player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0)
-                }
-            </td>
-            <td>
-                {
-                    player.leagues_owned.reduce((acc, cur) => acc + cur.losses, 0)
-                }
-            </td>
-            <td colSpan={2}>
-                <em>
-                    {
-                        (player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0) /
-                            player.leagues_owned.reduce((acc, cur) => acc + cur.losses + cur.wins, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-                    }
-                </em>
-            </td>
-            <td colSpan={2}>
-                {
-                    player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US")
-                }
-            </td>
-            <td colSpan={2}>
-                {
-                    player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US")
-                }
-            </td>
-            <td colSpan={2}>
-                <em>
-                    {
-                        (
-                            (player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0) -
-                                player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0)) / player.leagues_owned.length
-                        ).toLocaleString("en-US", { maximumFractionDigits: 2 })
-                    }
-                </em>
-            </td>
-        </tr>
+    const display = (
+        <table className="wrapper">
+            {header}
+            {playershares_display.map((player, index) =>
+                <tbody className="main_row">
+                    <tr>
+                        <td colSpan={16}>
+                            <table className="main">
+                                <tr key={`${player.id}_${index}`}>
+                                    <td colSpan={3}>
+                                        <span className="image">
+                                            {
+                                                props.avatar(player.id, player.player.full_name, 'player')
+                                            }
+                                            <strong>
+                                                {
+                                                    player.player.full_name
+                                                }
+                                            </strong>
+                                        </span>
+                                    </td>
+                                    <td colSpan={1}>
+                                        {
+                                            player.leagues_owned.length
+                                        }
+                                    </td>
+                                    <td>
+                                        {
+                                            player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0)
+                                        }
+                                    </td>
+                                    <td>
+                                        {
+                                            player.leagues_owned.reduce((acc, cur) => acc + cur.losses, 0)
+                                        }
+                                    </td>
+                                    <td colSpan={2}>
+                                        <em>
+                                            {
+                                                (player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0) /
+                                                    player.leagues_owned.reduce((acc, cur) => acc + cur.losses + cur.wins, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                                            }
+                                        </em>
+                                    </td>
+                                    <td colSpan={3}>
+                                        {
+                                            player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US")
+                                        }
+                                    </td>
+                                    <td colSpan={3}>
+                                        {
+                                            player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US")
+                                        }
+                                    </td>
+                                    <td colSpan={2}>
+                                        <em>
+                                            {
+                                                (
+                                                    (player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0) -
+                                                        player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0)) / player.leagues_owned.length
+                                                ).toLocaleString("en-US", { maximumFractionDigits: 2 })
+                                            }
+                                        </em>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            )}
+        </table>
     )
 
     return <>
@@ -127,12 +125,7 @@ const PlayerShares = (props) => {
             sendSearched={(data) => setSearched(data)}
         />
         <div className="scrollable">
-            <table className="main playershares">
-                <tbody>
-                    {header}
-                    {display}
-                </tbody>
-            </table>
+            {display}
         </div>
     </>
 }

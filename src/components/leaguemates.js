@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import LeaguemateLeagues from "./leaguemateLeagues";
 import Search from "./search";
 
 const Leaguemates = (props) => {
@@ -19,112 +20,114 @@ const Leaguemates = (props) => {
     }, [props])
 
     const header = (
-        <React.Fragment>
-            <tbody className="main_header">
-                <tr>
-                    <th rowSpan={2}>
-                        Leaguemate
-                    </th>
-                    <th rowSpan={2}>
-                        Leagues
-                    </th>
-                    <th colSpan={2}>
-                        Leaguemate
-                    </th>
-                    <th colSpan={2}>
-                        {props.username}
-                    </th>
-                </tr>
-                <tr>
-
-                    <th>
-                        Record
-                    </th>
-                    <th>
-                        WinPCT
-                    </th>
-                    <th>
-                        Record
-                    </th>
-                    <th>
-                        WinPCT
-                    </th>
-                </tr>
-            </tbody>
-        </React.Fragment>
+        <tbody className="main_header">
+            <tr>
+                <th rowSpan={2}>Leaguemate</th>
+                <th rowSpan={2}>Leagues</th>
+                <th colSpan={2}>Leaguemate</th>
+                <th colSpan={2}>{props.username}</th>
+            </tr>
+            <tr>
+                <th>Record</th>
+                <th>WinPCT</th>
+                <th>Record</th>
+                <th>WinPCT</th>
+            </tr>
+        </tbody>
     )
 
     const leaguemates_display = searched.trim().length === 0 ? leaguemates :
         leaguemates.filter(x => x.display_name.trim() === searched.trim())
 
-    const display = leaguemates_display.filter(x => x.user_id !== props.user_id).map((leaguemate, index) =>
-        <React.Fragment key={`${leaguemate.user_id}_${index}`}>
-            <tr
-                className={leaguemate.isLeaguesHidden === false ? "main_row_active clickable" : "main_row clickable"}
-                style={{
-                    zIndex: index
-                }}
-                onClick={() => showLeagues(leaguemate.user_id)}
-            >
-                <td colSpan={1}>
-                    <span className="image">
-                        {
-                            props.avatar(leaguemate.avatar, leaguemate.display_name, 'user')
-                        }
-                        <strong>
+    const display = (
+        <table className="wrapper">
+            {header}
+            {leaguemates_display.filter(x => x.user_id !== props.user_id).map((leaguemate, index) =>
+                <tbody className="main_row" key={`${leaguemate.user_id}_${index}`}>
+                    <tr
+                        style={{
+                            zIndex: index
+                        }}
+                        onClick={() => showLeagues(leaguemate.user_id)}
+                    >
+                        <td colSpan={6}>
+                            <table className="main leaguemates">
+                                <colgroup>
+                                    <col span={2} />
+                                </colgroup>
+                                <colgroup className="leaguemate">
+                                    <col span={2} />
+                                </colgroup>
+                                <colgroup className="leaguemate">
+                                    <col span={2} />
+                                </colgroup>
+                                <tr>
+                                    <td>
+                                        <span className="image">
+                                            {
+                                                props.avatar(leaguemate.avatar, leaguemate.display_name, 'user')
+                                            }
+                                            <strong>
+                                                {
+                                                    leaguemate.display_name
+                                                }
+                                            </strong>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {
+                                            leaguemate.leagues.length
+                                        }
+                                    </td>
+                                    <td>
+                                        {
+                                            leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins, 0)
+                                        }
+                                        -
+                                        {
+                                            leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.losses, 0)
+                                        }
+                                    </td>
+                                    <td>
+                                        <em>
+                                            {
+                                                (leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins, 0) /
+                                                    leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins + cur.lmroster.settings.losses, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                                            }
+                                        </em>
+                                    </td>
+                                    <td>
+                                        {
+                                            leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.wins, 0)
+                                        }
+                                        -
+                                        {
+                                            leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.losses, 0)
+                                        }
+                                    </td>
+                                    <td>
+                                        <em>
+                                            {
+                                                (leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.wins, 0) /
+                                                    leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.wins + cur.roster.settings.losses, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                                            }
+                                        </em>
+                                    </td>
+                                </tr>
+                            </table>
                             {
-                                leaguemate.display_name
-                            }
-                        </strong>
-                    </span>
-                </td>
-                <td>
-                    {
-                        leaguemate.leagues.length
-                    }
-                </td>
-                <td>
-                    {
-                        leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins, 0)
-                    }
-                    -
-                    {
-                        leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.losses, 0)
-                    }
-                </td>
-                <td>
-                    <em>
-                        {
-                            (leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins, 0) /
-                                leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins + cur.lmroster.settings.losses, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-                        }
-                    </em>
-                </td>
-                <td>
-                    {
-                        leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.wins, 0)
-                    }
-                    -
-                    {
-                        leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.losses, 0)
-                    }
-                </td>
-                <td>
-                    <em>
-                        {
-                            (leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.wins, 0) /
-                                leaguemate.leagues.reduce((acc, cur) => acc + cur.roster.settings.wins + cur.roster.settings.losses, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-                        }
-                    </em>
-                </td>
-            </tr>
-            {
-                leaguemate.isLeaguesHidden === undefined || leaguemate.isLeaguesHidden ? null :
-                    'Leagues'
-            }
-        </React.Fragment>
-    )
+                                leaguemate.isLeaguesHidden === undefined || leaguemate.isLeaguesHidden ? null :
+                                    <LeaguemateLeagues
 
+                                    />
+                            }
+                        </td>
+                    </tr>
+
+                </tbody>
+            )}
+        </table>
+    )
     return <>
         <Search
             list={leaguemates.map(leaguemate => leaguemate.display_name)}
@@ -132,21 +135,7 @@ const Leaguemates = (props) => {
             sendSearched={(data) => setSearched(data)}
         />
         <div className="scrollable">
-            <table className="main leaguemates">
-                <colgroup>
-                    <col span={2} />
-                </colgroup>
-                <colgroup className="leaguemate">
-                    <col span={2} />
-                </colgroup>
-                <colgroup className="leaguemate">
-                    <col span={2} />
-                </colgroup>
-                {header}
-                <tbody>
-                    {display}
-                </tbody>
-            </table>
+            {display}
         </div>
     </>
 }

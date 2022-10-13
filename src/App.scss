@@ -25,67 +25,75 @@ html {
         position: relative;
 
         div#homepage {
-          h1 {
-            position: relative;
-            color: var(--color2);
 
-            p {
+          div.home_wrapper {
+            position: absolute;
+            width: 100%;
 
-              img {
-                width: 5em;
-                height: 5em;
-                border-radius: 50%;
-                object-fit: cover;
-                box-shadow: 0 0 2em var(--color2);
-                filter: brightness(.5)
-              }
+            h1 {
+              position: relative;
+              color: var(--color2);
 
-              strong {
-                position: absolute;
-                left: 0;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: fit-content;
-                height: fit-content;
-                margin: auto;
-                background-color: black;
-                line-height: 50%;
-                transform: translateY(50%);
-                font-size: 1.5em;
-              }
-            }
-          }
+              p {
 
-          div {
-            input.home {
-              background-color: var(--color2);
-              font-weight: 900;
-              border: .5em ridge var(--color3);
-              box-shadow: inset 0 0 1.5em var(--color1), 0 0 1em var(--color5);
-
-              padding: .75em 1.5em;
-              font-size: 1.5em;
-              display: block;
-              margin: 2em auto;
-              color: var(--color1);
-            }
-
-            a {
-
-              button.home {
-                &:hover {
-                  cursor: pointer;
+                img {
+                  width: 40vmin;
+                  height: auto;
+                  max-width: 1000px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                  box-shadow: 0 0 5em var(--color2);
+                  filter: brightness(.5)
                 }
 
-                background-color: var(--color5);
-                color: var(--color2);
-                font-size: 1.5em;
-                padding: .5em 1em;
-                box-shadow: inset 0 0 5em var(--color1),
-                0 0 1em var(--color5);
-                border: .5em double var(--color3);
-                border-radius: 2em;
+                strong {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  right: 0;
+                  bottom: 0;
+                  width: fit-content;
+                  height: fit-content;
+                  margin: auto;
+                  background-color: black;
+                  line-height: 50%;
+                  transform: translateY(50%);
+                  font-size: 10vmin;
+                }
+              }
+            }
+
+            div {
+              input.home {
+                background-color: var(--color2);
+                font-weight: 900;
+                border: .5em ridge var(--color3);
+                box-shadow: inset 0 0 1.5em var(--color1), 0 0 1em var(--color5);
+                padding: .75em 1.5em;
+                width: 50vmin;
+                height: 5vmin;
+                font-size: 5vmin;
+                display: block;
+                margin: 2em auto;
+                color: var(--color1);
+              }
+
+              a {
+
+                button.home {
+                  &:hover {
+                    cursor: pointer;
+                  }
+
+                  background-color: var(--color5);
+                  color: var(--color2);
+                  width: 25vmin;
+                  font-size: 5vmin;
+                  box-shadow: inset 0 0 5em var(--color1),
+                  0 0 1em var(--color5);
+                  border: .5em double var(--color3);
+                  border-radius: 2em;
+                }
               }
             }
           }
@@ -260,19 +268,12 @@ html {
             overflow: scroll;
             height: 80vh;
 
-            table {
+            table.wrapper {
               table-layout: fixed;
               margin: auto;
               width: 95%;
               max-width: 1200px;
-              font-size: 1.5rem;
               border-collapse: collapse;
-              position: relative;
-              box-shadow: 0 0 2rem var(--color5);
-
-              colgroup.leaguemate {
-                border-left: .5rem solid var(--color5);
-              }
 
               tbody.main_header {
                 position: sticky;
@@ -291,81 +292,105 @@ html {
                     padding: 0;
                     background-color: var(--color4);
                   }
+
+                  th.small {
+                    font-size: 1.5rem;
+                    font-weight: 900;
+                  }
                 }
               }
 
-              tbody {
-                tr.main_header {
-                  color: var(--color1);
-                  text-shadow: 0 0 .25rem var(--color5);
-                  background-color: var(--color4);
-                  position: sticky;
-                  top: .25rem;
-                  z-index: 1;
-                  font-size: 2rem;
-
-                }
-
+              tbody.main_row {
                 tr {
-                  &:hover {
-                    cursor: pointer;
-                  }
-
-                  outline: .25rem solid var(--color5);
-                  background-color: var(--color3);
 
                   td {
-                    background-color: transparent;
-                    padding: .25rem;
+                    table.main {
+                      table-layout: fixed;
+                      width: 100%;
+                      position: relative;
+                      box-shadow: 0 0 2rem var(--color5);
+                      border-collapse: collapse;
 
-                    span {
-                      &:hover {
-                        strong {
-                          overflow: visible;
-                          max-width: unset;
-                          color: var(--color2);
+                      colgroup.leaguemate {
+                        border-right: .5rem solid var(--color5);
+                        border-left: .5rem solid var(--color5);
+                      }
+
+                      tr {
+                        &:hover {
+                          cursor: pointer;
+                        }
+
+                        background-color: var(--color3);
+
+                        td {
+                          background-color: inherit;
+
+                          font-size: 2rem;
+                          border-left: .25rem solid var(--color1);
+
+                          span {
+                            &:hover {
+                              strong {
+                                overflow: visible;
+                                max-width: unset;
+                                color: var(--color2);
+                              }
+                            }
+
+                            position: relative;
+                            display: block;
+                            margin: 0;
+                            padding: 0;
+
+                            img {
+                              width: 5rem;
+                              height: 5rem;
+                              border-radius: 50%;
+                              object-fit: cover;
+                              box-shadow: 0 0 .75rem var(--color2);
+                              margin: .5em;
+                            }
+
+                            strong {
+                              position: absolute;
+                              top: 0;
+                              left: 1rem;
+                              right: 0;
+                              bottom: 0;
+                              margin: auto;
+                              height: fit-content;
+                              width: fit-content;
+                              max-width: 95%;
+                              text-overflow: ellipsis;
+                              overflow: hidden;
+                              white-space: nowrap;
+                              background-color: var(--color3);
+                              font-size: 1.5rem;
+
+                            }
+                          }
                         }
                       }
 
-                      position: relative;
-                      display: block;
-                      margin: 0;
-                      padding: 0;
-
-                      img {
-                        width: 5rem;
-                        height: 5rem;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        box-shadow: 0 0 .75rem var(--color2);
-                        margin: .5em;
-                      }
-
-                      strong {
-                        position: absolute;
-                        top: 0;
-                        left: 1rem;
-                        right: 0;
-                        bottom: 0;
-                        margin: auto;
-                        height: fit-content;
-                        width: fit-content;
-                        max-width: 100%;
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        background-color: var(--color3);
-
-                      }
                     }
 
-                    p {
-                      margin: .25rem;
+                    table.secondary {
+                      table-layout: fixed;
+                      font-size: 1.5rem;
+                      margin: auto;
+                      width: 100%;
+                      position: relative;
+                      box-shadow: 0 0 2rem var(--color5);
+                      border-collapse: collapse;
                     }
                   }
                 }
               }
+
             }
+
+
 
           }
         }
