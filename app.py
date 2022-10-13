@@ -43,7 +43,8 @@ def getLeagueInfo(league, user_id):
             'userRoster': userRoster,
             'dynasty': 'Dynasty' if league['settings']['type'] == 2 else 'Redraft',
             'bestball': 'Bestball' if ('best_ball' in league['settings'].keys(
-                ) and league['settings']['best_ball'] == 1) else 'Standard'
+                ) and league['settings']['best_ball'] == 1) else 'Standard',
+            'isHidden': False
         }
     return league
           

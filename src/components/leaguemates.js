@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Search from "./search";
 
 const Leaguemates = (props) => {
     const [leaguemates, setLeaguemates] = useState([])
+    const [searched, setSearched] = useState('')
 
     const showLeagues = (leaguemate_userid) => {
         console.log(leaguemate_userid)
@@ -52,7 +54,10 @@ const Leaguemates = (props) => {
         </React.Fragment>
     )
 
-    const leaguemates_display = leaguemates.filter(x => x.user_id !== props.user_id).map((leaguemate, index) =>
+    const leaguemates_display = searched.trim().length === 0 ? leaguemates :
+        leaguemates.filter(x => x.display_name.trim() === searched.trim())
+
+    const display = leaguemates_display.filter(x => x.user_id !== props.user_id).map((leaguemate, index) =>
         <React.Fragment key={`${leaguemate.user_id}_${index}`}>
             <tr
                 className={leaguemate.isLeaguesHidden === false ? "main_row_active clickable" : "main_row clickable"}
@@ -121,6 +126,11 @@ const Leaguemates = (props) => {
     )
 
     return <>
+        <Search
+            list={leaguemates.map(leaguemate => leaguemate.display_name)}
+            placeholder={'Search Leaguemates'}
+            sendSearched={(data) => setSearched(data)}
+        />
         <div className="scrollable">
             <table className="main leaguemates">
                 <colgroup>
@@ -134,7 +144,7 @@ const Leaguemates = (props) => {
                 </colgroup>
                 {header}
                 <tbody>
-                    {leaguemates_display}
+                    {display}
                 </tbody>
             </table>
         </div>

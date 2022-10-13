@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Search from "./search"
 
 const Leagues = (props) => {
     const [leagues, setLeagues] = useState([])
+    const [searched, setSearched] = useState('')
 
     useEffect(() => {
         setLeagues(props.leagues.map(league => {
@@ -24,23 +25,6 @@ const Leagues = (props) => {
             return league
         }))
     }, [props])
-
-    const searchLeagues = (league_name) => {
-        let l = leagues
-        if (league_name !== undefined && league_name.trim().length > 0) {
-            l.map(league => {
-                return league.isLeagueHidden = true
-            })
-            l.filter(x => x.name.trim() === league_name.trim()).map(league => {
-                return league.isLeagueHidden = false
-            })
-        } else {
-            l.map(league => {
-                return league.isLeagueHidden = false
-            })
-        }
-        setLeagues([...l])
-    }
 
     const header = (
         <tr className="main_header">
@@ -65,7 +49,10 @@ const Leagues = (props) => {
         </tr>
     )
 
-    const display = leagues.filter(x => x.isLeagueHidden === undefined || x.isLeagueHidden === false).map((league, index) =>
+    const leagues_display = searched.trim().length === 0 ? leagues :
+        leagues.filter(x => x.name.trim() === searched.trim())
+
+    const display = leagues_display.map((league, index) =>
         <tr key={`${league.league_id}_${index}`}>
             <td colSpan={3}>
                 <span className="image">
@@ -126,7 +113,7 @@ const Leagues = (props) => {
         <Search
             list={leagues.map(league => league.name)}
             placeholder={'Search Leagues'}
-            sendSearched={(data) => searchLeagues(data)}
+            sendSearched={(data) => setSearched(data)}
         />
         <div className="scrollable">
             <table className="main leagues">

@@ -305,35 +305,32 @@ const View = () => {
                 </tbody>
             </table>
     )
-    let display;
-    switch (tab) {
-        case 'Leagues':
-            display = isLoadingLeagues ? <h1>Loading...</h1> :
+
+    let display = (
+        <div>
+            <div hidden={tab !== 'Leagues'}>
                 <Leagues
                     leagues={stateLeagues.display}
                     user_id={state_User.user_id}
                     avatar={avatar}
                 />
-            break;
-        case 'Leaguemates':
-            display = isLoadingLeaguemates ? <h1>Loading..</h1> :
+            </div>
+            <div hidden={tab !== 'Leaguemates'}>
                 <Leaguemates
                     leaguemates={stateLeaguemates.display}
                     user_id={state_User.user_id}
                     username={state_User.display_name}
                     avatar={avatar}
                 />
-            break;
-        case 'Player Shares':
-            display = isLoadingPlayerShares ? <h1>Loading...</h1> :
+            </div>
+            <div hidden={tab !== 'Player Shares'}>
                 <PlayerShares
                     player_shares={statePlayerShares.display}
                     avatar={avatar}
                 />
-            break;
-        default:
-            break;
-    }
+            </div>
+        </div>
+    )
 
     return <div id="view">
         <Link to="/" className="home">

@@ -1,30 +1,31 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Search from "./search"
 
 const PlayerShares = (props) => {
     const [playershares, setPlayershares] = useState([])
+    const [searched, setSearched] = useState('')
 
     useEffect(() => {
         setPlayershares(props.player_shares.sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
     }, [props])
-
-    const searchPlayers = (player_name) => {
-        let ps = playershares
-        if (player_name !== undefined && player_name.trim().length > 0) {
-            ps.map(player => {
-                return player.isHidden = true
-            })
-            ps.filter(x => x.player.full_name?.trim() === player_name.trim()).map(player => {
-                return player.isHidden = false
-            })
-        } else {
-            ps.map(player => {
-                return player.isHidden = false
-            })
+    /*
+        const searchPlayers = (player_name) => {
+            let ps = player_shares
+            if (player_name !== undefined && player_name.trim().length > 0) {
+                ps.map(player => {
+                    return player.isHidden = true
+                })
+                ps.filter(x => x.player.full_name?.trim() === player_name.trim()).map(player => {
+                    return player.isHidden = false
+                })
+            } else {
+                ps.map(player => {
+                    return player.isHidden = false
+                })
+            }
+            setPlayershares([...ps])
         }
-        setPlayershares([...ps])
-    }
-
+    */
     const header = (
         <tr className="main_header">
             <th colSpan={3}>
@@ -56,7 +57,10 @@ const PlayerShares = (props) => {
         </tr>
     )
 
-    const player_shares = playershares.filter(x => (x.isHidden === false || x.isHidden === undefined)).map((player, index) =>
+    const playershares_display = searched.trim().length === 0 ? playershares :
+        playershares.filter(x => x.player.full_name?.trim() === searched.trim())
+
+    const display = playershares_display.map((player, index) =>
         <tr key={`${player.id}_${index}`}>
             <td colSpan={3}>
                 <span className="image">
@@ -120,13 +124,13 @@ const PlayerShares = (props) => {
         <Search
             list={playershares.map(player => player.player.full_name)}
             placeholder={'Search Players'}
-            sendSearched={(data) => searchPlayers(data)}
+            sendSearched={(data) => setSearched(data)}
         />
         <div className="scrollable">
             <table className="main playershares">
                 <tbody>
                     {header}
-                    {player_shares}
+                    {display}
                 </tbody>
             </table>
         </div>
