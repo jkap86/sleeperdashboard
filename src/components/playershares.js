@@ -154,13 +154,14 @@ const PlayerShares = (props) => {
     )
 
     return <>
+        <button onClick={() => setTab('All')} className={tab === 'All' ? 'active_toggle_starters' : 'toggle_starters'}>All</button>
+        <button onClick={() => setTab('Starters')} className={tab === 'Starters' ? 'active_toggle_starters' : 'toggle_starters'}>Starters</button>
         <Search
             list={playershares.map(player => player.player.full_name)}
             placeholder={'Search Players'}
             sendSearched={(data) => setSearched(data)}
         />
-        <button onClick={() => setTab('All')}>All</button>
-        <button onClick={() => setTab('Starters')}>Starters</button>
+
         <div className="scrollable">
 
             {display}

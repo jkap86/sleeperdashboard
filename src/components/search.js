@@ -33,7 +33,7 @@ const Search = (props) => {
                 <option key={index}>{i}</option>
             )}
         </datalist>
-        <button onClick={(e) => setSearched('')} className="clickable" type="reset">Clear</button>
+        <button onClick={(e) => setSearched('')} className="clear" type="reset">Clear</button>
     </>
 }
 

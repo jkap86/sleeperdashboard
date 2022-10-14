@@ -236,6 +236,57 @@ html body div#root div.App div#view div.summary table tbody tr td.bold {
   box-shadow: inset 0 0 3.5em var(--color1);
   padding: 0.25em;
 }
+html head div#root div.App div#view input,
+html body div#root div.App div#view input {
+  background-color: var(--color2);
+  font-weight: 900;
+  border: 1rem ridge var(--color4);
+  box-shadow: inset 0 0 1.5em var(--color1), 0 0 1.5rem var(--color1);
+  padding: 0.25rem;
+  font-size: 2rem;
+  display: inline-block;
+  margin: auto;
+  color: var(--color1);
+  position: relative;
+  z-index: 10;
+}
+html head div#root div.App div#view button,
+html body div#root div.App div#view button {
+  font-size: 2rem;
+  background-color: var(--color5);
+  color: var(--color2);
+  width: fit-content;
+}
+html head div#root div.App div#view button:hover,
+html body div#root div.App div#view button:hover {
+  cursor: pointer;
+}
+html head div#root div.App div#view button.clear,
+html body div#root div.App div#view button.clear {
+  background-color: var(--color3);
+  border: 1rem ridge var(--color4);
+  position: relative;
+  z-index: 10;
+  padding: 0.25rem;
+  box-shadow: 0 0 1.5rem var(--color1);
+}
+html head div#root div.App div#view button.toggle_starters,
+html body div#root div.App div#view button.toggle_starters {
+  background-color: var(--color3);
+  margin: 0 1rem;
+  border: 0.75rem ridge var(--color3);
+  color: var(--color4);
+  font-weight: 900;
+}
+html head div#root div.App div#view button.active_toggle_starters,
+html body div#root div.App div#view button.active_toggle_starters {
+  background-color: var(--color3);
+  margin: 0 1rem;
+  border: 0.75rem ridge var(--color5);
+  color: var(--color2);
+  font-weight: 900;
+  filter: contrast(2);
+}
 html head div#root div.App div#view div.scrollable,
 html body div#root div.App div#view div.scrollable {
   display: block;
