@@ -4,6 +4,7 @@ import Search from "./search"
 const Leagues = (props) => {
     const [leagues, setLeagues] = useState([])
     const [searched, setSearched] = useState('')
+    const [page, setPage] = useState(1)
 
     useEffect(() => {
         setLeagues(props.leagues.map(league => {
@@ -25,6 +26,10 @@ const Leagues = (props) => {
             return league
         }))
     }, [props])
+
+    useEffect(() => {
+        setPage(1)
+    }, [searched, props.leagues])
 
     const header = (
         <tr className="main_header">
@@ -56,7 +61,7 @@ const Leagues = (props) => {
         leagues.filter(x => x.name.trim() === searched.trim())
 
     const display = (
-        leagues_display.map((league, index) =>
+        leagues_display.slice((page - 1) * 50, ((page - 1) * 50) + 50).map((league, index) =>
             <tr key={`${league.league_id}_${index}`} className="main_row">
                 <td colSpan={13}>
                     <table className="content">
@@ -126,7 +131,17 @@ const Leagues = (props) => {
             placeholder={'Search Leagues'}
             sendSearched={(data) => setSearched(data)}
         />
+        <ol className="page_numbers">
+            {Array.from(Array(Math.ceil(leagues_display.length / 50)).keys()).map(key => key + 1).map(page_number =>
+                <li className={page === page_number ? 'active clickable' : 'clickable'} key={page_number} onClick={() => setPage(page_number)}>
+                    {page_number}
+                </li>
+            )}
+        </ol>
         <div className="scrollable">
+            <caption>
+
+            </caption>
             <table className="main">
                 <tbody>
                     {header}

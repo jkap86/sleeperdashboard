@@ -24,6 +24,10 @@ html {
           sans-serif;
         position: relative;
 
+        .clickable:hover {
+          cursor: pointer;
+        }
+
         div#homepage {
 
           div.home_wrapper {
@@ -312,6 +316,29 @@ html {
             color: var(--color2);
             font-weight: 900;
             filter: contrast(2);
+          }
+
+          ol.page_numbers {
+            list-style: none;
+            display: flex;
+            width: 75%;
+            overflow-x: scroll;
+            margin: auto;
+            font-size: 1.5rem;
+
+            li {
+              margin: 1rem;
+              padding: .5rem;
+              border: .5rem ridge var(--color3);
+            }
+
+            li.active {
+              color: var(--color2);
+              padding: .5rem;
+              border: .5rem ridge var(--color2);
+            }
+
+
           }
 
           div.scrollable {

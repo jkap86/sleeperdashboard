@@ -5,6 +5,7 @@ import Search from "./search";
 const Leaguemates = (props) => {
     const [leaguemates, setLeaguemates] = useState([])
     const [searched, setSearched] = useState('')
+    const [page, setPage] = useState(1)
 
     const showLeagues = (leaguemate_userid) => {
         console.log(leaguemate_userid)
@@ -18,6 +19,10 @@ const Leaguemates = (props) => {
     useEffect(() => {
         setLeaguemates(props.leaguemates.sort((a, b) => b.leagues.length - a.leagues.length))
     }, [props])
+
+    useEffect(() => {
+        setPage(1)
+    }, [searched, props.leaguemates])
 
     const header = (
         <>
@@ -36,11 +41,11 @@ const Leaguemates = (props) => {
         </>
     )
 
-    const leaguemates_display = searched.trim().length === 0 ? leaguemates :
+    const leaguemates_display = searched.trim().length === 0 ? leaguemates.filter(x => x.user_id !== props.user_id) :
         leaguemates.filter(x => x.display_name.trim() === searched.trim())
 
     const display = (
-        leaguemates_display.filter(x => x.user_id !== props.user_id).map((leaguemate, index) =>
+        leaguemates_display.slice((page - 1) * 50, ((page - 1) * 50) + 50).map((leaguemate, index) =>
             <tr
                 key={`${leaguemate.user_id}_${index}`}
                 onClick={() => showLeagues(leaguemate.user_id)}
@@ -105,6 +110,13 @@ const Leaguemates = (props) => {
             placeholder={'Search Leaguemates'}
             sendSearched={(data) => setSearched(data)}
         />
+        <ol className="page_numbers">
+            {Array.from(Array(Math.ceil(leaguemates_display.length / 50)).keys()).map(key => key + 1).map(page_number =>
+                <li className={page === page_number ? 'active clickable' : 'clickable'} key={page_number} onClick={() => setPage(page_number)}>
+                    {page_number}
+                </li>
+            )}
+        </ol>
         <div className="scrollable">
             <table className="main">
                 <tbody className="main_header">

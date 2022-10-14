@@ -8,6 +8,7 @@ const PlayerShares = (props) => {
     const [searched, setSearched] = useState('')
     const [leaguesVisible, setLeaguesVisible] = useState([])
     const [tab, setTab] = useState('All')
+    const [page, setPage] = useState(1)
 
     const toggleLeagues = (player_id) => {
         let lv = leaguesVisible;
@@ -30,6 +31,10 @@ const PlayerShares = (props) => {
             }
         }).sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
     }, [props])
+
+    useEffect(() => {
+        setPage(1)
+    }, [searched, props.player_shares])
 
     const header = (
         <tr className="main_header">
@@ -71,7 +76,7 @@ const PlayerShares = (props) => {
         <table className="main">
             <tbody>
                 {header}
-                {playershares_display.map((player, index) =>
+                {playershares_display.slice((page - 1) * 50, ((page - 1) * 50) + 50).map((player, index) =>
                     <React.Fragment key={`${player.id}_${index}`}>
                         <tr
                             className={leaguesVisible.includes(player.id) ? 'active' : 'main_row'}>
@@ -160,7 +165,13 @@ const PlayerShares = (props) => {
             placeholder={'Search Players'}
             sendSearched={(data) => setSearched(data)}
         />
-
+        <ol className="page_numbers">
+            {Array.from(Array(Math.ceil(playershares_display.length / 50)).keys()).map(key => key + 1).map(page_number =>
+                <li className={page === page_number ? 'active clickable' : 'clickable'} key={page_number} onClick={() => setPage(page_number)}>
+                    {page_number}
+                </li>
+            )}
+        </ol>
         <div className="scrollable">
 
             {display}

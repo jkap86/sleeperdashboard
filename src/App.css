@@ -21,6 +21,10 @@ html body div#root div.App {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   position: relative;
 }
+html head div#root div.App .clickable:hover,
+html body div#root div.App .clickable:hover {
+  cursor: pointer;
+}
 html head div#root div.App div#homepage div.home_wrapper,
 html body div#root div.App div#homepage div.home_wrapper {
   width: 100%;
@@ -286,6 +290,27 @@ html body div#root div.App div#view button.active_toggle_starters {
   color: var(--color2);
   font-weight: 900;
   filter: contrast(2);
+}
+html head div#root div.App div#view ol.page_numbers,
+html body div#root div.App div#view ol.page_numbers {
+  list-style: none;
+  display: flex;
+  width: 75%;
+  overflow-x: scroll;
+  margin: auto;
+  font-size: 1.5rem;
+}
+html head div#root div.App div#view ol.page_numbers li,
+html body div#root div.App div#view ol.page_numbers li {
+  margin: 1rem;
+  padding: 0.5rem;
+  border: 0.5rem ridge var(--color3);
+}
+html head div#root div.App div#view ol.page_numbers li.active,
+html body div#root div.App div#view ol.page_numbers li.active {
+  color: var(--color2);
+  padding: 0.5rem;
+  border: 0.5rem ridge var(--color2);
 }
 html head div#root div.App div#view div.scrollable,
 html body div#root div.App div#view div.scrollable {
