@@ -225,7 +225,7 @@ html {
 
             table {
               border-spacing: 0;
-              border: .5rem groove var(--color5);
+              border: .75rem ridge var(--color5);
               filter: contrast(2);
               margin: 1rem;
 
@@ -268,7 +268,7 @@ html {
             font-weight: 900;
             border: 1rem ridge var(--color4);
             box-shadow: inset 0 0 1.5em var(--color1), 0 0 1.5rem var(--color1);
-            padding: .25rem;
+            padding: .25rem 1rem;
             font-size: 2rem;
             display: inline-block;
             margin: auto;
@@ -317,25 +317,31 @@ html {
           div.scrollable {
             display: block;
             overflow: scroll;
-            height: 80vh;
+            height: fit-content;
+            max-height: 80vh;
+            width: 95%;
+            max-width: 1200px;
             position: relative;
+            border: .75rem ridge var(--color5);
+            margin: auto;
 
             table.main {
               table-layout: fixed;
               margin: auto;
-              width: 95%;
-              max-width: 1200px;
+              width: 100%;
               font-size: 2rem;
               border-spacing: 0;
 
+
               td.image {
                 &:hover {
+
                   strong {
                     overflow: visible;
                     max-width: unset;
                     color: var(--color2);
                     background-color: black;
-                    padding: .5rem;
+                    padding: .25rem;
                   }
                 }
 
@@ -458,29 +464,13 @@ html {
                       background-color: var(--color5);
                       color: var(--color1);
                       font-weight: 600;
+                      filter: brightness(.75);
                     }
 
                     &:nth-child(odd) {
-                      filter: brightness(1.1)
+                      filter: brightness(0.75)
                     }
 
-                    td.image {
-                      &:hover {
-                        span {
-                          strong {
-                            background-color: var(--color1);
-                            color: var(--color2);
-                          }
-                        }
-                      }
-
-                      span {
-                        strong {
-                          background-color: inherit;
-                          font-weight: 600;
-                        }
-                      }
-                    }
                   }
                 }
               }

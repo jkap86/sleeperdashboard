@@ -205,7 +205,7 @@ html body div#root div.App div#view div.summary {
 html head div#root div.App div#view div.summary table,
 html body div#root div.App div#view div.summary table {
   border-spacing: 0;
-  border: 0.5rem groove var(--color5);
+  border: 0.75rem ridge var(--color5);
   filter: contrast(2);
   margin: 1rem;
 }
@@ -242,7 +242,7 @@ html body div#root div.App div#view input {
   font-weight: 900;
   border: 1rem ridge var(--color4);
   box-shadow: inset 0 0 1.5em var(--color1), 0 0 1.5rem var(--color1);
-  padding: 0.25rem;
+  padding: 0.25rem 1rem;
   font-size: 2rem;
   display: inline-block;
   margin: auto;
@@ -291,15 +291,19 @@ html head div#root div.App div#view div.scrollable,
 html body div#root div.App div#view div.scrollable {
   display: block;
   overflow: scroll;
-  height: 80vh;
+  height: fit-content;
+  max-height: 80vh;
+  width: 95%;
+  max-width: 1200px;
   position: relative;
+  border: 0.75rem ridge var(--color5);
+  margin: auto;
 }
 html head div#root div.App div#view div.scrollable table.main,
 html body div#root div.App div#view div.scrollable table.main {
   table-layout: fixed;
   margin: auto;
-  width: 95%;
-  max-width: 1200px;
+  width: 100%;
   font-size: 2rem;
   border-spacing: 0;
 }
@@ -309,7 +313,7 @@ html body div#root div.App div#view div.scrollable table.main td.image:hover str
   max-width: unset;
   color: var(--color2);
   background-color: black;
-  padding: 0.5rem;
+  padding: 0.25rem;
 }
 html head div#root div.App div#view div.scrollable table.main td.image span,
 html body div#root div.App div#view div.scrollable table.main td.image span {
@@ -416,20 +420,11 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
   background-color: var(--color5);
   color: var(--color1);
   font-weight: 600;
+  filter: brightness(0.75);
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr:nth-child(odd),
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr:nth-child(odd) {
-  filter: brightness(1.1);
-}
-html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image:hover span strong,
-html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image:hover span strong {
-  background-color: var(--color1);
-  color: var(--color2);
-}
-html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image span strong,
-html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image span strong {
-  background-color: inherit;
-  font-weight: 600;
+  filter: brightness(0.75);
 }
 
 /*# sourceMappingURL=App.css.map */

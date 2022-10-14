@@ -74,12 +74,11 @@ const PlayerShares = (props) => {
                 {playershares_display.map((player, index) =>
                     <React.Fragment key={`${player.id}_${index}`}>
                         <tr
-                            onClick={() => toggleLeagues(player.id)}
                             className={leaguesVisible.includes(player.id) ? 'active' : 'main_row'}>
                             <td colSpan={16}>
                                 <table className="content">
                                     <tbody>
-                                        <tr>
+                                        <tr onClick={() => toggleLeagues(player.id)}>
                                             <td colSpan={3} className="image">
                                                 <span className="image">
                                                     {
