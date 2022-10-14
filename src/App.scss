@@ -322,6 +322,7 @@ html {
             list-style: none;
             display: flex;
             width: 75%;
+            max-width: 1200px;
             overflow-x: scroll;
             margin: auto;
             font-size: 1.5rem;
@@ -381,12 +382,12 @@ html {
                   padding: 0;
 
                   img {
-                    width: 5rem;
-                    height: 5rem;
+                    width: 7.5rem;
+                    height: 7.5rem;
                     border-radius: 50%;
                     object-fit: cover;
-                    box-shadow: 0 0 .75rem var(--color2);
-                    margin: .5em;
+                    box-shadow: 0 0 1rem var(--color2);
+                    margin: .5rem;
                   }
 
                   strong {
@@ -468,6 +469,85 @@ html {
                 width: 100%;
                 border: .25rem solid var(--color2);
                 border-top: none;
+                border-spacing: 0;
+
+                tr.secondary_header {
+                  position: sticky;
+                  top: 13rem;
+                  z-index: 1;
+                  outline: .25rem solid var(--color2);
+                  background-color: navy;
+                  color: var(--color2);
+                }
+
+                tbody.secondary_content {
+                  tr {
+                    background-color: navy;
+                    filter: invert(.1);
+
+                    &:nth-child(odd) {
+                      filter: invert(.2);
+                    }
+
+                    td.image_secondary {
+                      padding: 0 1rem;
+
+                      &:hover {
+                        span {
+                          strong {
+                            color: var(--color2);
+                            filter: brightness(2);
+                            overflow: visible;
+                            max-width: unset;
+                          }
+                        }
+                      }
+
+                      background-color: inherit;
+
+                      span {
+                        display: block;
+                        position: relative;
+                        background-color: inherit;
+
+                        img {
+                          width: 7.5rem;
+                          height: 7.5rem;
+                          border-radius: 50%;
+                          object-fit: cover;
+                          box-shadow: 0 0 1rem var(--color2);
+                          margin: .5rem;
+                          filter: invert(-.2);
+                        }
+
+                        strong {
+                          position: absolute;
+                          top: 0;
+                          left: 0;
+                          right: 0;
+                          bottom: 0;
+                          margin: auto;
+                          height: fit-content;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          max-width: 95%;
+                          white-space: nowrap;
+                          font-size: 1.5rem;
+                          background-color: inherit;
+                          width: fit-content;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              /*
+              table.secondary {
+                table-layout: fixed;
+                width: 100%;
+                border: .25rem solid var(--color2);
+                border-top: none;
                 margin: auto;
                 border-collapse: collapse;
                 color: var(--color2);
@@ -498,10 +578,45 @@ html {
                       filter: brightness(0.75)
                     }
 
+                    td.image_secondary {
+                      &:hover {
+                        strong {
+                          color: purple;
+                          max-width: unset;
+                          overflow: visible;
+                        }
+                      }
+
+                      span {
+                        background-color: inherit;
+                        display: block;
+                        margin: 0;
+                        padding: 0;
+
+                        img {
+                          width: 5rem;
+                          height: 5rem;
+                          border-radius: 50%;
+                          object-fit: cover;
+                          box-shadow: 0 0 .75rem var(--color2);
+                          margin: .5em;
+                        }
+
+                        strong {
+                          white-space: nowrap;
+                          font-size: 1.5rem;
+                          text-overflow: ellipsis;
+
+                          width: 15rem;
+                        }
+                      }
+
+                    }
+
                   }
                 }
               }
-
+            */
 
 
 

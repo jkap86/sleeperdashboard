@@ -14,7 +14,7 @@ const PlayerLeagues = (props) => {
             {
                 leaguesOwned.map((league, index) =>
                     <tr key={`${league.league_id}_${index}`}>
-                        <td colSpan={3} className="image">
+                        <td colSpan={3} className="image_secondary">
                             <span className="image">
                                 {
                                     props.avatar(league.league_avatar, league.league_name, 'league')
