@@ -44,7 +44,7 @@ const Leaguemates = (props) => {
             <tr
                 key={`${leaguemate.user_id}_${index}`}
                 onClick={() => showLeagues(leaguemate.user_id)}
-            >
+                className={'main_row'}>
                 <td className="image">
                     <span className="image">
                         {
@@ -110,7 +110,7 @@ const Leaguemates = (props) => {
                 <tbody className="main_header">
                     {header}
                 </tbody>
-                <tbody className="main">
+                <tbody>
                     {display}
                 </tbody>
             </table>

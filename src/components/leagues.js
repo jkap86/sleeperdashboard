@@ -27,7 +27,7 @@ const Leagues = (props) => {
     }, [props])
 
     const header = (
-        <tr>
+        <tr className="main_header">
             <th colSpan={3}>
                 League
             </th>
@@ -57,54 +57,63 @@ const Leagues = (props) => {
 
     const display = (
         leagues_display.map((league, index) =>
-            <tr key={`${league.league_id}_${index}`}>
-                <td colSpan={3} className="image">
-                    <span>
-                        {
-                            props.avatar(league.avatar, league.name, 'league')
-                        }
-                        <strong>
-                            {
-                                league.name
-                            }
-                        </strong>
-                    </span>
-                </td>
-                <td colSpan={3}>
-                    {
-                        `${league.wins}-${league.losses}${league.ties > 0 ? league.ties : ''}`
-                    }
-                    &nbsp;&nbsp;
-                    <em>
-                        {
-                            (league.wins / (league.wins + league.losses + league.ties)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-                        }
-                    </em>
-                </td>
-                <td colSpan={2}>
-                    {
-                        league.fpts.toLocaleString("en-US")
-                    }
-                </td>
-                <td colSpan={2}>
-                    {
-                        league.fpts_against.toLocaleString("en-US")
-                    }
-                </td>
-                <td>
-                    {
-                        league.rank
-                    }
-                </td>
-                <td>
-                    {
-                        league.rank_points
-                    }
-                </td>
-                <td>
-                    {
-                        league.total_rosters
-                    }
+            <tr key={`${league.league_id}_${index}`} className="main_row">
+                <td colSpan={13}>
+                    <table className="content">
+                        <tbody>
+                            <tr>
+                                <td colSpan={3} className="image">
+                                    <span>
+                                        {
+                                            props.avatar(league.avatar, league.name, 'league')
+                                        }
+                                        <strong>
+                                            {
+                                                league.name
+                                            }
+                                        </strong>
+                                    </span>
+                                </td>
+                                <td colSpan={3}>
+                                    {
+                                        `${league.wins}-${league.losses}${league.ties > 0 ? league.ties : ''}`
+                                    }
+                                    &nbsp;&nbsp;
+                                    <em>
+                                        {
+                                            (league.wins / (league.wins + league.losses + league.ties)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                                        }
+                                    </em>
+                                </td>
+                                <td colSpan={2}>
+                                    {
+                                        league.fpts.toLocaleString("en-US")
+                                    }
+                                </td>
+                                <td colSpan={2}>
+                                    {
+                                        league.fpts_against.toLocaleString("en-US")
+                                    }
+                                </td>
+                                <td>
+                                    {
+                                        league.rank
+                                    }
+                                </td>
+                                <td>
+                                    {
+                                        league.rank_points
+                                    }
+                                </td>
+                                <td>
+                                    {
+                                        league.total_rosters
+                                    }
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </td>
             </tr>
         )
@@ -119,10 +128,8 @@ const Leagues = (props) => {
         />
         <div className="scrollable">
             <table className="main">
-                <tbody className="main_header">
+                <tbody>
                     {header}
-                </tbody>
-                <tbody className="main">
                     {display}
                 </tbody>
             </table>

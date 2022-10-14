@@ -267,6 +267,7 @@ html {
             display: block;
             overflow: scroll;
             height: 80vh;
+            position: relative;
 
             table.main {
               table-layout: fixed;
@@ -274,29 +275,20 @@ html {
               width: 95%;
               max-width: 1200px;
               font-size: 2rem;
-              border-collapse: collapse;
-
-              tr {
-                border: .1rem solid var(--color5);
-              }
-
-              tr.active {
-                background-color: navy;
-                border: .1rem solid var(--color2);
-                filter: contrast(2);
-
-              }
+              border-spacing: 0;
 
               td.image {
-                span {
-                  &:hover {
-                    strong {
-                      overflow: visible;
-                      max-width: unset;
-                      color: var(--color2);
-                      background-color: var(--color3);
-                    }
+                &:hover {
+                  strong {
+                    overflow: visible;
+                    max-width: unset;
+                    color: var(--color2);
+                    background-color: black;
+                    padding: .5rem;
                   }
+                }
+
+                span {
 
                   background-color: inherit;
                   position: relative;
@@ -327,65 +319,128 @@ html {
                     overflow: hidden;
                     white-space: nowrap;
                     font-size: 1.5rem;
-                    background-color: var(--color3);
+                    background-color: var(--color3)
                   }
                 }
               }
 
-              td.secondary_wrapper {
-                background-color: var(--color5);
-                border: .1rem solid black;
+              th.small {
+                font-size: 75%;
               }
 
-              tbody.main_header {
-
+              .main_header {
                 background-color: var(--color4);
                 position: sticky;
                 top: 0;
-                z-index: 1;
+                z-index: 2;
                 color: var(--color1);
                 text-shadow: 0 0 .25rem var(--color5);
+                height: 5rem;
+              }
 
-                th.small {
-                  font-size: 75%;
+              tr.main_row {
+                background-color: var(--color3);
+
+                &:nth-child(odd) {
+                  filter: invert(.1);
                 }
               }
 
-              tbody.main {
-                background-color: var(--color3);
+              table.content {
+                table-layout: fixed;
+                width: 100%;
+                border-collapse: collapse;
 
-
-
-              }
-            }
-
-            table.secondary {
-              table-layout: fixed;
-              background-color: var(--color4);
-              width: 97%;
-              border-top: none;
-              margin: auto;
-              border-collapse: collapse;
-              filter: contrast(2);
-
-              th {
-                background-color: navy;
-                color: inherit;
-              }
-
-              td {
-                color: navy;
-                font-weight: 600;
-              }
-
-              td.image {
-                span {
-                  strong {
-                    background-color: var(--color4);
+                tr {
+                  &:hover {
+                    cursor: pointer;
                   }
                 }
               }
+
+              tr.active {
+                table.content {
+                  color: var(--color2);
+                  border: .25rem ridge var(--color2);
+                  position: sticky;
+                  z-index: 1;
+                  top: 5rem;
+
+                  tr {
+                    &:nth-child(odd) {
+                      td {
+                        background-color: navy;
+                      }
+                    }
+                  }
+
+
+
+                }
+              }
+
+              table.secondary {
+                table-layout: fixed;
+                width: 100%;
+                border: .25rem solid var(--color2);
+                border-top: none;
+                margin: auto;
+                border-collapse: collapse;
+                color: var(--color2);
+
+                tr.secondary_header {
+                  position: sticky;
+                  top: 13rem;
+                  z-index: 1;
+                  outline: .25rem solid var(--color2);
+
+                }
+
+                th {
+                  background-color: navy;
+                  color: inherit;
+                }
+
+                tbody.secondary_content {
+                  tr {
+                    td {
+                      background-color: var(--color5);
+                      color: var(--color1);
+                      font-weight: 600;
+                    }
+
+                    &:nth-child(odd) {
+                      filter: brightness(1.1)
+                    }
+
+                    td.image {
+                      &:hover {
+                        span {
+                          strong {
+                            background-color: var(--color1);
+                            color: var(--color2);
+                          }
+                        }
+                      }
+
+                      span {
+                        strong {
+                          background-color: inherit;
+                          font-weight: 600;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+
+
+
+
             }
+
+
 
 
           }

@@ -10,7 +10,7 @@ const PlayerLeagues = (props) => {
     }, [props.leagues_owned])
 
     let display = (
-        <tbody>
+        <tbody className="secondary_content">
             {
                 leaguesOwned.map((league, index) =>
                     <tr key={`${league.league_id}_${index}`}>
@@ -56,7 +56,7 @@ const PlayerLeagues = (props) => {
     return <>
         <table className="secondary">
             <tbody>
-                <tr>
+                <tr className="secondary_header">
                     <th colSpan={3}>League</th>
                     <th colSpan={2}>Status</th>
                     <th colSpan={3}>Record</th>
