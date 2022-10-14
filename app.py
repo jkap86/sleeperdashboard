@@ -91,8 +91,13 @@ def getPlayersLeague(league, allplayers):
     return [[{
         'id': z,
         'player': allplayers.get(z, {'full_name': 'INACTIVE'}),
+        'status': 'Starter' if z in y['starters'] else 
+            'Taxi' if z in (y['taxi'] or []) else 
+                'IR' if z in (y['reserve'] or []) else
+                    'Bench',
         'league_id': league['league_id'],
         'league_name': league['name'],
+        'league_avatar': league['avatar'],
         'dynasty': league['dynasty'],
         'bestball': league['bestball'],
         'manager': next(iter([

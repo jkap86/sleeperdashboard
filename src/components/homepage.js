@@ -28,7 +28,7 @@ const Homepage = () => {
                 />
                 <Link to={`/${username}`}>
                     <button
-                        className='home clickable'
+                        className='home'
                     >
                         Submit
                     </button>

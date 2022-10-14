@@ -23,7 +23,6 @@ html body div#root div.App {
 }
 html head div#root div.App div#homepage div.home_wrapper,
 html body div#root div.App div#homepage div.home_wrapper {
-  position: absolute;
   width: 100%;
 }
 html head div#root div.App div#homepage div.home_wrapper h1,
@@ -74,11 +73,12 @@ html head div#root div.App div#homepage div.home_wrapper div a button.home,
 html body div#root div.App div#homepage div.home_wrapper div a button.home {
   background-color: var(--color5);
   color: var(--color2);
-  width: 25vmin;
+  width: fit-content;
   font-size: 5vmin;
-  box-shadow: inset 0 0 5em var(--color1), 0 0 1em var(--color5);
-  border: 0.5em double var(--color3);
-  border-radius: 2em;
+  padding: 1rem;
+  box-shadow: inset 0 0 15rem var(--color1), 0 0 3rem var(--color5);
+  border: 2rem double var(--color3);
+  border-radius: 10rem;
 }
 html head div#root div.App div#homepage div.home_wrapper div a button.home:hover,
 html body div#root div.App div#homepage div.home_wrapper div a button.home:hover {
@@ -242,81 +242,42 @@ html body div#root div.App div#view div.scrollable {
   overflow: scroll;
   height: 80vh;
 }
-html head div#root div.App div#view div.scrollable table.wrapper,
-html body div#root div.App div#view div.scrollable table.wrapper {
+html head div#root div.App div#view div.scrollable table.main,
+html body div#root div.App div#view div.scrollable table.main {
   table-layout: fixed;
   margin: auto;
   width: 95%;
   max-width: 1200px;
-  border-collapse: collapse;
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_header,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_header {
-  position: sticky;
-  top: 0.25rem;
-  z-index: 1;
-  outline: 0.25rem solid var(--color5);
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_header tr,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_header tr {
-  outline: none;
-  background-color: transparent;
-  color: var(--color1);
-  text-shadow: 0 0 0.25rem var(--color5);
   font-size: 2rem;
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_header tr th,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_header tr th {
-  padding: 0;
-  background-color: var(--color4);
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_header tr th.small,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_header tr th.small {
-  font-size: 1.5rem;
-  font-weight: 900;
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main {
-  table-layout: fixed;
-  width: 100%;
-  position: relative;
-  box-shadow: 0 0 2rem var(--color5);
   border-collapse: collapse;
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main colgroup.leaguemate,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main colgroup.leaguemate {
-  border-right: 0.5rem solid var(--color5);
-  border-left: 0.5rem solid var(--color5);
+html head div#root div.App div#view div.scrollable table.main tr,
+html body div#root div.App div#view div.scrollable table.main tr {
+  border: 0.1rem solid var(--color5);
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr {
-  background-color: var(--color3);
+html head div#root div.App div#view div.scrollable table.main tr.active,
+html body div#root div.App div#view div.scrollable table.main tr.active {
+  background-color: navy;
+  border: 0.1rem solid var(--color2);
+  filter: contrast(2);
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr:hover,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr:hover {
-  cursor: pointer;
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td {
+html head div#root div.App div#view div.scrollable table.main td.image span,
+html body div#root div.App div#view div.scrollable table.main td.image span {
   background-color: inherit;
-  font-size: 2rem;
-  border-left: 0.25rem solid var(--color1);
-}
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span {
   position: relative;
   display: block;
   margin: 0;
   padding: 0;
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span:hover strong,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span:hover strong {
+html head div#root div.App div#view div.scrollable table.main td.image span:hover strong,
+html body div#root div.App div#view div.scrollable table.main td.image span:hover strong {
   overflow: visible;
   max-width: unset;
   color: var(--color2);
+  background-color: var(--color3);
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span img,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span img {
+html head div#root div.App div#view div.scrollable table.main td.image span img,
+html body div#root div.App div#view div.scrollable table.main td.image span img {
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -324,12 +285,12 @@ html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row 
   box-shadow: 0 0 0.75rem var(--color2);
   margin: 0.5em;
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span strong,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.main tr td span strong {
+html head div#root div.App div#view div.scrollable table.main td.image span strong,
+html body div#root div.App div#view div.scrollable table.main td.image span strong {
   position: absolute;
   top: 0;
   left: 1rem;
-  right: 0;
+  right: 1rem;
   bottom: 0;
   margin: auto;
   height: fit-content;
@@ -338,18 +299,54 @@ html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row 
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  font-size: 1.5rem;
   background-color: var(--color3);
-  font-size: 1.5rem;
 }
-html head div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.secondary,
-html body div#root div.App div#view div.scrollable table.wrapper tbody.main_row tr td table.secondary {
+html head div#root div.App div#view div.scrollable table.main td.secondary_wrapper,
+html body div#root div.App div#view div.scrollable table.main td.secondary_wrapper {
+  background-color: var(--color5);
+  border: 0.1rem solid black;
+}
+html head div#root div.App div#view div.scrollable table.main tbody.main_header,
+html body div#root div.App div#view div.scrollable table.main tbody.main_header {
+  background-color: var(--color4);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--color1);
+  text-shadow: 0 0 0.25rem var(--color5);
+}
+html head div#root div.App div#view div.scrollable table.main tbody.main_header th.small,
+html body div#root div.App div#view div.scrollable table.main tbody.main_header th.small {
+  font-size: 75%;
+}
+html head div#root div.App div#view div.scrollable table.main tbody.main,
+html body div#root div.App div#view div.scrollable table.main tbody.main {
+  background-color: var(--color3);
+}
+html head div#root div.App div#view div.scrollable table.secondary,
+html body div#root div.App div#view div.scrollable table.secondary {
   table-layout: fixed;
-  font-size: 1.5rem;
+  background-color: var(--color4);
+  width: 97%;
+  border-top: none;
   margin: auto;
-  width: 100%;
-  position: relative;
-  box-shadow: 0 0 2rem var(--color5);
   border-collapse: collapse;
+  filter: contrast(2);
+}
+html head div#root div.App div#view div.scrollable table.secondary th,
+html body div#root div.App div#view div.scrollable table.secondary th {
+  background-color: navy;
+  color: inherit;
+}
+html head div#root div.App div#view div.scrollable table.secondary td,
+html body div#root div.App div#view div.scrollable table.secondary td {
+  color: navy;
+  font-weight: 600;
+}
+html head div#root div.App div#view div.scrollable table.secondary td.image span strong,
+html body div#root div.App div#view div.scrollable table.secondary td.image span strong {
+  background-color: var(--color4);
 }
 
 /*# sourceMappingURL=App.css.map */

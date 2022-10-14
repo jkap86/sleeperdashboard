@@ -1,121 +1,145 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
+import PlayerLeagues from "./playerLeagues"
 import Search from "./search"
 
 const PlayerShares = (props) => {
     const [playershares, setPlayershares] = useState([])
+    const [starters, setStarters] = useState([])
     const [searched, setSearched] = useState('')
+    const [leaguesVisible, setLeaguesVisible] = useState([])
+    const [tab, setTab] = useState('All')
+
+    const toggleLeagues = (player_id) => {
+        let lv = leaguesVisible;
+        if (lv.includes(player_id)) {
+            lv = lv.filter(x => x !== player_id)
+            console.log(lv)
+        } else {
+            lv.push(player_id)
+            console.log(lv)
+        }
+        setLeaguesVisible([...lv])
+    }
 
     useEffect(() => {
         setPlayershares(props.player_shares.sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
+        setStarters(props.player_shares.map(player => {
+            return {
+                ...player,
+                leagues_owned: player.leagues_owned.filter(x => x.status === 'Starter')
+            }
+        }).sort((a, b) => b.leagues_owned.length - a.leagues_owned.length))
     }, [props])
 
     const header = (
-        <tbody className="main_header">
-            <tr>
-                <th colSpan={3}>
-                    Name
-                </th>
-                <th colSpan={1}>
-                    #
-                </th>
-                <th>
-                    W
-                </th>
-                <th>
-                    L
-                </th>
-                <th colSpan={2}>
-                    W%
-                </th>
-                <th colSpan={3}>
-                    PF
-                </th>
-                <th colSpan={3}>
-                    PA
-                </th>
-                <th colSpan={2}>
-                    <em>
-                        Avg Diff
-                    </em>
-                </th>
-            </tr>
-        </tbody>
+        <tr>
+            <th colSpan={3}>
+                Name
+            </th>
+            <th colSpan={1}>
+                #
+            </th>
+            <th>
+                W
+            </th>
+            <th>
+                L
+            </th>
+            <th colSpan={2}>
+                W%
+            </th>
+            <th colSpan={3}>
+                PF
+            </th>
+            <th colSpan={3}>
+                PA
+            </th>
+            <th colSpan={2}>
+                <em>
+                    Avg Diff
+                </em>
+            </th>
+        </tr>
     )
 
-    const playershares_display = searched.trim().length === 0 ? playershares :
-        playershares.filter(x => x.player.full_name?.trim() === searched.trim())
+    let players = tab === 'All' ? playershares : starters
+
+    const playershares_display = searched.trim().length === 0 ? players :
+        players.filter(x => x.player.full_name?.trim() === searched.trim())
 
     const display = (
-        <table className="wrapper">
-            {header}
-            {playershares_display.map((player, index) =>
-                <tbody className="main_row">
-                    <tr>
-                        <td colSpan={16}>
-                            <table className="main">
-                                <tr key={`${player.id}_${index}`}>
-                                    <td colSpan={3}>
-                                        <span className="image">
-                                            {
-                                                props.avatar(player.id, player.player.full_name, 'player')
-                                            }
-                                            <strong>
-                                                {
-                                                    player.player.full_name
-                                                }
-                                            </strong>
-                                        </span>
-                                    </td>
-                                    <td colSpan={1}>
-                                        {
-                                            player.leagues_owned.length
-                                        }
-                                    </td>
-                                    <td>
-                                        {
-                                            player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0)
-                                        }
-                                    </td>
-                                    <td>
-                                        {
-                                            player.leagues_owned.reduce((acc, cur) => acc + cur.losses, 0)
-                                        }
-                                    </td>
-                                    <td colSpan={2}>
-                                        <em>
-                                            {
-                                                (player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0) /
-                                                    player.leagues_owned.reduce((acc, cur) => acc + cur.losses + cur.wins, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
-                                            }
-                                        </em>
-                                    </td>
-                                    <td colSpan={3}>
-                                        {
-                                            player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US")
-                                        }
-                                    </td>
-                                    <td colSpan={3}>
-                                        {
-                                            player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US")
-                                        }
-                                    </td>
-                                    <td colSpan={2}>
-                                        <em>
-                                            {
-                                                (
-                                                    (player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0) -
-                                                        player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0)) / player.leagues_owned.length
-                                                ).toLocaleString("en-US", { maximumFractionDigits: 2 })
-                                            }
-                                        </em>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            )}
-        </table>
+        playershares_display.map((player, index) =>
+            <React.Fragment key={`${player.id}_${index}`}>
+                <tr
+                    onClick={() => toggleLeagues(player.id)}
+                    className={leaguesVisible.includes(player.id) ? 'active' : null}
+                >
+                    <td colSpan={3} className="image">
+                        <span className="image">
+                            {
+                                props.avatar(player.id, player.player.full_name, 'player')
+                            }
+                            <strong>
+                                {
+                                    player.player.full_name
+                                }
+                            </strong>
+                        </span>
+                    </td>
+                    <td colSpan={1}>
+                        {
+                            player.leagues_owned.length
+                        }
+                    </td>
+                    <td>
+                        {
+                            player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0)
+                        }
+                    </td>
+                    <td>
+                        {
+                            player.leagues_owned.reduce((acc, cur) => acc + cur.losses, 0)
+                        }
+                    </td>
+                    <td colSpan={2}>
+                        <em>
+                            {
+                                (player.leagues_owned.reduce((acc, cur) => acc + cur.wins, 0) /
+                                    player.leagues_owned.reduce((acc, cur) => acc + cur.losses + cur.wins, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                            }
+                        </em>
+                    </td>
+                    <td colSpan={3}>
+                        {
+                            player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US")
+                        }
+                    </td>
+                    <td colSpan={3}>
+                        {
+                            player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US")
+                        }
+                    </td>
+                    <td colSpan={2}>
+                        <em>
+                            {
+                                (
+                                    (player.leagues_owned.reduce((acc, cur) => acc + cur.fpts, 0) -
+                                        player.leagues_owned.reduce((acc, cur) => acc + cur.fpts_against, 0)) / player.leagues_owned.length
+                                ).toLocaleString("en-US", { maximumFractionDigits: 2 })
+                            }
+                        </em>
+                    </td>
+                </tr>
+                <tr hidden={!leaguesVisible.includes(player.id)}>
+                    <td colSpan={16} className="secondary_wrapper">
+                        <PlayerLeagues
+                            leagues_owned={player.leagues_owned}
+                            avatar={props.avatar}
+                        />
+                    </td>
+                </tr>
+            </React.Fragment>
+        )
     )
 
     return <>
@@ -124,8 +148,17 @@ const PlayerShares = (props) => {
             placeholder={'Search Players'}
             sendSearched={(data) => setSearched(data)}
         />
+        <button onClick={() => setTab('All')}>All</button>
+        <button onClick={() => setTab('Starters')}>Starters</button>
         <div className="scrollable">
-            {display}
+            <table className="main">
+                <tbody className="main_header">
+                    {header}
+                </tbody>
+                <tbody className="main">
+                    {display}
+                </tbody>
+            </table>
         </div>
     </>
 }

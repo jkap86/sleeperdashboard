@@ -27,7 +27,6 @@ html {
         div#homepage {
 
           div.home_wrapper {
-            position: absolute;
             width: 100%;
 
             h1 {
@@ -87,12 +86,13 @@ html {
 
                   background-color: var(--color5);
                   color: var(--color2);
-                  width: 25vmin;
+                  width: fit-content;
                   font-size: 5vmin;
-                  box-shadow: inset 0 0 5em var(--color1),
-                  0 0 1em var(--color5);
-                  border: .5em double var(--color3);
-                  border-radius: 2em;
+                  padding: 1rem;
+                  box-shadow: inset 0 0 15rem var(--color1),
+                  0 0 3rem var(--color5);
+                  border: 2rem double var(--color3);
+                  border-radius: 10rem;
                 }
               }
             }
@@ -268,128 +268,124 @@ html {
             overflow: scroll;
             height: 80vh;
 
-            table.wrapper {
+            table.main {
               table-layout: fixed;
               margin: auto;
               width: 95%;
               max-width: 1200px;
+              font-size: 2rem;
               border-collapse: collapse;
 
-              tbody.main_header {
-                position: sticky;
-                top: .25rem;
-                z-index: 1;
-                outline: .25rem solid var(--color5);
+              tr {
+                border: .1rem solid var(--color5);
+              }
 
-                tr {
-                  outline: none;
-                  background-color: transparent;
-                  color: var(--color1);
-                  text-shadow: 0 0 .25rem var(--color5);
-                  font-size: 2rem;
+              tr.active {
+                background-color: navy;
+                border: .1rem solid var(--color2);
+                filter: contrast(2);
 
-                  th {
-                    padding: 0;
-                    background-color: var(--color4);
+              }
+
+              td.image {
+                span {
+                  &:hover {
+                    strong {
+                      overflow: visible;
+                      max-width: unset;
+                      color: var(--color2);
+                      background-color: var(--color3);
+                    }
                   }
 
-                  th.small {
+                  background-color: inherit;
+                  position: relative;
+                  display: block;
+                  margin: 0;
+                  padding: 0;
+
+                  img {
+                    width: 5rem;
+                    height: 5rem;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    box-shadow: 0 0 .75rem var(--color2);
+                    margin: .5em;
+                  }
+
+                  strong {
+                    position: absolute;
+                    top: 0;
+                    left: 1rem;
+                    right: 1rem;
+                    bottom: 0;
+                    margin: auto;
+                    height: fit-content;
+                    width: fit-content;
+                    max-width: 95%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
                     font-size: 1.5rem;
-                    font-weight: 900;
+                    background-color: var(--color3);
                   }
                 }
               }
 
-              tbody.main_row {
-                tr {
+              td.secondary_wrapper {
+                background-color: var(--color5);
+                border: .1rem solid black;
+              }
 
-                  td {
-                    table.main {
-                      table-layout: fixed;
-                      width: 100%;
-                      position: relative;
-                      box-shadow: 0 0 2rem var(--color5);
-                      border-collapse: collapse;
+              tbody.main_header {
 
-                      colgroup.leaguemate {
-                        border-right: .5rem solid var(--color5);
-                        border-left: .5rem solid var(--color5);
-                      }
+                background-color: var(--color4);
+                position: sticky;
+                top: 0;
+                z-index: 1;
+                color: var(--color1);
+                text-shadow: 0 0 .25rem var(--color5);
 
-                      tr {
-                        &:hover {
-                          cursor: pointer;
-                        }
-
-                        background-color: var(--color3);
-
-                        td {
-                          background-color: inherit;
-
-                          font-size: 2rem;
-                          border-left: .25rem solid var(--color1);
-
-                          span {
-                            &:hover {
-                              strong {
-                                overflow: visible;
-                                max-width: unset;
-                                color: var(--color2);
-                              }
-                            }
-
-                            position: relative;
-                            display: block;
-                            margin: 0;
-                            padding: 0;
-
-                            img {
-                              width: 5rem;
-                              height: 5rem;
-                              border-radius: 50%;
-                              object-fit: cover;
-                              box-shadow: 0 0 .75rem var(--color2);
-                              margin: .5em;
-                            }
-
-                            strong {
-                              position: absolute;
-                              top: 0;
-                              left: 1rem;
-                              right: 0;
-                              bottom: 0;
-                              margin: auto;
-                              height: fit-content;
-                              width: fit-content;
-                              max-width: 95%;
-                              text-overflow: ellipsis;
-                              overflow: hidden;
-                              white-space: nowrap;
-                              background-color: var(--color3);
-                              font-size: 1.5rem;
-
-                            }
-                          }
-                        }
-                      }
-
-                    }
-
-                    table.secondary {
-                      table-layout: fixed;
-                      font-size: 1.5rem;
-                      margin: auto;
-                      width: 100%;
-                      position: relative;
-                      box-shadow: 0 0 2rem var(--color5);
-                      border-collapse: collapse;
-                    }
-                  }
+                th.small {
+                  font-size: 75%;
                 }
               }
 
+              tbody.main {
+                background-color: var(--color3);
+
+
+
+              }
             }
 
+            table.secondary {
+              table-layout: fixed;
+              background-color: var(--color4);
+              width: 97%;
+              border-top: none;
+              margin: auto;
+              border-collapse: collapse;
+              filter: contrast(2);
+
+              th {
+                background-color: navy;
+                color: inherit;
+              }
+
+              td {
+                color: navy;
+                font-weight: 600;
+              }
+
+              td.image {
+                span {
+                  strong {
+                    background-color: var(--color4);
+                  }
+                }
+              }
+            }
 
 
           }
