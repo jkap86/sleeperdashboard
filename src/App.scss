@@ -24,8 +24,68 @@ html {
           sans-serif;
         position: relative;
 
+        div.logo_wrapper {
+          position: relative;
+          width: 35rem;
+          height: 35rem;
+          margin: auto;
+          font-size: inherit;
+
+          img {
+            margin: auto;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+          }
+
+          div.z {
+            font-size: inherit;
+            z-index: 10;
+            color: var(--color5);
+            font-size: 10rem;
+            position: relative;
+            animation-name: snooze;
+            animation-duration: 4s;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+            z-index: 10;
+          }
+
+          div.two {
+            animation-duration: 5s;
+          }
+
+          div.three {
+            animation-duration: 6s;
+            right: 5rem;
+          }
+
+          @keyframes snooze {
+            0% {
+              transform: translateY(0rem) translateX(0rem);
+              font-size: 5rem;
+              opacity: 1;
+            }
+
+
+            100% {
+              transform: translateY(-50vmax) translateX(35vmax);
+              font-size: 10rem;
+              opacity: 0;
+            }
+          }
+        }
+
         .clickable:hover {
           cursor: pointer;
+        }
+
+        h2 {
+          font-size: 5rem;
         }
 
         div#homepage {

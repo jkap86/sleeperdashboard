@@ -8,6 +8,7 @@ import league_avatar from '../images/league_avatar.png';
 import player_avatar from '../images/headshot.png';
 import Leaguemates from "./leaguemates";
 import PlayerShares from "./playershares";
+import sleeperLogo from '../images/sleeper_icon.png';
 
 const View = () => {
     const params = useParams();
@@ -312,7 +313,7 @@ const View = () => {
         <div>
             <div hidden={tab !== 'Leagues'}>
                 {
-                    isLoadingLeagues ? <h1>Loading...</h1> :
+                    isLoadingLeagues ? <h2>Loading Leagues...</h2> :
                         <Leagues
                             leagues={stateLeagues.display}
                             user_id={state_User.user_id}
@@ -322,7 +323,7 @@ const View = () => {
             </div>
             <div hidden={tab !== 'Leaguemates'}>
                 {
-                    isLoadingLeaguemates ? <h1>Loading...</h1> :
+                    isLoadingLeaguemates ? <h2>Loading Leaguemates...</h2> :
                         <Leaguemates
                             leaguemates={stateLeaguemates.display}
                             user_id={state_User.user_id}
@@ -333,7 +334,19 @@ const View = () => {
             </div>
             <div hidden={tab !== 'Player Shares'}>
                 {
-                    isLoadingPlayerShares ? <h1>Loading...</h1> :
+                    isLoadingPlayerShares ?
+                        <div>
+                            <h2>
+                                Loading Player Shares...
+                            </h2>
+                            <div className='logo_wrapper'>
+                                <img src={sleeperLogo} />
+                                <div className='z one'>Z</div>
+                                <div className='z two'>Z</div>
+                                <div className='z three'>Z</div>
+                            </div>
+                        </div>
+                        :
                         <PlayerShares
                             player_shares={statePlayerShares.display}
                             avatar={avatar}

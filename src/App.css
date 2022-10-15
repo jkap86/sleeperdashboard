@@ -21,9 +21,66 @@ html body div#root div.App {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   position: relative;
 }
+html head div#root div.App div.logo_wrapper,
+html body div#root div.App div.logo_wrapper {
+  position: relative;
+  width: 35rem;
+  height: 35rem;
+  margin: auto;
+  font-size: inherit;
+}
+html head div#root div.App div.logo_wrapper img,
+html body div#root div.App div.logo_wrapper img {
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+html head div#root div.App div.logo_wrapper div.z,
+html body div#root div.App div.logo_wrapper div.z {
+  font-size: inherit;
+  z-index: 10;
+  color: var(--color5);
+  font-size: 10rem;
+  position: relative;
+  animation-name: snooze;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+  z-index: 10;
+}
+html head div#root div.App div.logo_wrapper div.two,
+html body div#root div.App div.logo_wrapper div.two {
+  animation-duration: 5s;
+}
+html head div#root div.App div.logo_wrapper div.three,
+html body div#root div.App div.logo_wrapper div.three {
+  animation-duration: 6s;
+  right: 5rem;
+}
+@keyframes snooze {
+  0% {
+    transform: translateY(0rem) translateX(0rem);
+    font-size: 5rem;
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50vmax) translateX(35vmax);
+    font-size: 10rem;
+    opacity: 0;
+  }
+}
 html head div#root div.App .clickable:hover,
 html body div#root div.App .clickable:hover {
   cursor: pointer;
+}
+html head div#root div.App h2,
+html body div#root div.App h2 {
+  font-size: 5rem;
 }
 html head div#root div.App div#homepage div.home_wrapper,
 html body div#root div.App div#homepage div.home_wrapper {
