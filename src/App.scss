@@ -544,8 +544,9 @@ html {
                 border: .25rem solid var(--color2);
                 border-top: none;
                 border-spacing: 0;
+                border-collapse: collapse;
 
-                tr.secondary_header {
+                .secondary_header {
                   position: sticky;
                   top: 13rem;
                   z-index: 1;
@@ -557,14 +558,17 @@ html {
 
 
                 tbody.secondary_content {
+
+
                   tr {
                     background-color: var(--color5);
+                    filter: brightness(.75);
                     color: black;
                     font-weight: 600;
 
                     &:nth-child(odd) {
                       background-color: var(--color5);
-                      filter: brightness(1.1);
+                      filter: brightness(.65);
                     }
 
                     td.image_secondary {
@@ -611,7 +615,7 @@ html {
                           text-overflow: ellipsis;
                           max-width: 95%;
                           white-space: nowrap;
-                          font-size: 1.5rem;
+                          font-size: 1.75rem;
                           background-color: inherit;
                           width: fit-content;
                         }

@@ -15,7 +15,6 @@ const Leaguemates = (props) => {
             console.log(lv)
         } else {
             lv.push(leaguemate_id)
-            console.log(lv)
         }
         setLeaguesVisible([...lv])
     }
@@ -113,7 +112,12 @@ const Leaguemates = (props) => {
                         </tbody>
                     </table>
                     <div hidden={!leaguesVisible.includes(leaguemate.user_id)}>
-                        <LeaguemateLeagues />
+                        <LeaguemateLeagues
+                            leagues={leaguemate.leagues}
+                            leaguemate={leaguemate.display_name}
+                            username={props.username}
+                            avatar={props.avatar}
+                        />
                     </div>
                 </td>
             </tr>
