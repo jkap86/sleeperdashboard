@@ -571,6 +571,19 @@ html {
                       filter: brightness(.65);
                     }
 
+                    td.league_summary {
+
+                      table {
+                        width: 100%;
+                        position: sticky;
+                        top: 15rem;
+                        z-index: 1;
+                        text-align: left;
+                      }
+
+                      vertical-align: top;
+                    }
+
                     td.image_secondary {
                       padding: 0 1rem;
 

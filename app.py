@@ -13,19 +13,21 @@ Session(app)
 app.secret_key = '1111'
 Compress(app)
 
-def getLeagueInfo(league, user_id):
+def getLeagueInfo(league, user_id, allplayers):
     users = requests.get(
         'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
           
     rosters = requests.get(
         'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters', timeout=3).json()
-        
+
     userRoster = next(iter([x for x in rosters if x['owner_id'] == user_id or 
         (x['co_owners'] != None and user_id in x['co_owners'])]), None)
     league = {
             'league_id': league['league_id'],
             'name': league['name'],
             'avatar': league['avatar'],
+            'settings': league['settings'],
+            'scoring_settings': league['scoring_settings'],
             'total_rosters': league['total_rosters'],
             'wins': userRoster['settings']['wins'] if userRoster != None else 0,
             'losses': userRoster['settings']['losses'] if userRoster != None else 0,
@@ -163,10 +165,20 @@ def getUser(username):
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 @functools.lru_cache(maxsize=128)
 def getLeagues(user_id):
+    if session.get('allplayers') == None:
+        print('getting players...')
+        allplayers = requests.get(
+            'https://api.sleeper.app/v1/players/nfl'
+        ).json()
+        session['allplayers'] = allplayers
+    else:
+        print('players already loaded...')
+        allplayers = session.get('allplayers')
+
     leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
     
     with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id)))
+        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id), itertools.repeat(allplayers)))
     
     session[user_id] = {
         'leagues': leagues_detailed

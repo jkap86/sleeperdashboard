@@ -1,10 +1,22 @@
 import { useState, useEffect, useRef } from "react"
+import LeagueRosters from "./leagueRosters"
 import Search from "./search"
 
 const Leagues = (props) => {
     const [leagues, setLeagues] = useState([])
     const [searched, setSearched] = useState('')
     const [page, setPage] = useState(1)
+    const [rostersVisible, setRostersVisible] = useState([])
+
+    const toggleRosters = (league_id) => {
+        let rv = rostersVisible;
+        if (rv.includes(league_id)) {
+            rv = rv.filter(x => x !== league_id)
+        } else {
+            rv.push(league_id)
+        }
+        setRostersVisible([...rv])
+    }
 
     useEffect(() => {
         setLeagues(props.leagues.map(league => {
@@ -62,11 +74,14 @@ const Leagues = (props) => {
 
     const display = (
         leagues_display.slice((page - 1) * 50, ((page - 1) * 50) + 50).map((league, index) =>
-            <tr key={`${league.league_id}_${index}`} className="main_row">
+            <tr
+                key={`${league.league_id}_${index}`}
+                className={rostersVisible.includes(league.league_id) ? 'active' : 'main_row'}
+            >
                 <td colSpan={13}>
                     <table className="content">
                         <tbody>
-                            <tr>
+                            <tr onClick={() => toggleRosters(league.league_id)}>
                                 <td colSpan={3} className="image">
                                     <span>
                                         {
@@ -119,6 +134,17 @@ const Leagues = (props) => {
 
                         </tbody>
                     </table>
+                    <div hidden={!rostersVisible.includes(league.league_id)}>
+                        <LeagueRosters
+                            rosters={league.rosters}
+                            users={league.users}
+                            avatar={props.avatar}
+                            settings={league.settings}
+                            scoring_settings={league.scoring_settings}
+                            roster_positons={league.roster_positons}
+                            user_id={props.user_id}
+                        />
+                    </div>
                 </td>
             </tr>
         )

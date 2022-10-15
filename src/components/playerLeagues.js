@@ -6,7 +6,6 @@ const PlayerLeagues = (props) => {
 
     useEffect(() => {
         setLeaguesOwned(props.leagues_owned)
-        console.log(props.leagues_owned)
     }, [props.leagues_owned])
 
     let display = (

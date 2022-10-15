@@ -595,6 +595,18 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
   background-color: var(--color5);
   filter: brightness(0.65);
 }
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.league_summary,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.league_summary {
+  vertical-align: top;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.league_summary table,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.league_summary table {
+  width: 100%;
+  position: sticky;
+  top: 15rem;
+  z-index: 1;
+  text-align: left;
+}
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary {
   padding: 0 1rem;
