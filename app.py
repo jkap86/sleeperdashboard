@@ -135,7 +135,7 @@ def addPlayerLeagues(player, user_id, players_all):
     }
     return player_detail
 
-def getPlayerShares(leagues, user_id, allplayers, inactives):
+def getPlayerShares(leagues, user_id, allplayers):
     with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
         players_all = list(executor.map(getPlayersLeague, leagues, itertools.repeat(allplayers)))
         players_all = list(itertools.chain(*list(itertools.chain(*players_all))))
@@ -163,7 +163,36 @@ def getUser(username):
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 @functools.lru_cache(maxsize=128)
 def getLeagues(user_id):
-    inactives = session.get('inactives', [])
+    leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
+    
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
+        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id)))
+    
+    session[user_id] = {
+        'leagues': leagues_detailed
+    }
+
+    return {
+        'leagues': leagues_detailed
+    }
+
+
+@app.route('/leaguemates/<user_id>')
+@functools.lru_cache(maxsize=128)
+def getLeaguemates(user_id):
+    leagues = session.get(user_id)
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
+        leaguemates = list(executor.map(getLM, [leagues['leagues']], [user_id]))
+    
+    return {
+        'leaguemates': leaguemates[0]
+    }
+
+@app.route('/playershares/<user_id>')
+@functools.lru_cache(maxsize=128)
+def getPlayershares(user_id):
+    
     if session.get('allplayers') == None:
         print('getting players...')
         allplayers = requests.get(
@@ -174,16 +203,12 @@ def getLeagues(user_id):
         print('players already loaded...')
         allplayers = session.get('allplayers')
 
-    leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
-    
+    user = session.get(user_id)
+
     with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id)))
-        leaguemates = list(executor.map(getLM, [leagues_detailed], [user_id]))
-        playershares = list(executor.map(getPlayerShares, [leagues_detailed], [user_id], [allplayers], [inactives]))
+        playershares = list(executor.map(getPlayerShares, [user['leagues']], [user_id], [allplayers]))
 
     return {
-        'leagues': leagues_detailed,
-        'leaguemates': leaguemates[0],
         'playershares': playershares[0]
     }
 

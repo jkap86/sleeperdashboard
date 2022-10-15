@@ -432,6 +432,7 @@ html body div#root div.App div#view div.scrollable table.main td.image span img 
   object-fit: cover;
   box-shadow: 0 0 1rem var(--color2);
   margin: 0.5rem;
+  filter: contrast(2);
 }
 html head div#root div.App div#view div.scrollable table.main td.image span strong,
 html body div#root div.App div#view div.scrollable table.main td.image span strong {
@@ -513,12 +514,13 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tr
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr {
-  background-color: navy;
-  filter: invert(0.1);
+  background-color: var(--color2);
+  color: black;
+  font-weight: 600;
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr:nth-child(odd),
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr:nth-child(odd) {
-  filter: invert(0.2);
+  background-color: var(--color5);
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary {
@@ -544,9 +546,9 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
   height: 7.5rem;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 1rem var(--color2);
+  box-shadow: 0 0 2rem var(--color1);
   margin: 0.5rem;
-  filter: invert(-0.2);
+  filter: contrast(2);
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary span strong,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary span strong {

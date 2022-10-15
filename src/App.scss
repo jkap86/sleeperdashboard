@@ -388,6 +388,7 @@ html {
                     object-fit: cover;
                     box-shadow: 0 0 1rem var(--color2);
                     margin: .5rem;
+                    filter: contrast(2);
                   }
 
                   strong {
@@ -482,11 +483,12 @@ html {
 
                 tbody.secondary_content {
                   tr {
-                    background-color: navy;
-                    filter: invert(.1);
+                    background-color: var(--color2);
+                    color: black;
+                    font-weight: 600;
 
                     &:nth-child(odd) {
-                      filter: invert(.2);
+                      background-color: var(--color5);
                     }
 
                     td.image_secondary {
@@ -515,9 +517,9 @@ html {
                           height: 7.5rem;
                           border-radius: 50%;
                           object-fit: cover;
-                          box-shadow: 0 0 1rem var(--color2);
+                          box-shadow: 0 0 2rem var(--color1);
                           margin: .5rem;
-                          filter: invert(-.2);
+                          filter: contrast(2);
                         }
 
                         strong {

@@ -43,15 +43,17 @@ const View = () => {
                 original: leagues.data.leagues,
                 display: leagues.data.leagues
             })
+            const leaguemates = await axios.get(`/leaguemates/${user.user_id}`)
             setStateLeaguemates({
-                original: leagues.data.leaguemates,
-                display: leagues.data.leaguemates
+                original: leaguemates.data.leaguemates,
+                display: leaguemates.data.leaguemates
             })
+            const playershares = await axios.get(`/playershares/${user.user_id}`)
             setStatePlayerShares({
-                original: leagues.data.playershares,
-                display: leagues.data.playershares
+                original: playershares.data.playershares,
+                display: playershares.data.playershares
             })
-            console.log(leagues.data)
+            console.log(leaguemates.data)
             setIsLoadingLeagues(false)
             setIsLoadingLeaguemates(false)
             setIsLoadingPlayerShares(false)
