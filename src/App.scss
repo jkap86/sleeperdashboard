@@ -43,7 +43,6 @@ html {
           }
 
           div.z {
-            font-size: inherit;
             z-index: 10;
             color: var(--color5);
             font-size: 10rem;
@@ -60,7 +59,7 @@ html {
           }
 
           div.three {
-            animation-duration: 6s;
+            animation-duration: 3s;
             right: 5rem;
           }
 
@@ -73,7 +72,7 @@ html {
 
 
             100% {
-              transform: translateY(-50vmax) translateX(35vmax);
+              transform: translateY(-25vmax) translateX(15vmax);
               font-size: 10rem;
               opacity: 0;
             }

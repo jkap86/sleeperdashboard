@@ -313,7 +313,19 @@ const View = () => {
         <div>
             <div hidden={tab !== 'Leagues'}>
                 {
-                    isLoadingLeagues ? <h2>Loading Leagues...</h2> :
+                    isLoadingLeagues ?
+                        <div>
+                            <h2>
+                                Loading Leagues...
+                            </h2>
+                            <div className='logo_wrapper'>
+                                <img src={sleeperLogo} />
+                                <div className='z one'>Z</div>
+                                <div className='z two'>Z</div>
+                                <div className='z three'>Z</div>
+                            </div>
+                        </div>
+                        :
                         <Leagues
                             leagues={stateLeagues.display}
                             user_id={state_User.user_id}
@@ -323,7 +335,19 @@ const View = () => {
             </div>
             <div hidden={tab !== 'Leaguemates'}>
                 {
-                    isLoadingLeaguemates ? <h2>Loading Leaguemates...</h2> :
+                    isLoadingLeaguemates ?
+                        <div>
+                            <h2>
+                                Loading Leaguemates...
+                            </h2>
+                            <div className='logo_wrapper'>
+                                <img src={sleeperLogo} />
+                                <div className='z one'>Z</div>
+                                <div className='z two'>Z</div>
+                                <div className='z three'>Z</div>
+                            </div>
+                        </div>
+                        :
                         <Leaguemates
                             leaguemates={stateLeaguemates.display}
                             user_id={state_User.user_id}
