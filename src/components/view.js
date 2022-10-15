@@ -311,25 +311,34 @@ const View = () => {
     let display = (
         <div>
             <div hidden={tab !== 'Leagues'}>
-                <Leagues
-                    leagues={stateLeagues.display}
-                    user_id={state_User.user_id}
-                    avatar={avatar}
-                />
+                {
+                    isLoadingLeagues ? <h1>Loading...</h1> :
+                        <Leagues
+                            leagues={stateLeagues.display}
+                            user_id={state_User.user_id}
+                            avatar={avatar}
+                        />
+                }
             </div>
             <div hidden={tab !== 'Leaguemates'}>
-                <Leaguemates
-                    leaguemates={stateLeaguemates.display}
-                    user_id={state_User.user_id}
-                    username={state_User.display_name}
-                    avatar={avatar}
-                />
+                {
+                    isLoadingLeaguemates ? <h1>Loading...</h1> :
+                        <Leaguemates
+                            leaguemates={stateLeaguemates.display}
+                            user_id={state_User.user_id}
+                            username={state_User.display_name}
+                            avatar={avatar}
+                        />
+                }
             </div>
             <div hidden={tab !== 'Player Shares'}>
-                <PlayerShares
-                    player_shares={statePlayerShares.display}
-                    avatar={avatar}
-                />
+                {
+                    isLoadingPlayerShares ? <h1>Loading...</h1> :
+                        <PlayerShares
+                            player_shares={statePlayerShares.display}
+                            avatar={avatar}
+                        />
+                }
             </div>
         </div>
     )
@@ -370,11 +379,6 @@ const View = () => {
                                     className={tab === 'Player Shares' ? 'active' : null}
                                     onClick={() => setTab('Player Shares')}>
                                     Player Shares
-                                </button>
-                                <button
-                                    className={tab === 'Trades' ? 'active' : null}
-                                    onClick={() => setTab('Trades')}>
-                                    Trades
                                 </button>
                             </div>
                             <div className="switch_wrapper">
