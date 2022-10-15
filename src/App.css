@@ -521,6 +521,20 @@ html body div#root div.App div#view div.scrollable table.main .main_header {
   text-shadow: 0 0 0.25rem var(--color5);
   height: 5rem;
 }
+html head div#root div.App div#view div.scrollable table.main tr.main_header_double,
+html body div#root div.App div#view div.scrollable table.main tr.main_header_double {
+  background-color: var(--color4);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  color: var(--color1);
+  text-shadow: 0 0 0.25rem var(--color5);
+  height: 2.5rem;
+}
+html head div#root div.App div#view div.scrollable table.main tr.main_header_double:nth-child(2),
+html body div#root div.App div#view div.scrollable table.main tr.main_header_double:nth-child(2) {
+  top: 2.5rem;
+}
 html head div#root div.App div#view div.scrollable table.main tr.main_row,
 html body div#root div.App div#view div.scrollable table.main tr.main_row {
   background-color: var(--color3);
@@ -570,13 +584,14 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tr
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr {
-  background-color: var(--color2);
+  background-color: var(--color5);
   color: black;
   font-weight: 600;
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr:nth-child(odd),
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr:nth-child(odd) {
   background-color: var(--color5);
+  filter: brightness(1.1);
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary {
@@ -586,6 +601,7 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary:hover span strong,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.image_secondary:hover span strong {
   color: var(--color2);
+  background-color: var(--color1);
   filter: brightness(2);
   overflow: visible;
   max-width: unset;

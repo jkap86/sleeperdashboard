@@ -483,6 +483,20 @@ html {
                 height: 5rem;
               }
 
+              tr.main_header_double {
+                background-color: var(--color4);
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                color: var(--color1);
+                text-shadow: 0 0 .25rem var(--color5);
+                height: 2.5rem;
+
+                &:nth-child(2) {
+                  top: 2.5rem;
+                }
+              }
+
               tr.main_row {
                 background-color: var(--color3);
 
@@ -540,14 +554,17 @@ html {
                   color: var(--color2);
                 }
 
+
+
                 tbody.secondary_content {
                   tr {
-                    background-color: var(--color2);
+                    background-color: var(--color5);
                     color: black;
                     font-weight: 600;
 
                     &:nth-child(odd) {
                       background-color: var(--color5);
+                      filter: brightness(1.1);
                     }
 
                     td.image_secondary {
@@ -557,6 +574,7 @@ html {
                         span {
                           strong {
                             color: var(--color2);
+                            background-color: var(--color1);
                             filter: brightness(2);
                             overflow: visible;
                             max-width: unset;
