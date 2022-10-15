@@ -220,7 +220,7 @@ html body div#root div.App div#view div.summary table tbody tr td {
   border: 0.5rem groove var(--color4);
   background-color: var(--color2);
   padding: 0.5rem;
-  font-size: 1.75rem;
+  font-size: 2rem;
 }
 html head div#root div.App div#view div.summary table tbody tr th,
 html body div#root div.App div#view div.summary table tbody tr th {

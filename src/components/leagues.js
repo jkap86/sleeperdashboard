@@ -139,9 +139,6 @@ const Leagues = (props) => {
             )}
         </ol>
         <div className="scrollable">
-            <caption>
-
-            </caption>
             <table className="main">
                 <tbody>
                     {header}

@@ -46,7 +46,21 @@ const PlayerLeagues = (props) => {
                                 league.fpts_against.toLocaleString("en-US")
                             }
                         </td>
-                        <td colSpan={3}></td>
+                        <td colSpan={1}>
+                            {
+                                league.rank
+                            }
+                        </td>
+                        <td>
+                            {
+                                league.rank_pts
+                            }
+                        </td>
+                        <td>
+                            {
+                                league.total_rosters
+                            }
+                        </td>
                     </tr>
                 )
             }

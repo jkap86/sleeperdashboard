@@ -88,6 +88,9 @@ def getLM(leagues, user_id):
     return leaguemates_dict
 
 def getPlayersLeague(league, allplayers):
+    standings = sorted(league['rosters'], key=lambda x: (x['settings']['wins'], x['settings']['fpts']), reverse=True)
+    pointsList = sorted(league['rosters'], key=lambda x: x['settings']['fpts'], reverse=True)
+
     return [[{
         'id': z,
         'player': allplayers.get(z, {'full_name': 'INACTIVE'}),
@@ -98,12 +101,15 @@ def getPlayersLeague(league, allplayers):
         'league_id': league['league_id'],
         'league_name': league['name'],
         'league_avatar': league['avatar'],
+        'total_rosters': league['total_rosters'],
         'dynasty': league['dynasty'],
         'bestball': league['bestball'],
         'manager': next(iter([
             m for m in league['users'] if 
                 (m['user_id'] == y['owner_id'] or (y['co_owners'] != None and m['user_id'] in y['co_owners']))
             ]), {'display_name': 'Orphan', 'user_id': 0}),
+        'rank': next(iter([i + 1 for (i, x) in enumerate(standings) if x['owner_id'] == y['owner_id']]), 0),
+        'rank_pts': next(iter([i + 1 for (i, x) in enumerate(pointsList) if x['owner_id'] == y['owner_id']]), 0), 
         'wins': y['settings']['wins'],
         'losses': y['settings']['losses'],
         'ties': y['settings']['ties'],
