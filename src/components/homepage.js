@@ -15,7 +15,7 @@ const Homepage = () => {
                         src={sleeperLogo}
                     />
                     <strong>
-                        Sleeper Dashboard
+                        Sleepier
                     </strong>
                 </p>
             </h1>
