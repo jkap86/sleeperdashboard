@@ -5,7 +5,7 @@ import Roster from "./roster";
 const LeagueRosters = (props) => {
     const [rosters, setRosters] = useState([]);
     const [activeRoster, setActiveRoster] = useState(0);
-
+    console.log(rosters)
     useEffect(() => {
         setRosters(props.rosters.sort((a, b) =>
             b.settings.wins - a.settings.wins || b.settings.losses - a.settings.losses ||

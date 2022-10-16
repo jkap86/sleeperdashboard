@@ -20,6 +20,11 @@ def getLeagueInfo(league, user_id, allplayers):
     rosters = requests.get(
         'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters', timeout=3).json()
 
+    rosters = [{
+        **y,
+        'players': [allplayers.get(z, None) for z in y['players']]
+    } for y in rosters]
+
     userRoster = next(iter([x for x in rosters if x['owner_id'] == user_id or 
         (x['co_owners'] != None and user_id in x['co_owners'])]), None)
     league = {
@@ -28,6 +33,7 @@ def getLeagueInfo(league, user_id, allplayers):
             'avatar': league['avatar'],
             'settings': league['settings'],
             'scoring_settings': league['scoring_settings'],
+            'roster_positions': league['roster_positions'],
             'total_rosters': league['total_rosters'],
             'wins': userRoster['settings']['wins'] if userRoster != None else 0,
             'losses': userRoster['settings']['losses'] if userRoster != None else 0,
@@ -55,23 +61,18 @@ def getLeaguemates_League(league, user_id):
         next(iter([z for z in league['rosters'] if z['owner_id'] == user_id or
             (z['co_owners'] != None and user_id in z['co_owners'])]), None)
     )
-    leaguemates_league = []
-    for lm in league['users']:
-        lmroster = (
-            next(iter([z for z in league['rosters'] if z['owner_id'] == lm['user_id'] or
-            (z['co_owners'] != None and lm['user_id'] in z['co_owners'])]), None)
-        )
 
-        if lmroster != None and userRoster != None:
-            leaguemates_league.append({
-                **lm,
-                'league': {
-                    **league,
-                    'lmroster': lmroster,
-                    'roster': userRoster
-                }
-            })
-    
+    leaguemates_league = [{
+        **lm,
+        'league': {
+            'lmroster': next(iter([
+                z for z in league['rosters'] if
+                    z['owner_id'] != user_id and (user_id not in (z['co_owners'] or []))
+            ]), None),
+            'roster': userRoster
+        }
+    } for lm in league['users']]
+
     return leaguemates_league
 
 def addLmLeagues(leaguemate, leaguemates_all):
@@ -94,8 +95,8 @@ def getPlayersLeague(league, allplayers):
     pointsList = sorted(league['rosters'], key=lambda x: x['settings']['fpts'], reverse=True)
 
     return [[{
-        'id': z,
-        'player': allplayers.get(z, {'full_name': 'INACTIVE'}),
+        'id': z['player_id'],
+        'player': allplayers.get(z['player_id'], {'full_name': 'INACTIVE'}),
         'status': 'Starter' if z in y['starters'] else 
             'Taxi' if z in (y['taxi'] or []) else 
                 'IR' if z in (y['reserve'] or []) else
@@ -123,7 +124,7 @@ def getPlayersLeague(league, allplayers):
             float(str(y['settings']['fpts_against']) + "." + str(y['settings']['fpts_against_decimal']))
                 if 'fpts_against_decimal' in y['settings'].keys() else 0
         ) 
-    } for z in y['players'] or []] for y in league['rosters'] or []]
+    } for z in y['players'] or [] if z != None] for y in league['rosters'] or []]
 
 def addPlayerLeagues(player, user_id, players_all):
     player_detail = {

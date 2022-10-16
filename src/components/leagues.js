@@ -141,7 +141,7 @@ const Leagues = (props) => {
                             avatar={props.avatar}
                             settings={league.settings}
                             scoring_settings={league.scoring_settings}
-                            roster_positons={league.roster_positons}
+                            roster_positions={league.roster_positions}
                             user_id={props.user_id}
                         />
                     </div>
