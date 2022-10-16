@@ -156,7 +156,6 @@ def getPlayerShares(leagues, user_id):
 
 @app.route('/user/<username>')
 def getUser(username):
-    getAllPlayers()
     user = requests.get(
         'https://api.sleeper.app/v1/user/' + str(username), timeout=3
     ).json()

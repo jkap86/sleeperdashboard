@@ -602,6 +602,7 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
   table-layout: fixed;
   margin: auto;
   font-size: 1.5rem;
+  filter: brightness(2);
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image {
@@ -635,9 +636,21 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
   background-color: var(--color1);
   color: var(--color2);
 }
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th button,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th button {
+  background-color: transparent;
+  filter: brightness(0.5);
+  color: white;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th button.active,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th button.active {
+  filter: brightness(2);
+  color: var(--color2);
+  border-color: var(--color2);
+}
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td,
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.75);
   color: var(--color2);
 }
 html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td:first-child,

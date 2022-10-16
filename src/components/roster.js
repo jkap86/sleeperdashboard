@@ -25,18 +25,30 @@ const Roster = (props) => {
             </tr>
             <tr>
                 <th>
-                    <button onClick={() => setTab('Starters')}>Starters</button>
+                    <button
+                        className={tab === 'Starters' ? 'active' : null}
+                        onClick={() => setTab('Starters')}>
+                        Starters
+                    </button>
                 </th>
                 <th>
-                    <button onClick={() => setTab('Bench')}>Bench</button>
+                    <button
+                        className={tab === 'Bench' ? 'active' : null}
+                        onClick={() => setTab('Bench')}>
+                        Bench
+                    </button>
                 </th>
                 <th>
-                    <button onClick={() => setTab('Taxi')}>
+                    <button
+                        className={tab === 'Taxi' ? 'active' : null}
+                        onClick={() => setTab('Taxi')}>
                         IR
                     </button>
                 </th>
                 <th>
-                    <button onClick={() => setTab('IR')}>
+                    <button
+                        className={tab === 'IR' ? 'active' : null}
+                        onClick={() => setTab('IR')}>
                         Taxi
                     </button>
                 </th>

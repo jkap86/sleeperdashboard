@@ -648,6 +648,7 @@ html {
                       table-layout: fixed;
                       margin: auto;
                       font-size: 1.5rem;
+                      filter: brightness(2);
 
                       td.image {
                         height: 5rem;
@@ -679,10 +680,22 @@ html {
                         text-align: center;
                         background-color: var(--color1);
                         color: var(--color2);
+
+                        button {
+                          background-color: transparent;
+                          filter: brightness(.5);
+                          color: white;
+                        }
+
+                        button.active {
+                          filter: brightness(2);
+                          color: var(--color2);
+                          border-color: var(--color2);
+                        }
                       }
 
                       td {
-                        background-color: rgba($color: black, $alpha: .5);
+                        background-color: rgba($color: black, $alpha: .75);
                         color: var(--color2);
 
 
