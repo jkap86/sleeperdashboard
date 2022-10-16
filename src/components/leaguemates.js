@@ -75,18 +75,18 @@ const Leaguemates = (props) => {
                                 </td>
                                 <td>
                                     {
-                                        leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins, 0)
+                                        leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster?.settings.wins, 0)
                                     }
                                     -
                                     {
-                                        leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.losses, 0)
+                                        leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster?.settings.losses, 0)
                                     }
                                 </td>
                                 <td>
                                     <em>
                                         {
-                                            (leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins, 0) /
-                                                leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster.settings.wins + cur.lmroster.settings.losses, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
+                                            (leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster?.settings.wins, 0) /
+                                                leaguemate.leagues.reduce((acc, cur) => acc + cur.lmroster?.settings.wins + cur.lmroster?.settings.losses, 0)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
                                         }
                                     </em>
                                 </td>
