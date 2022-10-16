@@ -63,22 +63,22 @@ def getLeaguemates_League(league, user_id):
         next(iter([z for z in league['rosters'] if z['owner_id'] == user_id or
             (z['co_owners'] != None and user_id in z['co_owners'])]), None)
     )
+    leaguemates_league = []
     for lm in league['users']:
         lmroster = next(iter([
             z for z in league['rosters'] if
                 z['owner_id'] == lm['user_id'] or (lm['user_id'] in (z['co_owners'] or []))
         ]), None)
-
-    leaguemates_league = []
-    if lmroster != None and userRoster != None:
-        leaguemates_league.append({
-            **lm,
-            'league': {
-                **league,
-                'lmroster': lmroster,
-                'roster': userRoster
-            }
-        })
+        
+        if lmroster != None and userRoster != None:
+            leaguemates_league.append({
+                **lm,
+                'league': {
+                    **league,
+                    'lmroster': lmroster,
+                    'roster': userRoster
+                }
+            })
 
     return leaguemates_league
 
