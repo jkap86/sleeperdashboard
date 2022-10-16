@@ -72,7 +72,7 @@ const PlayerShares = (props) => {
     let players = tab === 'All' ? playershares : starters
 
     const playershares_display = searched.trim().length === 0 ? players :
-        players.filter(x => x.player.full_name?.trim() === searched.trim())
+        players.filter(x => allplayers[x.id].full_name?.trim() === searched.trim())
 
     const display = (
         <table className="main">
@@ -163,7 +163,7 @@ const PlayerShares = (props) => {
         <button onClick={() => setTab('All')} className={tab === 'All' ? 'active_toggle_starters' : 'toggle_starters'}>All</button>
         <button onClick={() => setTab('Starters')} className={tab === 'Starters' ? 'active_toggle_starters' : 'toggle_starters'}>Starters</button>
         <Search
-            list={playershares.map(player => player.id)}
+            list={playershares.map(player => allplayers[player.id].full_name)}
             placeholder={'Search Players'}
             sendSearched={(data) => setSearched(data)}
         />
