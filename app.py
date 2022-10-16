@@ -5,6 +5,7 @@ import requests
 import concurrent.futures
 import itertools
 import functools
+import json
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
 app.config["SESSION_PERMANENT"] = False
@@ -13,17 +14,18 @@ Session(app)
 app.secret_key = '1111'
 Compress(app)
 
-def getLeagueInfo(league, user_id, allplayers):
+def getAllPlayers():
+    allplayers = requests.get('https://api.sleeper.app/v1/players/nfl').json()
+    with open('./src/allplayers.json', "w") as fo:
+        fo.write(json.dumps(allplayers))
+
+
+def getLeagueInfo(league, user_id):
     users = requests.get(
         'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/users', timeout=3).json()
           
     rosters = requests.get(
         'https://api.sleeper.app/v1/league/' + str(league['league_id']) + '/rosters', timeout=3).json()
-
-    rosters = [{
-        **y,
-        'players': [allplayers.get(z, None) for z in y['players']]
-    } for y in rosters]
 
     userRoster = next(iter([x for x in rosters if x['owner_id'] == user_id or 
         (x['co_owners'] != None and user_id in x['co_owners'])]), None)
@@ -65,13 +67,14 @@ def getLeaguemates_League(league, user_id):
     leaguemates_league = [{
         **lm,
         'league': {
+            **league,
             'lmroster': next(iter([
                 z for z in league['rosters'] if
                     z['owner_id'] != user_id and (user_id not in (z['co_owners'] or []))
             ]), None),
             'roster': userRoster
         }
-    } for lm in league['users']]
+    } for lm in league['users'] if userRoster != None]
 
     return leaguemates_league
 
@@ -90,13 +93,12 @@ def getLM(leagues, user_id):
     }.values())
     return leaguemates_dict
 
-def getPlayersLeague(league, allplayers):
+def getPlayersLeague(league):
     standings = sorted(league['rosters'], key=lambda x: (x['settings']['wins'], x['settings']['fpts']), reverse=True)
     pointsList = sorted(league['rosters'], key=lambda x: x['settings']['fpts'], reverse=True)
 
     return [[{
-        'id': z['player_id'],
-        'player': allplayers.get(z['player_id'], {'full_name': 'INACTIVE'}),
+        'id': z,
         'status': 'Starter' if z in y['starters'] else 
             'Taxi' if z in (y['taxi'] or []) else 
                 'IR' if z in (y['reserve'] or []) else
@@ -138,14 +140,13 @@ def addPlayerLeagues(player, user_id, players_all):
     }
     return player_detail
 
-def getPlayerShares(leagues, user_id, allplayers):
+def getPlayerShares(leagues, user_id):
     with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
-        players_all = list(executor.map(getPlayersLeague, leagues, itertools.repeat(allplayers)))
+        players_all = list(executor.map(getPlayersLeague, leagues))
         players_all = list(itertools.chain(*list(itertools.chain(*players_all))))
         players_unique = list({
             player['id']: {
-                'id': player['id'],
-                'player': player['player']
+                'id': player['id']
             } for player in players_all
         }.values())
         playershares = list(executor.map(addPlayerLeagues, players_unique, itertools.repeat(user_id), itertools.repeat(players_all)))
@@ -155,6 +156,7 @@ def getPlayerShares(leagues, user_id, allplayers):
 
 @app.route('/user/<username>')
 def getUser(username):
+    getAllPlayers()
     user = requests.get(
         'https://api.sleeper.app/v1/user/' + str(username), timeout=3
     ).json()
@@ -166,20 +168,10 @@ def getUser(username):
 @app.route('/leagues/<user_id>', methods=['GET', 'POST'])
 @functools.lru_cache(maxsize=128)
 def getLeagues(user_id):
-    if session.get('allplayers') == None:
-        print('getting players...')
-        allplayers = requests.get(
-            'https://api.sleeper.app/v1/players/nfl'
-        ).json()
-        session['allplayers'] = allplayers
-    else:
-        print('players already loaded...')
-        allplayers = session.get('allplayers')
-
     leagues = requests.get('https://api.sleeper.app/v1/user/' + str(user_id) + '/leagues/nfl/2022', timeout=3).json()
     
     with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id), itertools.repeat(allplayers)))
+        leagues_detailed = list(executor.map(getLeagueInfo, leagues, itertools.repeat(user_id)))
     
     session[user_id] = {
         'leagues': leagues_detailed
@@ -205,21 +197,10 @@ def getLeaguemates(user_id):
 @app.route('/playershares/<user_id>')
 @functools.lru_cache(maxsize=128)
 def getPlayershares(user_id):
-    
-    if session.get('allplayers') == None:
-        print('getting players...')
-        allplayers = requests.get(
-            'https://api.sleeper.app/v1/players/nfl'
-        ).json()
-        session['allplayers'] = allplayers
-    else:
-        print('players already loaded...')
-        allplayers = session.get('allplayers')
-
     user = session.get(user_id)
 
     with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-        playershares = list(executor.map(getPlayerShares, [user['leagues']], [user_id], [allplayers]))
+        playershares = list(executor.map(getPlayerShares, [user['leagues']], [user_id]))
 
     return {
         'playershares': playershares[0]

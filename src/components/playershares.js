@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react"
 import PlayerLeagues from "./playerLeagues"
 import Search from "./search"
+import allplayers from '../allplayers.json'
+
 
 const PlayerShares = (props) => {
     const [playershares, setPlayershares] = useState([])
@@ -87,11 +89,11 @@ const PlayerShares = (props) => {
                                             <td colSpan={3} className="image">
                                                 <span className="image">
                                                     {
-                                                        props.avatar(player.id, player.player.full_name, 'player')
+                                                        props.avatar(player.id, allplayers[player.id].full_name, 'player')
                                                     }
                                                     <strong>
                                                         {
-                                                            player.player.full_name
+                                                            allplayers[player.id].full_name
                                                         }
                                                     </strong>
                                                 </span>
@@ -161,7 +163,7 @@ const PlayerShares = (props) => {
         <button onClick={() => setTab('All')} className={tab === 'All' ? 'active_toggle_starters' : 'toggle_starters'}>All</button>
         <button onClick={() => setTab('Starters')} className={tab === 'Starters' ? 'active_toggle_starters' : 'toggle_starters'}>Starters</button>
         <Search
-            list={playershares.map(player => player.player.full_name)}
+            list={playershares.map(player => player.id)}
             placeholder={'Search Players'}
             sendSearched={(data) => setSearched(data)}
         />

@@ -412,6 +412,63 @@ html {
             border: .75rem ridge var(--color5);
             margin: auto;
 
+            th.image,
+            td.image {
+              &:hover {
+
+                strong {
+                  overflow: visible;
+                  max-width: unset;
+                  color: var(--color2);
+                  background-color: black;
+                  padding: .25rem;
+                }
+              }
+
+              height: 10rem;
+
+              span {
+
+                background-color: inherit;
+                position: relative;
+                display: block;
+                margin: 0;
+                padding: 0;
+
+                img {
+                  width: 7.5rem;
+                  height: 7.5rem;
+                  border-radius: 50%;
+                  object-fit: cover;
+                  box-shadow: 0 0 1rem var(--color2);
+                  margin: .5rem;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  bottom: 0;
+                  right: 0;
+                  margin: auto;
+                }
+
+                strong {
+                  position: absolute;
+                  top: 0;
+                  left: 1rem;
+                  right: 1rem;
+                  bottom: 0;
+                  margin: auto;
+                  height: fit-content;
+                  width: fit-content;
+                  max-width: 95%;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  font-size: 1.5rem;
+                  background-color: var(--color3)
+                }
+              }
+            }
+
             table.main {
               table-layout: fixed;
               margin: auto;
@@ -420,54 +477,7 @@ html {
               border-spacing: 0;
 
 
-              td.image {
-                &:hover {
 
-                  strong {
-                    overflow: visible;
-                    max-width: unset;
-                    color: var(--color2);
-                    background-color: black;
-                    padding: .25rem;
-                  }
-                }
-
-                span {
-
-                  background-color: inherit;
-                  position: relative;
-                  display: block;
-                  margin: 0;
-                  padding: 0;
-
-                  img {
-                    width: 7.5rem;
-                    height: 7.5rem;
-                    border-radius: 50%;
-                    object-fit: cover;
-                    box-shadow: 0 0 1rem var(--color2);
-                    margin: .5rem;
-                    filter: contrast(2);
-                  }
-
-                  strong {
-                    position: absolute;
-                    top: 0;
-                    left: 1rem;
-                    right: 1rem;
-                    bottom: 0;
-                    margin: auto;
-                    height: fit-content;
-                    width: fit-content;
-                    max-width: 95%;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    font-size: 1.5rem;
-                    background-color: var(--color3)
-                  }
-                }
-              }
 
               th.small {
                 font-size: 75%;
@@ -548,7 +558,7 @@ html {
 
                 .secondary_header {
                   position: sticky;
-                  top: 13rem;
+                  top: 15rem;
                   z-index: 1;
                   outline: .25rem solid var(--color2);
                   background-color: navy;
@@ -558,7 +568,6 @@ html {
 
 
                 tbody.secondary_content {
-
 
                   tr {
                     background-color: var(--color5);
@@ -576,7 +585,7 @@ html {
                       table {
                         width: 100%;
                         position: sticky;
-                        top: 15rem;
+                        top: 17rem;
                         z-index: 1;
                         text-align: left;
                       }
@@ -634,94 +643,58 @@ html {
                         }
                       }
                     }
-                  }
-                }
-              }
 
-              /*
-              table.secondary {
-                table-layout: fixed;
-                width: 100%;
-                border: .25rem solid var(--color2);
-                border-top: none;
-                margin: auto;
-                border-collapse: collapse;
-                color: var(--color2);
+                    table.league_summary {
+                      table-layout: fixed;
+                      margin: auto;
+                      font-size: 1.5rem;
 
-                tr.secondary_header {
-                  position: sticky;
-                  top: 13rem;
-                  z-index: 1;
-                  outline: .25rem solid var(--color2);
-
-                }
-
-                th {
-                  background-color: navy;
-                  color: inherit;
-                }
-
-                tbody.secondary_content {
-                  tr {
-                    td {
-                      background-color: var(--color5);
-                      color: var(--color1);
-                      font-weight: 600;
-                      filter: brightness(.75);
-                    }
-
-                    &:nth-child(odd) {
-                      filter: brightness(0.75)
-                    }
-
-                    td.image_secondary {
-                      &:hover {
-                        strong {
-                          color: purple;
-                          max-width: unset;
-                          overflow: visible;
-                        }
-                      }
-
-                      span {
-                        background-color: inherit;
-                        display: block;
-                        margin: 0;
-                        padding: 0;
+                      td.image {
+                        height: 5rem;
 
                         img {
-                          width: 5rem;
-                          height: 5rem;
-                          border-radius: 50%;
-                          object-fit: cover;
-                          box-shadow: 0 0 .75rem var(--color2);
-                          margin: .5em;
+                          height: 4rem;
+                          width: 4rem;
                         }
 
                         strong {
-                          white-space: nowrap;
-                          font-size: 1.5rem;
-                          text-overflow: ellipsis;
-
-                          width: 15rem;
+                          font-size: inherit;
                         }
                       }
 
-                    }
+                      th.image {
+                        height: 7.5rem;
 
+                        img {
+                          width: 6rem;
+                          height: 6rem;
+                        }
+
+                        strong {
+                          font-size: 2rem;
+                        }
+                      }
+
+                      th {
+                        text-align: center;
+                        background-color: var(--color1);
+                        color: var(--color2);
+                      }
+
+                      td {
+                        background-color: rgba($color: black, $alpha: .5);
+                        color: var(--color2);
+
+
+                        &:first-child {
+                          text-align: center;
+                        }
+                      }
+                    }
                   }
                 }
               }
-            */
-
-
-
-
             }
-
-
-
-
           }
         }
 

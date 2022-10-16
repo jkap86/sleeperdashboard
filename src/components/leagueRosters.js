@@ -52,6 +52,7 @@ const LeagueRosters = (props) => {
                                     user={props.users.find(x => x.user_id === activeRoster.owner_id)}
                                     activeRoster={activeRoster}
                                     roster_positions={props.roster_positions}
+                                    avatar={props.avatar}
                                 />
                                 :
                                 <LeagueSummary

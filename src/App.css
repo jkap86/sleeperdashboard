@@ -381,117 +381,53 @@ html body div#root div.App div#view div.scrollable {
   border: 0.75rem ridge var(--color5);
   margin: auto;
 }
-html head div#root div.App div#view div.scrollable table.main,
-html body div#root div.App div#view div.scrollable table.main {
-  table-layout: fixed;
-  margin: auto;
-  width: 100%;
-  font-size: 2rem;
-  border-spacing: 0;
-  /*
-    table.secondary {
-      table-layout: fixed;
-      width: 100%;
-      border: .25rem solid var(--color2);
-      border-top: none;
-      margin: auto;
-      border-collapse: collapse;
-      color: var(--color2);
-
-      tr.secondary_header {
-        position: sticky;
-        top: 13rem;
-        z-index: 1;
-        outline: .25rem solid var(--color2);
-
-      }
-
-      th {
-        background-color: navy;
-        color: inherit;
-      }
-
-      tbody.secondary_content {
-        tr {
-          td {
-            background-color: var(--color5);
-            color: var(--color1);
-            font-weight: 600;
-            filter: brightness(.75);
-          }
-
-          &:nth-child(odd) {
-            filter: brightness(0.75)
-          }
-
-          td.image_secondary {
-            &:hover {
-              strong {
-                color: purple;
-                max-width: unset;
-                overflow: visible;
-              }
-            }
-
-            span {
-              background-color: inherit;
-              display: block;
-              margin: 0;
-              padding: 0;
-
-              img {
-                width: 5rem;
-                height: 5rem;
-                border-radius: 50%;
-                object-fit: cover;
-                box-shadow: 0 0 .75rem var(--color2);
-                margin: .5em;
-              }
-
-              strong {
-                white-space: nowrap;
-                font-size: 1.5rem;
-                text-overflow: ellipsis;
-
-                width: 15rem;
-              }
-            }
-
-          }
-
-        }
-      }
-    }
-  */
+html head div#root div.App div#view div.scrollable th.image,
+html head div#root div.App div#view div.scrollable td.image,
+html body div#root div.App div#view div.scrollable th.image,
+html body div#root div.App div#view div.scrollable td.image {
+  height: 10rem;
 }
-html head div#root div.App div#view div.scrollable table.main td.image:hover strong,
-html body div#root div.App div#view div.scrollable table.main td.image:hover strong {
+html head div#root div.App div#view div.scrollable th.image:hover strong,
+html head div#root div.App div#view div.scrollable td.image:hover strong,
+html body div#root div.App div#view div.scrollable th.image:hover strong,
+html body div#root div.App div#view div.scrollable td.image:hover strong {
   overflow: visible;
   max-width: unset;
   color: var(--color2);
   background-color: black;
   padding: 0.25rem;
 }
-html head div#root div.App div#view div.scrollable table.main td.image span,
-html body div#root div.App div#view div.scrollable table.main td.image span {
+html head div#root div.App div#view div.scrollable th.image span,
+html head div#root div.App div#view div.scrollable td.image span,
+html body div#root div.App div#view div.scrollable th.image span,
+html body div#root div.App div#view div.scrollable td.image span {
   background-color: inherit;
   position: relative;
   display: block;
   margin: 0;
   padding: 0;
 }
-html head div#root div.App div#view div.scrollable table.main td.image span img,
-html body div#root div.App div#view div.scrollable table.main td.image span img {
+html head div#root div.App div#view div.scrollable th.image span img,
+html head div#root div.App div#view div.scrollable td.image span img,
+html body div#root div.App div#view div.scrollable th.image span img,
+html body div#root div.App div#view div.scrollable td.image span img {
   width: 7.5rem;
   height: 7.5rem;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 1rem var(--color2);
   margin: 0.5rem;
-  filter: contrast(2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
-html head div#root div.App div#view div.scrollable table.main td.image span strong,
-html body div#root div.App div#view div.scrollable table.main td.image span strong {
+html head div#root div.App div#view div.scrollable th.image span strong,
+html head div#root div.App div#view div.scrollable td.image span strong,
+html body div#root div.App div#view div.scrollable th.image span strong,
+html body div#root div.App div#view div.scrollable td.image span strong {
   position: absolute;
   top: 0;
   left: 1rem;
@@ -506,6 +442,14 @@ html body div#root div.App div#view div.scrollable table.main td.image span stro
   white-space: nowrap;
   font-size: 1.5rem;
   background-color: var(--color3);
+}
+html head div#root div.App div#view div.scrollable table.main,
+html body div#root div.App div#view div.scrollable table.main {
+  table-layout: fixed;
+  margin: auto;
+  width: 100%;
+  font-size: 2rem;
+  border-spacing: 0;
 }
 html head div#root div.App div#view div.scrollable table.main th.small,
 html body div#root div.App div#view div.scrollable table.main th.small {
@@ -577,7 +521,7 @@ html body div#root div.App div#view div.scrollable table.main table.secondary {
 html head div#root div.App div#view div.scrollable table.main table.secondary .secondary_header,
 html body div#root div.App div#view div.scrollable table.main table.secondary .secondary_header {
   position: sticky;
-  top: 13rem;
+  top: 15rem;
   z-index: 1;
   outline: 0.25rem solid var(--color2);
   background-color: navy;
@@ -603,7 +547,7 @@ html head div#root div.App div#view div.scrollable table.main table.secondary tb
 html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr td.league_summary table {
   width: 100%;
   position: sticky;
-  top: 15rem;
+  top: 17rem;
   z-index: 1;
   text-align: left;
 }
@@ -652,6 +596,53 @@ html body div#root div.App div#view div.scrollable table.main table.secondary tb
   font-size: 1.75rem;
   background-color: inherit;
   width: fit-content;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary {
+  table-layout: fixed;
+  margin: auto;
+  font-size: 1.5rem;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image {
+  height: 5rem;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image img,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image img {
+  height: 4rem;
+  width: 4rem;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image strong,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td.image strong {
+  font-size: inherit;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th.image,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th.image {
+  height: 7.5rem;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th.image img,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th.image img {
+  width: 6rem;
+  height: 6rem;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th.image strong,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th.image strong {
+  font-size: 2rem;
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary th {
+  text-align: center;
+  background-color: var(--color1);
+  color: var(--color2);
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--color2);
+}
+html head div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td:first-child,
+html body div#root div.App div#view div.scrollable table.main table.secondary tbody.secondary_content tr table.league_summary td:first-child {
+  text-align: center;
 }
 
 /*# sourceMappingURL=App.css.map */

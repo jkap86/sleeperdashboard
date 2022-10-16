@@ -51,12 +51,11 @@ const Leaguemates = (props) => {
         leaguemates_display.slice((page - 1) * 50, ((page - 1) * 50) + 50).map((leaguemate, index) =>
             <tr
                 key={`${leaguemate.user_id}_${index}`}
-                onClick={() => toggleLeagues(leaguemate.user_id)}
                 className={leaguesVisible.includes(leaguemate.user_id) ? 'active' : 'main_row'}>
                 <td colSpan={6}>
                     <table className="content">
                         <tbody>
-                            <tr>
+                            <tr onClick={() => toggleLeagues(leaguemate.user_id)}>
                                 <td className="image">
                                     <span className="image">
                                         {
